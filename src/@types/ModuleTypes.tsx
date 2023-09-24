@@ -47,5 +47,6 @@ export interface InputType {
     text: string;
     kana?: string;
     romazi?: string;
+    furigana?: string;
   }[];
 }

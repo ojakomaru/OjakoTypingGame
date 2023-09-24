@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Header from "../Components/Header";
 import MainDisplay from "../Components/MainDisplay";
 import Footer from "../Components/Footer";
-import { type HomeProps } from "../@types/PagesTypes";
+import { type HomeProps } from "../@types/ModuleTypes";
 import {
   Card,
   CardMedia,

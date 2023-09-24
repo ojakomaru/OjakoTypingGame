@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext, useFieldArray } from "react-hook-form";
-import { type InputType } from "../@types/PagesTypes";
+import { type InputType } from "../@types/ModuleTypes";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import {
   Add as AddIcon,

@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { type InputType } from "../@types/PagesTypes";
+import { type InputType } from "../@types/ModuleTypes";
 import { TextField } from "@mui/material";
 
 const TitleInput: React.FC = () => {

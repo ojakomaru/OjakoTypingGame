@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { type InputType } from "../@types/PagesTypes";
+import { type InputType } from "../@types/ModuleTypes";
 import { Stack, Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../Components/saveTypingData";

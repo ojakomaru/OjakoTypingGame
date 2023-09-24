@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import Header from "../Components/Header";
 import MainDisplay from "../Components/MainDisplay";
 import Footer from "../Components/Footer";
-import { PlayingProps } from "../@types/PagesTypes";
+import { PlayingProps } from "../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
   const { problemNo, setting, score, setScore } = props;

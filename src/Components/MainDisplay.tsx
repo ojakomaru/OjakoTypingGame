@@ -2,7 +2,7 @@ import * as React from "react";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { Container, rgbToHex } from "@mui/material";
-import { MainFeaturedPostProps } from "../@types/PagesTypes";
+import { MainFeaturedPostProps } from "../@types/ModuleTypes";
 import PlayModal from "../Modal/playModal";
 import PlayingGame from "../TypingPlay/PlayingGame";
 import HomeDisplay from "../Modal/homeDisplay";
@@ -41,7 +41,7 @@ export default function MainDisplay({
             backgroundColor: "rgba(0,0,0,.3)",
           }}
         />
-        {isHome? ( //ホーム画面の場合
+        {isHome ? ( //ホーム画面の場合
           <HomeDisplay text={text} />
         ) : isPlaying ? ( // プレイ画面の場合
           <PlayingGame problemNo={problemNo} />
