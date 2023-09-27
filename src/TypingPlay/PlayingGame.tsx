@@ -105,7 +105,7 @@ const PlayingGame: React.FC<PlayingGameProps> = ({ problemNo }) => {
         }
       }
     };
-  });
+  }, [correctText, checkText, position, typo]);
 
   // HTML
   return (

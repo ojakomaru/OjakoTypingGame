@@ -5,6 +5,7 @@ import Header from "../Components/Header";
 import MainDisplay from "../Components/MainDisplay";
 import Footer from "../Components/Footer";
 import { type HomeProps } from "../@types/ModuleTypes";
+import { type InputType } from "../@types/ModuleTypes";
 import {
   Card,
   CardMedia,
@@ -22,6 +23,12 @@ export default function Home({
   setScore,
 }: HomeProps) {
   const [isHome, setIsHome] = useState<boolean>(true);
+  let [typingdatas, setTypingdata] = useState<InputType[]>();
+  if (localStorage.hasOwnProperty("typingData")) {
+    // 今回登録する配列の結合。。（一旦重複しても構わない仕様として実装する）
+    typingdatas = JSON.parse(localStorage.getItem("typingData") as string);
+  }
+  console.log(typingdatas);
   const mainSelectProblem = {
     problemNo: problemNo,
     title: "タイピング課題のタイトル",
@@ -44,8 +51,8 @@ export default function Home({
             setIsHome={setIsHome}
           />
           <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
-            {Array.from(Array(6)).map((_, index) => (
-              <Grid item xs={2} sm={4} md={4} key={index}>
+            {typingdatas && typingdatas.map((post, index) => (
+              <Grid item xs={2} sm={4} md={4} key={post.id}>
                 <Card
                   sx={{
                     height: "100%",
@@ -62,11 +69,10 @@ export default function Home({
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                      {post.title}
                     </Typography>
                     <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
+                      {`${post.problems[0].text}...`}
                     </Typography>
                   </CardContent>
                   <CardActions>
