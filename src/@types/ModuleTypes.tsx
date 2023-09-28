@@ -1,6 +1,6 @@
 export interface HomeProps {
-  problemNo: number;
-  setProblemNo: (a: number) => void;
+  problemNo: string;
+  setProblemNo: (a: string) => void;
   setting: {
     isROMAZI: boolean;
     isKANA: boolean;
@@ -13,7 +13,7 @@ export interface HomeProps {
 }
 
 export interface PlayingProps {
-  problemNo: number;
+  problemNo: string;
   setting: {
     isROMAZI: boolean;
     isKANA: boolean;
@@ -26,18 +26,22 @@ export interface PlayingProps {
 }
 
 export interface MainFeaturedPostProps {
-  problemNo: number;
-  text: {
-    description: string;
-    image: string;
-    linkText: string;
-    title: string;
-  };
+  problemNo: string;
+  text: HomeDisplayProps;
   isHome?: boolean;
   setIsHome?: (a: boolean) => void;
   startText?: string;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
+}
+
+export interface HomeDisplayProps {
+  text: {
+    title: string | undefined;
+    description: string | undefined;
+    image: string;
+    linkText: string;
+  };
 }
 
 export interface InputType {

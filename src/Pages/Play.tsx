@@ -10,12 +10,14 @@ const Play: React.FC<PlayingProps> = (props) => {
   const { problemNo, setting, score, setScore } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const mainPlayingText = {
-    problemNo: problemNo,
-    title: "タイピング課題のタイトル",
-    description:
-      "ここにタイピングする内容が表示され、新しい項目がどんどん更新される。",
-    image: "https://source.unsplash.com/random?wallpapers",
-    linkText: "Continue reading…",
+    text: {
+      problemNo: problemNo,
+      title: "タイピング課題のタイトル",
+      description:
+        "ここにタイピングする内容が表示され、新しい項目がどんどん更新される。",
+      image: "https://source.unsplash.com/random?wallpapers",
+      linkText: "Continue reading…",
+    },
   };
 
   return (

@@ -9,7 +9,7 @@ import HomeDisplay from "../Modal/homeDisplay";
 
 export default function MainDisplay({
   problemNo,
-  text,
+  text:{text},
   isPlaying = false,
   setIsPlaying,
   isHome,
