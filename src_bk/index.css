@@ -1,0 +1,388 @@
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+
+/* キーボードレイアウト */
+#virtual-keyboard {
+    position: relative;
+    width: 610px;
+    margin: 0 auto;
+  }
+
+  #virtual-keyboard div {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 34px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  #virtual-keyboard div.key_1 {
+    top: 0;
+    left: 41px;
+  }
+
+  #virtual-keyboard div.key_2 {
+    top: 0;
+    left: 82px;
+  }
+
+  #virtual-keyboard div.key_3 {
+    top: 0;
+    left: 123px;
+  }
+
+  #virtual-keyboard div.key_4 {
+    top: 0;
+    left: 164px;
+  }
+
+  #virtual-keyboard div.key_5 {
+    top: 0;
+    left: 205px;
+  }
+
+  #virtual-keyboard div.key_6 {
+    top: 0;
+    left: 246px;
+  }
+
+  #virtual-keyboard div.key_7 {
+    top: 0;
+    left: 287px;
+  }
+
+  #virtual-keyboard div.key_8 {
+    top: 0;
+    left: 328px;
+  }
+
+  #virtual-keyboard div.key_9 {
+    top: 0;
+    left: 369px;
+  }
+
+  #virtual-keyboard div.key_0 {
+    top: 0;
+    left: 410px;
+  }
+
+  #virtual-keyboard div.key_hyphen {
+    top: 0;
+    left: 451px;
+  }
+
+  #virtual-keyboard div.deco_key2 {
+    top: 0;
+    left: 492px;
+  }
+
+  #virtual-keyboard div.deco_key3 {
+    top: 0;
+    left: 533px;
+  }
+
+  #virtual-keyboard div.deco_key4 {
+    top: 0;
+    left: 574px;
+  }
+
+  #virtual-keyboard div.deco_key5 {
+    top: 41px;
+    width: 56px;
+  }
+
+  #virtual-keyboard div.key_q {
+    top: 41px;
+    left: 61px;
+  }
+
+  #virtual-keyboard div.key_w {
+    top: 41px;
+    left: 102px;
+  }
+
+  #virtual-keyboard div.key_e {
+    top: 41px;
+    left: 143px;
+  }
+
+  #virtual-keyboard div.key_r {
+    top: 41px;
+    left: 184px;
+  }
+
+  #virtual-keyboard div.key_t {
+    top: 41px;
+    left: 225px;
+  }
+
+  #virtual-keyboard div.key_y {
+    top: 41px;
+    left: 266px;
+  }
+
+  #virtual-keyboard div.key_u {
+    top: 41px;
+    left: 307px;
+  }
+
+  #virtual-keyboard div.key_i {
+    top: 41px;
+    left: 348px;
+  }
+
+  #virtual-keyboard div.key_o {
+    top: 41px;
+    left: 389px;
+  }
+
+  #virtual-keyboard div.key_p {
+    top: 41px;
+    left: 430px;
+  }
+
+  #virtual-keyboard div.key_atmark {
+    top: 41px;
+    left: 471px;
+  }
+
+  #virtual-keyboard div.deco_key6 {
+    top: 41px;
+    left: 512px;
+  }
+
+  #virtual-keyboard div.key_Enter {
+    top: 41px;
+    left: 553px;
+    width: 57px;
+    height: 77px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 21px 100%, 21px 36px, 0 36px);
+  }
+
+  #virtual-keyboard div.key_Enter:after {
+    position: absolute;
+    display: block;
+    content: "";
+    top: 34px;
+    left: 0;
+    width: 20px;
+    height: 41px;
+    border-top: 1px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+  }
+
+  #virtual-keyboard div.deco_key7 {
+    top: 82px;
+    width: 76px;
+  }
+
+  #virtual-keyboard div.key_a {
+    top: 82px;
+    left: 81px;
+  }
+
+  #virtual-keyboard div.key_s {
+    top: 82px;
+    left: 122px;
+  }
+
+  #virtual-keyboard div.key_d {
+    top: 82px;
+    left: 163px;
+  }
+
+  #virtual-keyboard div.key_f {
+    top: 82px;
+    left: 204px;
+  }
+
+  #virtual-keyboard div.key_g {
+    top: 82px;
+    left: 245px;
+  }
+
+  #virtual-keyboard div.key_h {
+    top: 82px;
+    left: 286px;
+  }
+
+  #virtual-keyboard div.key_j {
+    top: 82px;
+    left: 327px;
+  }
+
+  #virtual-keyboard div.key_k {
+    top: 82px;
+    left: 368px;
+  }
+
+  #virtual-keyboard div.key_l {
+    top: 82px;
+    left: 409px;
+  }
+
+  #virtual-keyboard div.key_semicolon {
+    top: 82px;
+    left: 450px;
+  }
+
+  #virtual-keyboard div.key_colon {
+    top: 82px;
+    left: 491px;
+  }
+
+  #virtual-keyboard div.deco_key8 {
+    top: 82px;
+    left: 532px;
+  }
+
+  #virtual-keyboard div.key_lShift {
+    top: 123px;
+    left: 0;
+    width: 96px;
+  }
+
+  #virtual-keyboard div.key_z {
+    top: 123px;
+    left: 101px;
+  }
+
+  #virtual-keyboard div.key_x {
+    top: 123px;
+    left: 142px;
+  }
+
+  #virtual-keyboard div.key_c {
+    top: 123px;
+    left: 183px;
+  }
+
+  #virtual-keyboard div.key_v {
+    top: 123px;
+    left: 224px;
+  }
+
+  #virtual-keyboard div.key_b {
+    top: 123px;
+    left: 265px;
+  }
+
+  #virtual-keyboard div.key_n {
+    top: 123px;
+    left: 306px;
+  }
+
+  #virtual-keyboard div.key_m {
+    top: 123px;
+    left: 347px;
+  }
+
+  #virtual-keyboard div.key_comma {
+    top: 123px;
+    left: 388px;
+  }
+
+  #virtual-keyboard div.key_period {
+    top: 123px;
+    left: 429px;
+  }
+
+  #virtual-keyboard div.key_slash {
+    top: 123px;
+    left: 470px;
+  }
+
+  #virtual-keyboard div.deco_key9 {
+    top: 123px;
+    left: 511px;
+  }
+
+  #virtual-keyboard div.key_rShift {
+    top: 123px;
+    left: 552px;
+    width: 58px;
+  }
+
+  #virtual-keyboard div.deco_key10 {
+    top: 164px;
+    left: 0;
+    width: 56px;
+  }
+
+  #virtual-keyboard div.deco_key11 {
+    top: 164px;
+    left: 61px;
+  }
+
+  #virtual-keyboard div.deco_key12 {
+    top: 164px;
+    left: 102px;
+  }
+
+  #virtual-keyboard div.deco_key13 {
+    top: 164px;
+    left: 143px;
+  }
+
+  #virtual-keyboard div.key_space {
+    top: 164px;
+    left: 184px;
+    width: 181px;
+  }
+
+  #virtual-keyboard div.deco_key14 {
+    top: 164px;
+    left: 370px;
+  }
+
+  #virtual-keyboard div.deco_key15 {
+    top: 164px;
+    left: 411px;
+  }
+
+  #virtual-keyboard div.deco_key16 {
+    top: 164px;
+    left: 452px;
+    width: 56px;
+  }
+
+  #virtual-keyboard div.deco_key17 {
+    top: 164px;
+    left: 513px;
+  }
+
+  #virtual-keyboard div.deco_key18 {
+    top: 164px;
+    left: 554px;
+    width: 56px;
+  }
+
+  #virtual-keyboard div.active {
+    background-color: #ff9c00 !important;
+    border-color: #ff9c00 !important;
+    color: #fff !important;
+  }
+  #virtual-keyboard::after {
+    content: '';
+    display: block;
+    padding-top: 38%;
+  }

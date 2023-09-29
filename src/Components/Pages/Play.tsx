@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Keyboard from "../TypingPlay/Keyboard";
+import Keyboard from "../../TypingPlay/Keyboard";
 import { Container } from "@mui/material";
-import Header from "../Components/Header";
-import MainDisplay from "../Components/MainDisplay";
-import Footer from "../Components/Footer";
-import { PlayingProps } from "../@types/ModuleTypes";
+import Header from "../Header";
+import MainDisplay from "../MainDisplay";
+import Footer from "../Footer";
+import { PlayingProps } from "../../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
   const { problemNo, setting, score, setScore } = props;

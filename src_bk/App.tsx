@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Components/Pages/Home";
-import Play from "./Components/Pages/Play";
+import HomePage from "./Components/Pages/HomePage";
+// import Play from "./Components/Pages/Play";
 import AddTyping from "./Components/Pages/AddTyping";
 
 const playSetting = {
@@ -13,34 +13,23 @@ const playSetting = {
 };
 
 const App: FC = () => {
-  const [problemNo, setProblemNo] = useState<string>(""); //出題問題ID
-  const [score, setScore] = useState<number>(0); //ゲームスコア
   return (
     <Routes>
       {/*RouteにHomeを設定する*/}
       <Route
         path="/"
         element={
-          <Home
-            problemNo={problemNo}
-            setProblemNo={setProblemNo}
-            setting={playSetting}
-            score={score}
-            setScore={setScore}
+          <HomePage
           />
         }
       />
-      <Route
+      {/* <Route
         path="/play"
         element={
           <Play
-            problemNo={problemNo}
-            setting={playSetting}
-            score={score}
-            setScore={setScore}
           />
         }
-      />
+      /> */}
       <Route path="/addtyping" element={<AddTyping />} />
       {/* <Route path="/score" element={<Score />} />
           <Route path="*" element={<Notfound />} /> */}
@@ -57,5 +46,5 @@ export default App;
 // npm i markdown-to-js;
 // 同階層にglobal.d.tsを作成し「declare module "*.md";」を追記
 //  npm install react-router-dom
-// npm i js-hira-kata-romanize
-// npm install axios --save
+// yarn add --dev @types/styled-components;
+// yarn add styled-components

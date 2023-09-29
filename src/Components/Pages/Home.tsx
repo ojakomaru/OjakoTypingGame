@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Header from "../Components/Header";
-import MainDisplay from "../Components/MainDisplay";
-import Footer from "../Components/Footer";
-import { type HomeProps } from "../@types/ModuleTypes";
-import { type InputType } from "../@types/ModuleTypes";
-import { type HomeDisplayProps } from "../@types/ModuleTypes";
+import Header from "../Header";
+import MainDisplay from "../MainDisplay";
+import Footer from "../Footer";
+import { type HomeProps } from "../../@types/ModuleTypes";
+import { type InputType } from "../../@types/ModuleTypes";
+import { type HomeDisplayProps } from "../../@types/ModuleTypes";
 
 import {
   Card,
