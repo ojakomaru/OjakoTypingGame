@@ -13,7 +13,7 @@ const playSetting = {
 };
 
 const App: FC = () => {
-  const [problemNo, setProblemNo] = useState<string>(""); //出題問題ID
+  const [problemNo, setProblemNo] = useState<number>(3); //出題問題ID
   const [score, setScore] = useState<number>(0); //ゲームスコア
   return (
     <Routes>
