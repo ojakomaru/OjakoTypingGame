@@ -42,8 +42,8 @@ const AddTyping: React.FC = () => {
   // 検証が成功すると呼び出され、引数で入力値が渡ってきます。
   const onSubmit: SubmitHandler<InputType> = (typingdata: InputType) => {
     saveTypingData(typingdata);
-    methods.reset();
-    navigate("/");
+    // methods.reset();
+    // navigate("/");
   };
 
   // 5. form要素のonSubmitに1.で取得しているhandleSubmitを指定します */

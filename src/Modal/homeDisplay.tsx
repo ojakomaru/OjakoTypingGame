@@ -4,17 +4,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-interface HomeDisplayProps {
-  text: {
-    description: string;
-    image: string;
-    linkText: string;
-    title: string;
-  };
+import { type HomeDisplayProps } from "../@types/ModuleTypes";
+type HomeDisplayObject = {
+  text: HomeDisplayProps,
 }
-
-const HomeDisplay: React.FC<HomeDisplayProps> = ({ text }) => {
+const HomeDisplay: React.FC<HomeDisplayObject> = ( {text} ) => {
   const navigate = useNavigate();
   const GameStart = () => {navigate("/play")};
   // HTML

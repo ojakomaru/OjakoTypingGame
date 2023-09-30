@@ -6,6 +6,7 @@ import { MainFeaturedPostProps } from "../@types/ModuleTypes";
 import PlayModal from "../Modal/playModal";
 import PlayingGame from "../TypingPlay/PlayingGame";
 import HomeDisplay from "../Modal/homeDisplay";
+import { useLocation } from "react-router-dom";
 
 export default function MainDisplay({
   problemNo,
@@ -15,6 +16,7 @@ export default function MainDisplay({
   isHome,
   setIsHome,
 }: MainFeaturedPostProps) {
+  console.log(text);
   return (
     <Container maxWidth="md">
       <Paper

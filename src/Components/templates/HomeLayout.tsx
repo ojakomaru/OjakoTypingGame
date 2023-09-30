@@ -1,5 +1,5 @@
-import React, { FC, ReactNode } from 'react';
-import styled from 'styled-components';
+import React, { FC, ReactNode } from "react";
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const Header = styled.header`
   z-index: 999;
 `;
 
-const Hero = styled.section``;
+const MainDisplay = styled.section``;
 
 const Content = styled.section`
   width: 100%;
@@ -33,23 +33,24 @@ const Footer = styled.footer`
 `;
 
 const HomeLayout = (props: HomeLayoutProps) => {
-  const { header, ishero, maindisplay, children, footer } = props;
-   return (
-     <Wrapper {...props}>
-       <Header>{header}</Header>
-       {ishero && <Hero>{maindisplay}</Hero>}
-       <Content>{children}</Content>
-       <Footer>{footer}</Footer>
-     </Wrapper>
-   );
+  const { header, maindisplay, typinglists, footer } = props;
+  return (
+    <Wrapper {...props}>
+      <Header>{header}</Header>
+      <main>
+        <MainDisplay>{maindisplay}</MainDisplay>
+        <Content>{typinglists}</Content>
+      </main>
+      <Footer>{footer}</Footer>
+    </Wrapper>
+  );
 };
 
 type HomeLayoutProps = {
   header: ReactNode;
-  ishero?: boolean,
   maindisplay: ReactNode;
   footer: ReactNode;
-  children: ReactNode;
+  typinglists: ReactNode;
 };
 
 export default HomeLayout;
