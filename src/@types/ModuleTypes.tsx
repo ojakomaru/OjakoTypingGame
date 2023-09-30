@@ -1,28 +1,41 @@
+export interface TypingDataType {
+  id: string;
+  title: string;
+  problems: {
+    text: string;
+    kana?: string;
+    romazi?: string;
+    furigana?: string;
+  }[];
+}
+
 export interface HomeProps {
   problemNo: string;
   setProblemNo: (a: string) => void;
-  setting: {
-    isROMAZI: boolean;
-    isKANA: boolean;
-    isKeyGuide: boolean;
-    isShowWPM: boolean;
-    isSpeedBer: boolean;
-  };
-  score: number;
-  setScore: (a: number) => void;
+  typingdatas?: TypingDataType[];
+  // setting: {
+  //   isROMAZI: boolean;
+  //   isKANA: boolean;
+  //   isKeyGuide: boolean;
+  //   isShowWPM: boolean;
+  //   isSpeedBer: boolean;
+  // };
+  // score: number;
+  // setScore: (a: number) => void;
 }
 
 export interface PlayingProps {
   problemNo: string;
-  setting: {
-    isROMAZI: boolean;
-    isKANA: boolean;
-    isKeyGuide: boolean;
-    isShowWPM: boolean;
-    isSpeedBer: boolean;
-  };
-  score: number;
-  setScore: (a: number) => void;
+  typingdata?: TypingDataType
+  // setting: {
+  //   isROMAZI: boolean;
+  //   isKANA: boolean;
+  //   isKeyGuide: boolean;
+  //   isShowWPM: boolean;
+  //   isSpeedBer: boolean;
+  // };
+  // score: number;
+  // setScore: (a: number) => void;
 }
 
 export interface MainFeaturedPostProps {
@@ -42,13 +55,3 @@ export interface HomeDisplayProps {
   linkText: string;
 }
 
-export interface InputType {
-  id: string;
-  title: string;
-  problems: {
-    text: string;
-    kana?: string;
-    romazi?: string;
-    furigana?: string;
-  }[];
-}

@@ -35,7 +35,7 @@ const Footer = styled.footer`
 const HomeLayout = (props: HomeLayoutProps) => {
   const { header, maindisplay, typinglists, footer } = props;
   return (
-    <Wrapper {...props}>
+    <Wrapper>
       <Header>{header}</Header>
       <main>
         <MainDisplay>{maindisplay}</MainDisplay>

@@ -1,10 +1,10 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { type InputType } from "../@types/ModuleTypes";
+import { type TypingDataType } from "../@types/ModuleTypes";
 import { TextField } from "@mui/material";
 
 const TitleInput: React.FC = () => {
-  const { control } = useFormContext<InputType>();
+  const { control } = useFormContext<TypingDataType>();
   return (
     <>
       {/* 6.Controllerコンポーネントで TextFieldをReactHookFormと紐づけます。*/}

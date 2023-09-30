@@ -3,18 +3,33 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Pages/Home";
 import Play from "./Components/Pages/Play";
 import AddTyping from "./Components/Pages/AddTyping";
+import { type TypingDataType } from "./@types/ModuleTypes";
 
-const playSetting = {
-  isROMAZI: true,
-  isKANA: true,
-  isKeyGuide: true,
-  isShowWPM: true,
-  isSpeedBer: true,
-};
+let initialData: TypingDataType[] = [
+  {
+    id: "1",
+    title: "test",
+    problems: [
+      {
+        text: "テスト問題",
+        kana: "かな",
+        romazi: "tesuto",
+        furigana: "テスト",
+      },
+    ],
+  },
+];
+if (localStorage.hasOwnProperty("typingData")) {
+  // 今回登録する配列の結合。。（一旦重複しても構わない仕様として実装する）
+  initialData = JSON.parse(localStorage.getItem("typingData") as string);
+}
 
 const App: FC = () => {
   const [problemNo, setProblemNo] = useState<string>(""); //出題問題ID
-  const [score, setScore] = useState<number>(0); //ゲームスコア
+  // 登録済みのデータの取得
+  const [typingdata, setTypingData] = useState<TypingDataType>();
+  const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(initialData);
+
   return (
     <Routes>
       {/*RouteにHomeを設定する*/}
@@ -24,22 +39,13 @@ const App: FC = () => {
           <Home
             problemNo={problemNo}
             setProblemNo={setProblemNo}
-            setting={playSetting}
-            score={score}
-            setScore={setScore}
+            typingdatas={typingdatas}
           />
         }
       />
       <Route
         path="/play"
-        element={
-          <Play
-            problemNo={problemNo}
-            setting={playSetting}
-            score={score}
-            setScore={setScore}
-          />
-        }
+        element={<Play problemNo={problemNo} typingdata={typingdata} />}
       />
       <Route path="/addtyping" element={<AddTyping />} />
       {/* <Route path="/score" element={<Score />} />

@@ -1,7 +1,7 @@
-import { type InputType } from "../@types/ModuleTypes";
+import { type TypingDataType } from "../@types/ModuleTypes";
 import Analyzer from "./Analyzer";
 
-const saveTypingData = (typingdata: InputType): void => {
+const saveTypingData = (typingdata: TypingDataType): void => {
   let word: string = "";
   typingdata.problems.map(async (problem) => {
     //APIで変換したいテキスト
@@ -23,7 +23,7 @@ const saveTypingData = (typingdata: InputType): void => {
   //   // 配列の結合
   //   // typingDataList.push(data);
   //   // console.log(typingDataList);
-    localStorage.setItem("typingData", JSON.stringify(typingdata));
+  localStorage.setItem("typingData", JSON.stringify(typingdata));
   // }
 };
 

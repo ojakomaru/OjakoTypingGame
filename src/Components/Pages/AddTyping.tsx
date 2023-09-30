@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { type InputType } from "../../@types/ModuleTypes";
+import { type TypingDataType } from "../../@types/ModuleTypes";
 import { Stack, Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../saveTypingData";
@@ -27,7 +27,7 @@ const FormLayout = css`
 const AddTyping: React.FC = () => {
   const navigate = useNavigate();
   const id = uuidv4();
-  const methods = useForm<InputType>({
+  const methods = useForm<TypingDataType>({
     mode: "onBlur",
     reValidateMode: "onBlur",
     // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
@@ -40,7 +40,7 @@ const AddTyping: React.FC = () => {
 
   // 4. サブミット時の処理を作成します。
   // 検証が成功すると呼び出され、引数で入力値が渡ってきます。
-  const onSubmit: SubmitHandler<InputType> = (typingdata: InputType) => {
+  const onSubmit: SubmitHandler<TypingDataType> = (typingdata: TypingDataType) => {
     saveTypingData(typingdata);
     // methods.reset();
     // navigate("/");

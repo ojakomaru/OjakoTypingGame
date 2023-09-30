@@ -8,11 +8,11 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { type InputType } from "../../@types/ModuleTypes";
+import { type TypingDataType } from "../../@types/ModuleTypes";
 
 type TypingListsProps = {
-  typingdatas: InputType[];
-  setProblemNo: (a:string) => void;
+  typingdatas?: TypingDataType[];
+  setProblemNo: (a: string) => void;
 };
 
 export default function TypingLists({ typingdatas, setProblemNo }: TypingListsProps) {

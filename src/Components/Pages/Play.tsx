@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Keyboard from "../../TypingPlay/Keyboard";
 import { Container } from "@mui/material";
-import Header from "../Header";
-import MainDisplay from "../MainDisplay";
-import Footer from "../Footer";
+import Header from "../molecules/Header";
+import MainDisplay from "../organisms/MainDisplay";
+import Footer from "../atoms/Footer";
 import { PlayingProps } from "../../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
-  const { problemNo, setting, score, setScore } = props;
+  const { problemNo} = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const mainPlayingText = {
     problemNo: problemNo,
