@@ -4,11 +4,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { type TypingDataType } from "../@types/ModuleTypes";
+import { type TypingDataType } from "../../@types/ModuleTypes";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;
-}
+};
 
 const HomeDisplay = ({ displayData }: HomeDisplayProps) => {
   const { title, problems } = displayData;

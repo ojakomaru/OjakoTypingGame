@@ -19,7 +19,6 @@ let initialData: TypingDataType = {
 };
 
 const App: FC = () => {
-  const [problemNo, setProblemNo] = useState<string>(""); //出題問題ID
   // 登録済みのデータの取得
   const [typingdata, setTypingData] = useState<TypingDataType>(initialData);
   const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
@@ -33,8 +32,6 @@ const App: FC = () => {
         path="/"
         element={
           <Home
-            problemNo={problemNo}
-            setProblemNo={setProblemNo}
             typingdata={typingdata}
             setTypingData={setTypingData}
             typingdatas={typingdatas}
@@ -44,7 +41,7 @@ const App: FC = () => {
       />
       <Route
         path="/play"
-        element={<Play problemNo={problemNo} typingdata={typingdata} />}
+        element={<Play typingdata={typingdata} />}
       />
       <Route path="/addtyping" element={<AddTyping />} />
       {/* <Route path="/score" element={<Score />} />

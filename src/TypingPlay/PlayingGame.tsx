@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 
 // 引数の型指定
-interface PlayingGameProps {
-  problemNo: string;
-}
+// interface PlayingGameProps {
+//   problemNo: string;
+// }
 
 // 問題文のスタイリング
 const problemStyle = css`
@@ -46,7 +46,7 @@ const problemStyle = css`
   }
 `;
 
-const PlayingGame: React.FC<PlayingGameProps> = ({ problemNo }) => {
+const PlayingGame= () => {
   const navigate = useNavigate();
   // 問題文生成
   // let ProblemText = testdata.testdata.filter(

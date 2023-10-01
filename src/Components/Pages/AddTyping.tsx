@@ -4,12 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 import { type TypingDataType } from "../../@types/ModuleTypes";
 import { Stack, Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import saveTypingData from "../saveTypingData";
-import TitleInput from "../TitleInput";
-import ProblemList from "../ProblemList";
+import saveTypingData from "../../functional/saveTypingData";
+import TitleInput from "../atoms/TitleInput";
+import ProblemList from "../organisms/ProblemList";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import axios from "axios";
 
 const FormLayout = css`
   min-height: 45vh;
@@ -40,10 +39,12 @@ const AddTyping: React.FC = () => {
 
   // 4. サブミット時の処理を作成します。
   // 検証が成功すると呼び出され、引数で入力値が渡ってきます。
-  const onSubmit: SubmitHandler<TypingDataType> = (typingdata: TypingDataType) => {
+  const onSubmit: SubmitHandler<TypingDataType> = (
+    typingdata: TypingDataType
+  ) => {
     saveTypingData(typingdata);
-    // methods.reset();
-    // navigate("/");
+    methods.reset();
+    navigate("/");
   };
 
   // 5. form要素のonSubmitに1.で取得しているhandleSubmitを指定します */

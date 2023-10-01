@@ -1,9 +1,7 @@
 import { Container, Paper, Box } from "@mui/material";
 import React, { ReactNode } from "react";
 
-
 export default function MainDiaplayLayout({
-  data,
   children,
 }: DiaplayLayoutProps) {
 
@@ -18,10 +16,16 @@ export default function MainDiaplayLayout({
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundImage: `url(${data.image})`,
+          backgroundImage: `url("https://source.unsplash.com/random?wallpapers")`,
         }}
       >
-        {<img style={{ display: "none" }} src={data.image} alt={data.title} />}
+        {
+          <img
+            style={{ display: "none" }}
+            src="https://source.unsplash.com/random?wallpapers"
+            alt="https://source.unsplash.com/random?wallpapers"
+          />
+        }
         <Box
           sx={{
             position: "absolute",
@@ -39,6 +43,5 @@ export default function MainDiaplayLayout({
 }
 
 type DiaplayLayoutProps = {
-  data: any;
   children: ReactNode;
 };

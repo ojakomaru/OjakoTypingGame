@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Grid,
   Card,
@@ -8,25 +7,22 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { type TypingDataType } from "../../@types/ModuleTypes";
+import { type HomeProps } from "../../@types/ModuleTypes";
 
-type TypingListsProps = {
-  typingdatas: TypingDataType[];
-  setProblemNo: (a: string) => void;
-};
-
-export default function TypingLists({ typingdatas, setProblemNo }: TypingListsProps) {
+export default function TypingLists(props: HomeProps) {
+  const { typingdatas, setTypingData } = props;
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
       {typingdatas &&
         typingdatas.map((post, index) => (
           <Grid item xs={2} sm={4} md={4} key={post.id}>
             <Card
-              onClick={() => setProblemNo(post.id)}
+              onClick={() => setTypingData(post)}
               sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                cursor: "pointer"
               }}
             >
               <CardMedia
