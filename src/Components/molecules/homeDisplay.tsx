@@ -18,7 +18,11 @@ const HomeDisplay = ({ displayData }: HomeDisplayProps) => {
   };
   // HTML
   return (
-    <Grid container justifyContent="center" sx={{ mb: 2, pb: 2 }}>
+    <Grid
+      container
+      justifyContent="center"
+      sx={{ mb: 2, pb: 2, display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Box
         sx={{
           position: "relative",

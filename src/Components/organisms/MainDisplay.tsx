@@ -35,7 +35,7 @@ function MainDisplayChild(props: MainFeaturedPostProps, ref: Ref<HTMLDivElement>
 
   return (
     <div ref={ref}>
-      <MainDiaplayLayout>
+      <MainDiaplayLayout >
         {isHome ? ( //ホーム画面の場合
           <HomeDisplay displayData={typingdata} />
         ) : isPlaying ? ( // プレイ画面の場合

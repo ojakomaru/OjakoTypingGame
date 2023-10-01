@@ -7,9 +7,6 @@ const Wrapper = styled.div`
   padding-top: 3.75rem;
   min-height: 100vh;
   box-sizing: border-box;
-  @media screen and (max-width: 640px) {
-    padding-top: 3.25rem;
-  }
 `;
 
 const Header = styled.header`
@@ -19,7 +16,10 @@ const Header = styled.header`
   z-index: 999;
 `;
 
-const MainDisplay = styled.section``;
+const MainDisplay = styled.section`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Content = styled.section`
   width: 100%;
