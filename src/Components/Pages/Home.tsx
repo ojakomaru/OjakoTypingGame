@@ -1,7 +1,7 @@
 import { useState } from "react";
 import HomeLayout from "../templates/HomeLayout";
 import Header from "../molecules/Header";
-import MainDisplay from "../organisms/MainDisplay";
+import {MainDisplay} from "../organisms/MainDisplay";
 import TypingLists from "../organisms/TypingLists";
 import Footer from "../atoms/Footer";
 import { type HomeProps } from "../../@types/ModuleTypes";
@@ -18,11 +18,12 @@ export default function Home(props: HomeProps) {
       maindisplay={
         <MainDisplay
           {...props}
+          ref={ref}
           isHome={isHome}
           setIsHome={setIsHome}
         />
       }
-      typinglists={<TypingLists {...props}/>}
+      typinglists={<TypingLists {...props} moveTo={moveTo} />}
       footer={
         <Footer title="Footer" description="Ojako Typing App var.1.0.0" />
       }

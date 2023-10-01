@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Keyboard from "../../TypingPlay/Keyboard";
 import { Container } from "@mui/material";
 import Header from "../molecules/Header";
-import MainDisplay from "../organisms/MainDisplay";
+import {MainDisplay} from "../organisms/MainDisplay";
 import Footer from "../atoms/Footer";
 import { PlayingProps } from "../../@types/ModuleTypes";
 

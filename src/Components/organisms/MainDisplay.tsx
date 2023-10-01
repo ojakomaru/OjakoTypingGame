@@ -4,17 +4,18 @@ import PlayingGame from "../../TypingPlay/PlayingGame";
 import HomeDisplay from "../molecules/homeDisplay";
 import MainDiaplayLayout from "../templates/MainDiaplayLayout";
 import Home from "../Pages/Home";
-import { useEffect } from "react";
+import { Ref, RefObject, forwardRef, useEffect } from "react";
 
 type G_Props = React.ComponentPropsWithRef<typeof Home>;
 type MainFeaturedPostProps = {
+  ref: RefObject<HTMLDivElement>;
   isHome?: boolean;
   setIsHome?: (a: boolean) => void;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
 } & G_Props;
 
-export default function MainDisplay(props: MainFeaturedPostProps) {
+function MainDisplayChild(props: MainFeaturedPostProps, ref: Ref<HTMLDivElement>) {
   const {
     isPlaying = false,
     setIsPlaying,
@@ -31,15 +32,21 @@ export default function MainDisplay(props: MainFeaturedPostProps) {
       console.log(typingdata);
     }
   }, []);
+
   return (
-    <MainDiaplayLayout >
-      {isHome ? ( //ホーム画面の場合
-        <HomeDisplay displayData={typingdata} />
-      ) : isPlaying ? ( // プレイ画面の場合
-        <PlayingGame />
-      ) : (
-        <PlayModal setIsPlaying={setIsPlaying} />
-      )}
-    </MainDiaplayLayout>
+    <div ref={ref}>
+      <MainDiaplayLayout>
+        {isHome ? ( //ホーム画面の場合
+          <HomeDisplay displayData={typingdata} />
+        ) : isPlaying ? ( // プレイ画面の場合
+          <PlayingGame />
+        ) : (
+          <PlayModal setIsPlaying={setIsPlaying} />
+        )}
+      </MainDiaplayLayout>
+    </div>
   );
 }
+export const MainDisplay = forwardRef<HTMLDivElement, MainFeaturedPostProps>(
+  MainDisplayChild
+);

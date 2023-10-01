@@ -7,22 +7,32 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { type HomeProps } from "../../@types/ModuleTypes";
+import Home from "../Pages/Home";
+import { TypingDataType } from "../../@types/ModuleTypes";
+type G_Props = React.ComponentPropsWithRef<typeof Home>;
+type TypingListProps = {
+  moveTo: () => void;
+} & G_Props;
 
-export default function TypingLists(props: HomeProps) {
-  const { typingdatas, setTypingData } = props;
+export default function TypingLists(props: TypingListProps) {
+  const { typingdatas, setTypingData, moveTo } = props;
+  const selectedTypingToTop = (post: TypingDataType): void => {
+    moveTo();
+    setTypingData(post);
+  };
+
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
       {typingdatas &&
         typingdatas.map((post, index) => (
           <Grid item xs={2} sm={4} md={4} key={post.id}>
             <Card
-              onClick={() => setTypingData(post)}
+              onClick={() => selectedTypingToTop(post)}
               sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
             >
               <CardMedia
