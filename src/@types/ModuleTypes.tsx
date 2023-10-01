@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface TypingDataType {
   id: string;
   title: string;
@@ -12,7 +14,10 @@ export interface TypingDataType {
 export interface HomeProps {
   problemNo: string;
   setProblemNo: (a: string) => void;
-  typingdatas?: TypingDataType[];
+  typingdata: TypingDataType;
+  setTypingData: (a: TypingDataType) => void;
+  typingdatas: TypingDataType[];
+  setTypingDatas: (a: TypingDataType[]) => void;
   // setting: {
   //   isROMAZI: boolean;
   //   isKANA: boolean;

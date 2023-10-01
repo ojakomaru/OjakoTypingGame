@@ -11,7 +11,7 @@ import {
 import { type TypingDataType } from "../../@types/ModuleTypes";
 
 type TypingListsProps = {
-  typingdatas?: TypingDataType[];
+  typingdatas: TypingDataType[];
   setProblemNo: (a: string) => void;
 };
 

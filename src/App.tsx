@@ -5,30 +5,26 @@ import Play from "./Components/Pages/Play";
 import AddTyping from "./Components/Pages/AddTyping";
 import { type TypingDataType } from "./@types/ModuleTypes";
 
-let initialData: TypingDataType[] = [
-  {
-    id: "1",
-    title: "test",
-    problems: [
-      {
-        text: "テスト問題",
-        kana: "かな",
-        romazi: "tesuto",
-        furigana: "テスト",
-      },
-    ],
-  },
-];
-if (localStorage.hasOwnProperty("typingData")) {
-  // 今回登録する配列の結合。。（一旦重複しても構わない仕様として実装する）
-  initialData = JSON.parse(localStorage.getItem("typingData") as string);
-}
+let initialData: TypingDataType = {
+  id: "1",
+  title: "test",
+  problems: [
+    {
+      text: "テスト問題",
+      kana: "かな",
+      romazi: "tesuto",
+      furigana: "テスト",
+    },
+  ],
+};
 
 const App: FC = () => {
   const [problemNo, setProblemNo] = useState<string>(""); //出題問題ID
   // 登録済みのデータの取得
-  const [typingdata, setTypingData] = useState<TypingDataType>();
-  const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(initialData);
+  const [typingdata, setTypingData] = useState<TypingDataType>(initialData);
+  const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
+    JSON.parse(localStorage.getItem("typingData") as string)
+  );
 
   return (
     <Routes>
@@ -39,7 +35,10 @@ const App: FC = () => {
           <Home
             problemNo={problemNo}
             setProblemNo={setProblemNo}
+            typingdata={typingdata}
+            setTypingData={setTypingData}
             typingdatas={typingdatas}
+            setTypingDatas={setTypingDatas}
           />
         }
       />

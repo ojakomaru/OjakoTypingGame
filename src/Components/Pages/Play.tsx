@@ -7,7 +7,7 @@ import Footer from "../atoms/Footer";
 import { PlayingProps } from "../../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
-  const { problemNo} = props;
+  const { problemNo } = props;
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const mainPlayingText = {
     problemNo: problemNo,
@@ -21,10 +21,11 @@ const Play: React.FC<PlayingProps> = (props) => {
   return (
     <>
       {/* ホーム画面部分 */}
-      <Container maxWidth="lg">
+      {/* <Container maxWidth="lg">
         <Header title="OjakoTypingGame" />
         <main>
           <MainDisplay
+            // {...props}
             problemNo={problemNo}
             text={mainPlayingText}
             isPlaying={isPlaying}
@@ -33,7 +34,7 @@ const Play: React.FC<PlayingProps> = (props) => {
           <Keyboard inputKey="k" />
         </main>
       </Container>
-      <Footer title="Footer" description="Ojako Typing App var.1.0.0" />
+      <Footer title="Footer" description="Ojako Typing App var.1.0.0" /> */}
     </>
   );
 };

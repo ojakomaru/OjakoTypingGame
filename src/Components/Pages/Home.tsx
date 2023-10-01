@@ -6,16 +6,13 @@ import TypingLists from "../organisms/TypingLists";
 import Footer from "../atoms/Footer";
 import { type HomeProps } from "../../@types/ModuleTypes";
 
-export default function Home({ problemNo, setProblemNo, typingdatas }: HomeProps) {
+export default function Home(props: HomeProps) {
+  const {
+    problemNo,
+    setProblemNo,
+    typingdatas,
+  } = props;
   const [isHome, setIsHome] = useState<boolean>(true);
-
-  // メイン画面にタイピングデータを渡す
-  useEffect(() => {
-    const rnd = Math.floor(Math.random() * typingdatas!.length);
-    setProblemNo(typingdatas![rnd].id);
-    let typingdata = typingdatas!.find((obj) => obj.id === typingdatas![rnd].id);
-    // console.log(problemNo);
-  }, []);
 
   let mainSelectProblem = {
     title: "選択したタイピングタイトル",
@@ -29,6 +26,7 @@ export default function Home({ problemNo, setProblemNo, typingdatas }: HomeProps
       header={<Header title="OjakoTypingGame" />}
       maindisplay={
         <MainDisplay
+          {...props}
           problemNo={problemNo}
           text={mainSelectProblem}
           isHome={isHome}
