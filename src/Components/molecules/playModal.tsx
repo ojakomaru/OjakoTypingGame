@@ -12,14 +12,14 @@ export default function PlayModal({ setIsPlaying }: PlayModalProps) {
   // ゲームをスタートする処理
   window.document.onkeydown = function (event) {
     if (event.key === "Enter" || event.key === " ") {
-      setIsPlaying(true);
+      setIsPlaying!(true);
     }
   };
   // HTML
   return (
     <Grid container justifyContent="center">
       <Box
-        component="p"
+        component="div"
         sx={{
           position: "relative",
           p: { xs: 3, md: 6 },

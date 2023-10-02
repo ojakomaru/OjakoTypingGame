@@ -8,19 +8,29 @@ import { type TypingDataType } from "../../@types/ModuleTypes";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;
-  setIsHome: (a: boolean) => void;
+  setIsHome?: (a: boolean) => void;
 };
 
 const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
   const { title, problems } = displayData;
   const navigate = useNavigate();
   const GameStart = () => {
-    setIsHome(false);
+    setIsHome!(false);
     navigate("/play");
   };
 
   return (
-    <Grid container justifyContent="center" sx={{ mb: 2, pb: 2 }}>
+    <Grid
+      container
+      justifyContent="center"
+      sx={{
+        mb: 2,
+        pb: 2,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Box
         sx={{
           position: "relative",

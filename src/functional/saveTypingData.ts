@@ -3,6 +3,7 @@ import Analyzer from "./Analyzer";
 
 const saveTypingData = (typingdata: TypingDataType): void => {
   let word: string = "";
+  let typingDataList: TypingDataType[] = [];
   typingdata.problems.map(async (problem) => {
     //APIで変換したいテキスト
     word = problem.text;
@@ -13,18 +14,15 @@ const saveTypingData = (typingdata: TypingDataType): void => {
     // 半角文字列1234567890!@#$%^&*();:'"\|.<>[]?.,_=+~
     // 全角文字列１２３４５６７８９０！＠＃＄％＾＆＊（）：；’”￥｜？・＜＞「」＿＝＋〜
   });
-  console.log(typingdata);
 
   // 登録されたデータが有れば取得
-  // if (localStorage.hasOwnProperty("typingData")) {
-  //   let typingDataList: InputType[] = JSON.parse(
-  //     localStorage.getItem("typingData") as string
-  //   );
-  //   // 配列の結合
-  //   // typingDataList.push(data);
-  //   // console.log(typingDataList);
-  localStorage.setItem("typingData", JSON.stringify(typingdata));
-  // }
+  if (localStorage.hasOwnProperty("typingData")) {
+    typingDataList = JSON.parse(localStorage.getItem("typingData") as string);
+  }
+  // 配列の結合
+  typingDataList.push(typingdata);
+  localStorage.setItem("typingData", JSON.stringify(typingDataList));
+  console.log(typingDataList);
 };
 
 export default saveTypingData;

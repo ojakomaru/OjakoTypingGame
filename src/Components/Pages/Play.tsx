@@ -7,17 +7,17 @@ import Footer from "../atoms/Footer";
 import { PlayingProps } from "../../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <>
       <Container maxWidth="lg">
         <Header title="OjakoTypingGame" />
         <main>
-          {/* <MainDisplay
+          <MainDisplay
             {...props}
-            displayMode={displayMode}
-            setDisplayMode={setDisplayMode}
-          /> */}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
           <Keyboard inputKey="k" />
         </main>
       </Container>
