@@ -23,7 +23,7 @@ export default function MainDiaplayLayout({
           <img
             style={{ display: "none" }}
             src="https://source.unsplash.com/random?wallpapers"
-            alt="ゲームタイトル画面"
+            alt="https://source.unsplash.com/random?wallpapers"
           />
         }
         <Box

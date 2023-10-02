@@ -50,7 +50,15 @@ function MainDisplayCore(
 
   return (
     <div ref={ref}>
-      <MainDiaplayLayout>{SwitchMode()}</MainDiaplayLayout>
+      <MainDiaplayLayout >
+        {isHome ? ( //ホーム画面の場合
+          <HomeDisplay displayData={typingdata} />
+        ) : isPlaying ? ( // プレイ画面の場合
+          <PlayingGame />
+        ) : (
+          <PlayModal setIsPlaying={setIsPlaying} />
+        )}
+      </MainDiaplayLayout>
     </div>
   );
 }

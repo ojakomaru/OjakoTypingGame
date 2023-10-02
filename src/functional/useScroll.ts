@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useRef } from "react";
+import { ReactElement, RefObject, useCallback, useRef } from "react";
 
 export const useScroll = (): [RefObject<HTMLDivElement>, () => void] => {
   const ref = useRef<HTMLDivElement>(null);
