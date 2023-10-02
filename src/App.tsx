@@ -41,7 +41,14 @@ const App: FC = () => {
       />
       <Route
         path="/play"
-        element={<Play typingdata={typingdata} />}
+        element={
+          <Play
+            typingdata={typingdata}
+            setTypingData={setTypingData}
+            typingdatas={typingdatas}
+            setTypingDatas={setTypingDatas}
+          />
+        }
       />
       <Route path="/addtyping" element={<AddTyping />} />
       {/* <Route path="/score" element={<Score />} />

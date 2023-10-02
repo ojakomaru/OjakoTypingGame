@@ -4,26 +4,23 @@ import PlayingGame from "../../TypingPlay/PlayingGame";
 import HomeDisplay from "../molecules/homeDisplay";
 import MainDiaplayLayout from "../templates/MainDiaplayLayout";
 import Home from "../Pages/Home";
-import { Ref, RefObject, forwardRef, useEffect } from "react";
+import { FC, Ref, RefObject, forwardRef, useEffect } from "react";
 
 type G_Props = React.ComponentPropsWithRef<typeof Home>;
 type MainFeaturedPostProps = {
-  ref: RefObject<HTMLDivElement>;
-  isHome?: boolean;
-  setIsHome?: (a: boolean) => void;
+  ref?: RefObject<HTMLDivElement>;
+  ishome: boolean;
+  setIsHome: (a: boolean) => void;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
 } & G_Props;
 
-function MainDisplayChild(props: MainFeaturedPostProps, ref: Ref<HTMLDivElement>) {
-  const {
-    isPlaying = false,
-    setIsPlaying,
-    isHome,
-    typingdata,
-    setTypingData,
-    typingdatas,
-  } = props;
+function MainDisplayCore(
+  props: MainFeaturedPostProps,
+  ref: Ref<HTMLDivElement>
+) {
+  const { ishome, setIsHome, isPlaying, setIsPlaying, typingdata, setTypingData, typingdatas } = props;
+
   // メイン画面にタイピングデータを渡す
   useEffect(() => {
     if (typingdatas) {
@@ -33,20 +30,30 @@ function MainDisplayChild(props: MainFeaturedPostProps, ref: Ref<HTMLDivElement>
     }
   }, []);
 
+  // 画面のモードによって内容を出し分ける
+  const SwitchMode = () => {
+    switch (true) {
+      case ishome:
+        return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
+        break;
+      case isPlaying:
+        return <PlayModal setIsPlaying={setIsPlaying} />;
+        break;
+      case !isPlaying:
+        return <PlayingGame />;
+        break;
+      default:
+        return <></>;
+        break;
+    }
+  };
+
   return (
     <div ref={ref}>
-      <MainDiaplayLayout >
-        {isHome ? ( //ホーム画面の場合
-          <HomeDisplay displayData={typingdata} />
-        ) : isPlaying ? ( // プレイ画面の場合
-          <PlayingGame />
-        ) : (
-          <PlayModal setIsPlaying={setIsPlaying} />
-        )}
-      </MainDiaplayLayout>
+      <MainDiaplayLayout>{SwitchMode()}</MainDiaplayLayout>
     </div>
   );
 }
 export const MainDisplay = forwardRef<HTMLDivElement, MainFeaturedPostProps>(
-  MainDisplayChild
+  MainDisplayCore
 );

@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 
 export interface TypingDataType {
   id: string;
@@ -16,10 +15,14 @@ export interface HomeProps {
   setTypingData: (a: TypingDataType) => void;
   typingdatas: TypingDataType[];
   setTypingDatas: (a: TypingDataType[]) => void;
+
 }
 
 export interface PlayingProps {
-  typingdata?: TypingDataType
+  typingdata: TypingDataType;
+  setTypingData: (a: TypingDataType) => void;
+  typingdatas: TypingDataType[];
+  setTypingDatas: (a: TypingDataType[]) => void;
   // setting: {
   //   isROMAZI: boolean;
   //   isKANA: boolean;

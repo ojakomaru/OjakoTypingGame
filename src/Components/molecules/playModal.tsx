@@ -12,7 +12,7 @@ export default function PlayModal({ setIsPlaying }: PlayModalProps) {
   // ゲームをスタートする処理
   window.document.onkeydown = function (event) {
     if (event.key === "Enter" || event.key === " ") {
-      setIsPlaying?.(true); //undefinedでなければ実行する
+      setIsPlaying(true);
     }
   };
   // HTML

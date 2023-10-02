@@ -8,20 +8,14 @@ import { type HomeProps } from "../../@types/ModuleTypes";
 import { useScroll } from "../../functional/useScroll";
 
 export default function Home(props: HomeProps) {
-  const { typingdatas } = props;
-  const [isHome, setIsHome] = useState<boolean>(true);
+  const [ishome, setIsHome] = useState<boolean>(true);
   const [ref, moveTo] = useScroll();
 
   return (
     <HomeLayout
       header={<Header title="OjakoTypingGame" />}
       maindisplay={
-        <MainDisplay
-          {...props}
-          ref={ref}
-          isHome={isHome}
-          setIsHome={setIsHome}
-        />
+        <MainDisplay {...props} ref={ref} ishome setIsHome={setIsHome} />
       }
       typinglists={<TypingLists {...props} moveTo={moveTo} />}
       footer={

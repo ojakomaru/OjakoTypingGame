@@ -7,34 +7,21 @@ import Footer from "../atoms/Footer";
 import { PlayingProps } from "../../@types/ModuleTypes";
 
 const Play: React.FC<PlayingProps> = (props) => {
-  // const { problemNo } = props;
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const mainPlayingText = {
-    problemNo: "problemNo",
-    title: "タイピング課題のタイトル",
-    description:
-      "ここにタイピングする内容が表示され、新しい項目がどんどん更新される。",
-    image: "https://source.unsplash.com/random?wallpapers",
-    linkText: "Continue reading…",
-  };
-
+  const [isPlaying, setIsPlaying] = useState(true);
   return (
     <>
-      {/* ホーム画面部分 */}
-      {/* <Container maxWidth="lg">
+      <Container maxWidth="lg">
         <Header title="OjakoTypingGame" />
         <main>
-          <MainDisplay
-            // {...props}
-            problemNo={problemNo}
-            text={mainPlayingText}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-          />
+          {/* <MainDisplay
+            {...props}
+            displayMode={displayMode}
+            setDisplayMode={setDisplayMode}
+          /> */}
           <Keyboard inputKey="k" />
         </main>
       </Container>
-      <Footer title="Footer" description="Ojako Typing App var.1.0.0" /> */}
+      <Footer title="Footer" description="Ojako Typing App var.1.0.0" />
     </>
   );
 };
