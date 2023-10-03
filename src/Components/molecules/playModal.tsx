@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -10,12 +10,17 @@ interface PlayModalProps {
 }
 export default function PlayModal({ setIsPlaying }: PlayModalProps) {
   // ゲームをスタートする処理
-  window.document.onkeydown = function (event) {
-    if (event.key === "Enter" || event.key === " ") {
-      setIsPlaying!(true);
+  useEffect(() => {
+   window.document.onkeydown = function (event) {
+     if (event.key === "Enter" || event.key === " ") {
+       setIsPlaying!(true);
+     }
+   };
+    return () => {
+      window.document.onkeydown = null;
     }
-  };
-  // HTML
+  })
+
   return (
     <Grid container justifyContent="center">
       <Box

@@ -34,7 +34,6 @@ function MainDisplayCore(
     if (typingdatas) {
       const rnd = Math.floor(Math.random() * typingdatas.length);
       setTypingData(typingdatas[rnd]);
-      console.log(typingdata);
     }
   }, []);
 
@@ -43,7 +42,7 @@ function MainDisplayCore(
     if (ishome) {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
-      return <PlayingGame />;
+      return <PlayingGame typingdata={typingdata} />;
     } else {
       return <PlayModal setIsPlaying={setIsPlaying} />;
     }
