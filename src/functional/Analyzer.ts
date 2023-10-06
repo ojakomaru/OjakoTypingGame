@@ -1,6 +1,7 @@
 import Kuroshiro from "kuroshiro";
 import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
 
+
 /**
  * class Analyzer
  * 文字列変換ライブラリのKuroshiroのラッパークラス
@@ -14,6 +15,10 @@ class Analyzer {
     this.isInitialized = false;
   }
 
+  /**
+   * Analyzerの形態解析をセットして初期化します
+   * @returns 初期化したAnalyzerインスタンス
+   */
   private async init() {
     if (!this.isInitialized) {
       await this._instance.init(new KuromojiAnalyzer({ dictPath: "/dict" }));
@@ -24,7 +29,7 @@ class Analyzer {
 
   public async parse(term: string, to: string, mode: string) {
     const parser = await this.init();
-    const result = await parser.convert(term.replace(" ", ""), {
+    const result = await parser.convert(term, {
       to: to,
       mode: mode,
       romajiSystem: "nippon",
@@ -32,6 +37,11 @@ class Analyzer {
     return result;
   }
 
+  /**
+   * 文字列を受け取ってローマ字、ひらがな、ルビ振り済みマークアップを返します。
+   * @param term 変換する文字列
+   * @returns Object 変換結果を格納したオブジェクト
+   */
   public async getConvertString(term: string) {
     let convertString = {
       romaji: await this.parse(term, "romaji", "normal"),
