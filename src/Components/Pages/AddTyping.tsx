@@ -27,7 +27,7 @@ const AddTyping: React.FC = () => {
   const navigate = useNavigate();
   const id = uuidv4();
   const methods = useForm<TypingDataType>({
-    mode: "onBlur",
+    mode: "onChange",
     reValidateMode: "onBlur",
     // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
     defaultValues: {
@@ -43,8 +43,8 @@ const AddTyping: React.FC = () => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    methods.reset();
-    navigate("/");
+    // methods.reset();
+    // navigate("/");
   };
 
   // 5. form要素のonSubmitに1.で取得しているhandleSubmitを指定します */

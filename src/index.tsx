@@ -3,12 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import defaultTheme from "./themes/defaultTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import App from "./App";
 
-//デフォルトのテーマカラーなどを定義するために利用
-const defaultTheme = createTheme();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

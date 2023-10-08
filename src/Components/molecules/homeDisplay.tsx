@@ -16,7 +16,7 @@ const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
   const navigate = useNavigate();
   const GameStart = () => {
     setIsHome!(false);
-    navigate("/play");
+    navigate("/play", {state: displayData});
   };
 
   return (

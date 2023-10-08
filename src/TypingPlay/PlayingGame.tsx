@@ -36,97 +36,96 @@ const problemStyle = css`
       text-decoration: none;
     }
   }
-  .typo {
-    color: #f52727;
-  }
   .waiting-letters {
     color: #2d0303;
   }
   .typed-letters {
     color: #bcbbbb;
   }
+  .typo {
+    color: #f52727;
+  }
 `;
 
-export default function PlayingGame(props:PlayingGameProps) {
+export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata } = props;
   const navigate = useNavigate();
   const ref = useRef<HTMLParagraphElement>(null);
-  const [romajiText, setRomajiText] = useState<ReactNode>(typingdata.problems[0].furigana);
+  // 問題文の数
+  const [problemLength, setProblemLength] = useState(
+    typingdata.problems.length
+  );
+  // 問題文の中からランダムに初期値に設定
+  const rnd = Math.floor(Math.random() * problemLength);
+  const [romajiText, setRomajiText] = useState(typingdata.problems[rnd].romazi);
   const [position, setPosition] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
   // 問題文生成
 
-  // タイピング処理
-  // useEffect(() => {
-  //   document.onkeydown = function (event) {
-      let inputText = ref.current;
-      if (inputText) inputText!.innerHTML = typingdata.problems[0].furigana as string;
-      // inputText!.innerHTML = typingdata.problems[0].furigana as string;
-      console.log(inputText);
+  /* タイピング入力処理 */
+  useEffect(() => {
+    document.onkeydown = function (e) {
+      // スペースキーの挙動をキャンセル
+      if (e.code === "Space") e.preventDefault();
+      let inputText = ref.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
-      // if (event.key === "Escape") {
-      //   // ホーム画面とプレイ画面のフラグを変更
-      //   navigate("/");
-      // } else if (event.key === romajiText![position]) {
-        // スペースキーの挙動をキャンセル
-        // if (event.key === "Space") {event.preventDefault();}
+      if (e.key === "Escape") {
+        // ホーム画面とプレイ画面のフラグを変更
+        navigate("/");
+        // 正解時の処理
+      } else if (e.key.toUpperCase() === romajiText![position]) {
         // 正解時現在の文字を入力済みとする
-        // inputText[position].classList.add("typed-letters");
-        // inputText[position].classList.remove("current-letter");
+        inputText[position].classList.add("typed-letters");
+        inputText[position].classList.remove("current-letter");
         // まだ入力していない文字があるとき
-        // if (position <= romajiText!.length - 2) {
+        if (position <= romajiText!.length - 2) {
           // 次の位置へ移動
-          // inputText[position + 1].className = "current-letter";
-          // setPosition(position + 1);
-          //すべての文字を入力したとき
-        // } else {
-          // setJapaneseQuestionText(ProblemText[rnd].japanese);
-          // setPosition(0);
-          // setCheckText(ProblemText[rnd].text.split(""));
-          // inputText = document.getElementById("checkText")!.children;
-          // inputText[0].classList.add("current-letter");
-          // Array.from(inputText).map((char) => {
-          //   char.classList.remove("typed-letters");
-          //   char.classList.remove("typo");
-          //   char.classList.add("waiting-letters");
-          //   return null;
-          // });
-        // }
-      // } else {
-        // ミスした時の処理g
-        // if (event.key !== "Shift") {
-        //   // その位置で初めてのうち間違えであるとき
-        //   if (typo.indexOf(position) === -1) {
-        //     // うち間違えた位置の配列にその位置を追加
-        //     setTypo([...typo, position]);
-        //     // 打ち間違えた文字であることを示すclassを追加
-        //     // inputText[position].classList.add("typo");
-        //   }
-        // }
-  //     }
-  //   };
-  // });
+          inputText[position + 1].className = "current-letter";
+          setPosition(position + 1);
+          // すべての文字を入力したとき
+        } else {
+          inputText[0].classList.add("current-letter");
+          Array.from(inputText).map((char) => {
+            char.classList.remove("typed-letters");
+            char.classList.remove("typo");
+            char.classList.add("waiting-letters");
+            return null;
+          });
+        }
+
+        // ミスした時の処理
+      } else {
+        if (e.key !== "Shift") {
+          // その位置で初めてのうち間違えであるとき
+          if (typo.indexOf(position) === -1) {
+            // うち間違えた位置の配列にその位置を追加
+            setTypo([...typo, position]);
+            // 打ち間違えた文字であることを示すclassを追加
+            inputText[position].classList.add("typo");
+          }
+        }
+      }
+    };
+  });
 
   // HTML
   return (
     <Box css={problemStyle}>
       <div className="gameboard">
-        <p id="questionText">{typingdata.problems[0].text}</p>
-        <p id="hiraganaText">{typingdata.problems[0].kana}</p>
+        <p id="questionText">{typingdata.problems[rnd].text}</p>
+        <p id="hiraganaText">{typingdata.problems[rnd].kana}</p>
         <p ref={ref} id="checkText" className="break-normal">
-          <span className="current-letter"></span>
-          {/* {romajiText!
+          <span className="current-letter">{romajiText![0]}</span>
+          {romajiText!
             .split("")
             .slice(1)
             .map((char: string, index: number) => (
               <span className="waiting-letters" key={index}>
                 {char}
               </span>
-            ))} */}
-            {/* {romajiText} */}
+            ))}
         </p>
       </div>
     </Box>
   );
-};
-
+}

@@ -29,14 +29,6 @@ function MainDisplayCore(
     typingdatas,
   } = props;
 
-  // メイン画面にタイピングデータを渡す
-  useEffect(() => {
-    if (typingdatas) {
-      const rnd = Math.floor(Math.random() * typingdatas.length);
-      setTypingData(typingdatas[rnd]);
-    }
-  }, []);
-
   // 画面のモードによって内容を出し分ける
   const SwitchMode = () => {
     if (ishome) {

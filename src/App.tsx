@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Pages/Home";
 import Play from "./Components/Pages/Play";
@@ -24,6 +24,13 @@ const App: FC = () => {
   const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
     JSON.parse(localStorage.getItem("typingData") as string)
   );
+  // メイン画面にタイピングデータを渡す
+  useEffect(() => {
+    if (typingdatas) {
+      const rnd = Math.floor(Math.random() * typingdatas.length);
+      setTypingData(typingdatas[rnd]);
+    }
+  }, []);
 
   return (
     <Routes>

@@ -15,7 +15,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
   (async () => {
     for (let i = 0; i < typingdata.problems.length; i++) {
       //APIで変換したいテキスト
-      word = typingdata.problems[i].text.trim().replace(/\s+/g, " ");
+      word = typingdata.problems[i].text.trim().replace(/\s/g, " ");
       let convertString = await Analyzer.getConvertString(word);
       typingdata.problems[i].kana = convertString.hiragana; // かな変換
       typingdata.problems[i].romazi = romanizer.romanize(
@@ -30,7 +30,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       let olddata = JSON.parse(localStorage.getItem("typingData") as string);
       typingDataList = [...olddata, typingdata];
     }
-    localStorage.setItem("typingData", JSON.stringify(typingDataList));
+    // localStorage.setItem("typingData", JSON.stringify(typingDataList));
     console.log(typingDataList);
   })();
 };
