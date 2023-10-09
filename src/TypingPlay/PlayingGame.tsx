@@ -50,24 +50,47 @@ const problemStyle = css`
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata } = props;
   const navigate = useNavigate();
-  const ref = useRef<HTMLParagraphElement>(null);
+  const romajiRef = useRef<HTMLParagraphElement>(null);
+  const questionRef = useRef<HTMLParagraphElement>(null);
+  const kanaRef = useRef<HTMLParagraphElement>(null);
+  // 問題をコピーしておく（破壊的な配列操作を行うため）
+  const cpProblems = structuredClone(typingdata.problems);
+  const [problems, setProblems] = useState(cpProblems);
   // 問題文の数
-  const [problemLength, setProblemLength] = useState(
-    typingdata.problems.length
-  );
-  // 問題文の中からランダムに初期値に設定
-  const rnd = Math.floor(Math.random() * problemLength);
-  const [romajiText, setRomajiText] = useState(typingdata.problems[rnd].romazi);
-  const [position, setPosition] = useState(0);
+  const [problemLength, setProblemLength] = useState(problems.length);
+  const [romajiText, setRomajiText] = useState<string | undefined>("");
+  const [position, setPosition] = useState<number>(0);
   const [typo, setTypo] = useState(new Array(0));
+
   // 問題文生成
+  useEffect(() => {
+    reloadProblem();
+  }, []);
+  const reloadProblem = (): boolean => {
+    if (problems.length == 0) return false;
+    // 初期表示はランダムにする
+    if (problemLength === problems.length) {
+      const rnd = Math.floor(Math.random() * (problemLength - 1));
+      const problem = problems.splice(rnd, 1);
+      setRomajiText(problem[0].romazi);
+      questionRef.current!.innerText = problem[0].text;
+      kanaRef.current!.innerText = problem[0].kana as string;
+    } else {
+      const problem = problems.splice(0, 1);
+      setRomajiText(problem[0].romazi);
+      questionRef.current!.innerText = problem[0].text;
+      kanaRef.current!.innerText = problem[0].kana as string;
+    }
+    setProblems(problems);
+    return true;
+  };
 
   /* タイピング入力処理 */
   useEffect(() => {
     document.onkeydown = function (e) {
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
-      let inputText = ref.current!.children;
+      let inputText = romajiRef.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
       if (e.key === "Escape") {
         // ホーム画面とプレイ画面のフラグを変更
@@ -84,13 +107,14 @@ export default function PlayingGame(props: PlayingGameProps) {
           setPosition(position + 1);
           // すべての文字を入力したとき
         } else {
+          setPosition(0);
           inputText[0].classList.add("current-letter");
-          Array.from(inputText).map((char) => {
+          Array.from(inputText).forEach((char) => {
             char.classList.remove("typed-letters");
             char.classList.remove("typo");
             char.classList.add("waiting-letters");
-            return null;
           });
+          let isProblem = reloadProblem();
         }
 
         // ミスした時の処理
@@ -112,9 +136,9 @@ export default function PlayingGame(props: PlayingGameProps) {
   return (
     <Box css={problemStyle}>
       <div className="gameboard">
-        <p id="questionText">{typingdata.problems[rnd].text}</p>
-        <p id="hiraganaText">{typingdata.problems[rnd].kana}</p>
-        <p ref={ref} id="checkText" className="break-normal">
+        <p ref={questionRef} id="questionText"></p>
+        <p ref={kanaRef} id="hiraganaText"></p>
+        <p ref={romajiRef} id="checkText" className="break-normal">
           <span className="current-letter">{romajiText![0]}</span>
           {romajiText!
             .split("")
