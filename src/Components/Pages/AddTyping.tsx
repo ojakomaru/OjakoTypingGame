@@ -43,8 +43,8 @@ const AddTyping: React.FC = () => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    // methods.reset();
-    // navigate("/");
+    methods.reset();
+    navigate("/");
   };
 
   // 5. form要素のonSubmitに1.で取得しているhandleSubmitを指定します */

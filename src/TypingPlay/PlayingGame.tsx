@@ -115,6 +115,7 @@ export default function PlayingGame(props: PlayingGameProps) {
             char.classList.add("waiting-letters");
           });
           let isProblem = reloadProblem();
+          if (!isProblem) console.log("GameSet!!");
         }
 
         // ミスした時の処理
@@ -129,6 +130,9 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
         }
       }
+    };
+    return () => {
+      window.document.onkeydown = null;
     };
   });
 
