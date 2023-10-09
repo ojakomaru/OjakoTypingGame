@@ -1,10 +1,13 @@
 import React from "react";
-import { useState, useEffect, useRef, ReactNode } from "react";
+import { useState, useEffect, useRef } from "react";
 import { type TypingDataType } from "../@types/ModuleTypes";
+import { RomajiText } from "../Components/molecules/RomajiText";
+import { HiraganaText } from "../Components/atoms/HiraganaText";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { QuestionText } from "../Components/atoms/QuestionText";
 
 // 引数の型指定
 interface PlayingGameProps {
@@ -23,27 +26,11 @@ const problemStyle = css`
   .gameboard {
     color: #2d0303;
     width: 80%;
-    background-color: rgba(250, 250, 240, 0.8);
+    background-color: rgba(255, 255, 255, 0.95);
     font-size: calc(14px + 2vmin);
-  }
-  .current-letter {
-    color: #2d0303;
-    text-decoration: underline;
-    animation: blink 1s linear infinite;
-  }
-  @keyframes blink {
-    100% {
-      text-decoration: none;
-    }
-  }
-  .waiting-letters {
-    color: #2d0303;
-  }
-  .typed-letters {
-    color: #bcbbbb;
-  }
-  .typo {
-    color: #f52727;
+    border: 2px solid #000;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
   }
 `;
 
@@ -140,19 +127,10 @@ export default function PlayingGame(props: PlayingGameProps) {
   return (
     <Box css={problemStyle}>
       <div className="gameboard">
-        <p ref={questionRef} id="questionText"></p>
-        <p ref={kanaRef} id="hiraganaText"></p>
-        <p ref={romajiRef} id="checkText" className="break-normal">
-          <span className="current-letter">{romajiText![0]}</span>
-          {romajiText!
-            .split("")
-            .slice(1)
-            .map((char: string, index: number) => (
-              <span className="waiting-letters" key={index}>
-                {char}
-              </span>
-            ))}
-        </p>
+        <HiraganaText ref={kanaRef} />
+        <QuestionText ref={questionRef} />
+        {/* <p ref={questionRef} id="questionText"></p> */}
+        <RomajiText ref={romajiRef} romaji={romajiText} />
       </div>
     </Box>
   );

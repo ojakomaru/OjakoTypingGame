@@ -1,10 +1,7 @@
 import { Container, Paper, Box } from "@mui/material";
 import React, { ReactNode } from "react";
 
-export default function MainDiaplayLayout({
-  children,
-}: DiaplayLayoutProps) {
-
+export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayoutProps) {
   return (
     <Container maxWidth="md">
       <Paper
@@ -34,6 +31,7 @@ export default function MainDiaplayLayout({
             right: 0,
             left: 0,
             backgroundColor: "rgba(0,0,0,.3)",
+            display: isPlaying ? "none" : "inherit"
           }}
         />
         {children}
@@ -44,4 +42,5 @@ export default function MainDiaplayLayout({
 
 type DiaplayLayoutProps = {
   children: ReactNode;
+  isPlaying: boolean;
 };

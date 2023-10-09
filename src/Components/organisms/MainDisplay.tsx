@@ -4,7 +4,7 @@ import PlayingGame from "../../TypingPlay/PlayingGame";
 import HomeDisplay from "../molecules/homeDisplay";
 import MainDiaplayLayout from "../templates/MainDiaplayLayout";
 import Home from "../Pages/Home";
-import { FC, Ref, RefObject, forwardRef, useEffect } from "react";
+import { Ref, RefObject, forwardRef } from "react";
 
 type G_Props = React.ComponentPropsWithRef<typeof Home>;
 type MainFeaturedPostProps = {
@@ -25,8 +25,6 @@ function MainDisplayCore(
     isPlaying = false,
     setIsPlaying,
     typingdata,
-    setTypingData,
-    typingdatas,
   } = props;
 
   // 画面のモードによって内容を出し分ける
@@ -42,7 +40,7 @@ function MainDisplayCore(
 
   return (
     <div ref={ref}>
-      <MainDiaplayLayout>{SwitchMode()}</MainDiaplayLayout>
+      <MainDiaplayLayout isPlaying={isPlaying} >{SwitchMode()}</MainDiaplayLayout>
     </div>
   );
 }

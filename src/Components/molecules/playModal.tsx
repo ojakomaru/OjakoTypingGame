@@ -11,15 +11,16 @@ interface PlayModalProps {
 export default function PlayModal({ setIsPlaying }: PlayModalProps) {
   // ゲームをスタートする処理
   useEffect(() => {
-   window.document.onkeydown = function (event) {
-     if (event.key === "Enter" || event.key === " ") {
-       setIsPlaying!(true);
-     }
-   };
+    window.document.onkeydown = function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        setIsPlaying!(true);
+      }
+    };
     return () => {
       window.document.onkeydown = null;
-    }
-  })
+    };
+  });
 
   return (
     <Grid container justifyContent="center">
