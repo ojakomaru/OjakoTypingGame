@@ -14,6 +14,7 @@ const StyleRomajiText = styled(Paragraph)`
   .current-letter {
     color: #2d0303;
     text-decoration: underline;
+    font-weight: bold;
     animation: blink 1s linear infinite;
   }
   @keyframes blink {

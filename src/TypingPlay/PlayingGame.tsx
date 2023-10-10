@@ -16,8 +16,9 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
   const cpProblems = structuredClone(typingdata.problems);
   const [problems, setProblems] = useState(cpProblems);
   // 問題文の数
-  const [problemLength, setProblemLength] = useState(problems.length);
+  const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string | undefined>("");
+  const [kanaText, setKanaText] = useState<string[] | undefined>([]);
   const [position, setPosition] = useState<number>(0);
   const [typo, setTypo] = useState(new Array(0));
 
@@ -32,13 +33,13 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
       const rnd = Math.floor(Math.random() * (problemLength - 1));
       const problem = problems.splice(rnd, 1);
       setRomajiText(problem[0].romazi);
+      setKanaText(problem[0].kana?.split(""));
       questionRef.current!.innerText = problem[0].text;
-      kanaRef.current!.innerText = problem[0].kana as string;
     } else {
       const problem = problems.splice(0, 1);
       setRomajiText(problem[0].romazi);
+      setKanaText(problem[0].kana?.split(""));
       questionRef.current!.innerText = problem[0].text;
-      kanaRef.current!.innerText = problem[0].kana as string;
     }
     setProblems(problems);
     return true;
@@ -98,7 +99,7 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
   // HTML
   return (
     <GameBoard>
-      <HiraganaText ref={kanaRef} />
+      <HiraganaText ref={kanaRef} kanaText={kanaText} />
       <QuestionText ref={questionRef} />
       <RomajiText ref={romajiRef} romaji={romajiText} />
     </GameBoard>

@@ -6,6 +6,8 @@ export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayout
     <Container maxWidth="md">
       <Paper
         sx={{
+          display: "flex",
+          alignItems: "center",
           position: "relative",
           backgroundColor: "grey.800",
           color: "#fff",

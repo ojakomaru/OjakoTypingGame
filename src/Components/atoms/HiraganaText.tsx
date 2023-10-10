@@ -1,9 +1,10 @@
-import React, { Ref, RefObject, forwardRef } from "react";
+import React, { Ref, RefObject, forwardRef, useState } from "react";
 import styled from "styled-components";
 import Paragraph from "../atoms/Paragraph";
 
 type HiraganaTextProps = {
   ref: RefObject<HTMLParagraphElement>;
+  kanaText: string[] | undefined;
   className?: string;
 };
 
@@ -12,13 +13,7 @@ const StyleHiraganaText = styled(Paragraph)`
   color: #2d0303;
   .current-letter {
     color: #2d0303;
-    text-decoration: underline;
-    animation: blink 1s linear infinite;
-  }
-  @keyframes blink {
-    100% {
-      text-decoration: none;
-    }
+    font-weight: bold;
   }
   .waiting-letters {
     color: #2d0303;
@@ -26,18 +21,19 @@ const StyleHiraganaText = styled(Paragraph)`
   .typed-letters {
     color: #999;
   }
-  .typo {
-    color: #f52727;
-  }
 `;
 
 function HiraganaTextCore(
   props: HiraganaTextProps,
   ref: Ref<HTMLParagraphElement>
 ) {
-  const { className } = props;
+  const { className, kanaText } = props;
+  const [correctText, setCorrectText] = useState("");
   return (
-    <StyleHiraganaText ref={ref} id="hiraganaText" className={className} />
+    <StyleHiraganaText ref={ref} id="hiraganaText" className={className}>
+      <span className="current-letter">{correctText}</span>
+      {kanaText}
+    </StyleHiraganaText>
   );
 }
 export const HiraganaText = forwardRef<HTMLParagraphElement, HiraganaTextProps>(
