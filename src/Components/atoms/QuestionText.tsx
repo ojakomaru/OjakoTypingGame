@@ -20,8 +20,7 @@ function QuestionTextCore(
 ) {
   const { className } = props;
   return (
-    <StyleQuestionText ref={ref} id="questionText" className={className}>
-    </StyleQuestionText>
+    <StyleQuestionText ref={ref} id="questionText" className={className} />
   );
 }
 export const QuestionText = forwardRef<HTMLParagraphElement, QuestionTextProps>(

@@ -37,17 +37,7 @@ function HiraganaTextCore(
 ) {
   const { className } = props;
   return (
-    <StyleHiraganaText ref={ref} id="hiraganaText" className={className}>
-      {/* <span className="current-letter">{romaji![0]}</span>
-      {romaji!
-        .split("")
-        .slice(1)
-        .map((char: string, index: number) => (
-          <span className="waiting-letters" key={index}>
-            {char}
-          </span>
-        ))} */}
-    </StyleHiraganaText>
+    <StyleHiraganaText ref={ref} id="hiraganaText" className={className} />
   );
 }
 export const HiraganaText = forwardRef<HTMLParagraphElement, HiraganaTextProps>(

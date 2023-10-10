@@ -3,39 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import { type TypingDataType } from "../@types/ModuleTypes";
 import { RomajiText } from "../Components/molecules/RomajiText";
 import { HiraganaText } from "../Components/atoms/HiraganaText";
-import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { QuestionText } from "../Components/atoms/QuestionText";
+import GameBoard from "../Components/atoms/GameBoard";
 
-// 引数の型指定
-interface PlayingGameProps {
-  typingdata: TypingDataType;
-}
-
-// 問題文のスタイリング
-const problemStyle = css`
-  text-align: center;
-  min-height: 45vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: auto;
-  .gameboard {
-    color: #2d0303;
-    width: 80%;
-    background-color: rgba(255, 255, 255, 0.95);
-    font-size: calc(14px + 2vmin);
-    border: 2px solid #000;
-    border-top-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-  }
-`;
-
-export default function PlayingGame(props: PlayingGameProps) {
-  const { typingdata } = props;
+export default function PlayingGame({ typingdata }: { typingdata: TypingDataType }) {
   const navigate = useNavigate();
   const romajiRef = useRef<HTMLParagraphElement>(null);
   const questionRef = useRef<HTMLParagraphElement>(null);
@@ -125,13 +97,10 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // HTML
   return (
-    <Box css={problemStyle}>
-      <div className="gameboard">
-        <HiraganaText ref={kanaRef} />
-        <QuestionText ref={questionRef} />
-        {/* <p ref={questionRef} id="questionText"></p> */}
-        <RomajiText ref={romajiRef} romaji={romajiText} />
-      </div>
-    </Box>
+    <GameBoard>
+      <HiraganaText ref={kanaRef} />
+      <QuestionText ref={questionRef} />
+      <RomajiText ref={romajiRef} romaji={romajiText} />
+    </GameBoard>
   );
 }

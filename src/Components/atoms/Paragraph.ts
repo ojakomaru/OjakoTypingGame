@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Paragraph = styled.p.attrs((props) => ({
   ref: props.ref,
   className: props.className,
-  id: "checkText" || "questionText" || "hiraganaText" || "",
+  id: props.id,
 }))`
   font-size: 1rem;
   line-height: 1.3;
