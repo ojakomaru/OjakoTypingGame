@@ -6,8 +6,13 @@ import { HiraganaText } from "../Components/atoms/HiraganaText";
 import { useNavigate } from "react-router-dom";
 import { QuestionText } from "../Components/atoms/QuestionText";
 import GameBoard from "../Components/atoms/GameBoard";
+import Romanizer from "../functional/Romanizer";
 
-export default function PlayingGame({ typingdata }: { typingdata: TypingDataType }) {
+export default function PlayingGame({
+  typingdata,
+}: {
+  typingdata: TypingDataType;
+}) {
   const navigate = useNavigate();
   const romajiRef = useRef<HTMLParagraphElement>(null);
   const questionRef = useRef<HTMLParagraphElement>(null);
@@ -18,9 +23,15 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
   // 問題文の数
   const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string | undefined>("");
-  const [kanaText, setKanaText] = useState<string[] | undefined>([]);
+  const [kanaText, setKanaText] = useState<string | undefined>("");
   const [position, setPosition] = useState<number>(0);
+  const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
+  const romanizer = new Romanizer({
+    mapping: Romanizer.MAPPING_KUNREI,
+    chouon: Romanizer.CHOUON_ALPHABET,
+    upper: Romanizer.UPPER_ALL,
+  });
 
   // 問題文生成
   useEffect(() => {
@@ -33,12 +44,12 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
       const rnd = Math.floor(Math.random() * (problemLength - 1));
       const problem = problems.splice(rnd, 1);
       setRomajiText(problem[0].romazi);
-      setKanaText(problem[0].kana?.split(""));
+      setKanaText(problem[0].kana);
       questionRef.current!.innerText = problem[0].text;
     } else {
       const problem = problems.splice(0, 1);
       setRomajiText(problem[0].romazi);
-      setKanaText(problem[0].kana?.split(""));
+      setKanaText(problem[0].kana);
       questionRef.current!.innerText = problem[0].text;
     }
     setProblems(problems);
@@ -51,6 +62,7 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       let inputText = romajiRef.current!.children;
+      let hiragana = kanaRef.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
       if (e.key === "Escape") {
         // ホーム画面とプレイ画面のフラグを変更
@@ -60,6 +72,21 @@ export default function PlayingGame({ typingdata }: { typingdata: TypingDataType
         // 正解時現在の文字を入力済みとする
         inputText[position].classList.add("typed-letters");
         inputText[position].classList.remove("current-letter");
+
+        // ローマ字から平仮名を取得
+        if (
+          romanizer.isHiragana(
+            kanaText?.split(""),
+            kanaPos,
+            romajiText!,
+            position
+          )
+        ) {
+        setKanaPos(kanaPos - 1);
+
+        } 
+        setKanaPos(kanaPos + 1);
+
         // まだ入力していない文字があるとき
         if (position <= romajiText!.length - 2) {
           // 次の位置へ移動

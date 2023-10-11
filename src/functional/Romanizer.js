@@ -1,3 +1,5 @@
+import { romanMap, hiraTree } from "./stringMap";
+
 export default class Romanizer {
   static MAPPING_HEPBURN = "hepburn";
   static MAPPING_KUNREI = "kunrei";
@@ -20,200 +22,6 @@ export default class Romanizer {
   static OPTION_SET_KUNREI = {
     mapping: Romanizer.MAPPING_KUNREI,
     chouon: Romanizer.CHOUON_CIRCUMFLEX,
-  };
-
-  romanMap = {
-    あ: "a",
-    い: "i",
-    う: "u",
-    え: "e",
-    お: "o",
-    か: "ka",
-    き: "ki",
-    く: "ku",
-    け: "ke",
-    こ: "ko",
-    さ: "sa",
-    し: { hepburn: "shi", kunrei: "si" },
-    す: "su",
-    せ: "se",
-    そ: "so",
-    た: "ta",
-    ち: { hepburn: "chi", kunrei: "ti" },
-    つ: { hepburn: "tsu", kunrei: "tu" },
-    て: "te",
-    と: "to",
-    な: "na",
-    に: "ni",
-    ぬ: "nu",
-    ね: "ne",
-    の: "no",
-    は: "ha",
-    ひ: "hi",
-    ふ: { hepburn: "fu", kunrei: "hu" },
-    へ: "he",
-    ほ: "ho",
-    ま: "ma",
-    み: "mi",
-    む: "mu",
-    め: "me",
-    も: "mo",
-    や: "ya",
-    ゆ: "yu",
-    よ: "yo",
-    ら: "ra",
-    り: "ri",
-    る: "ru",
-    れ: "re",
-    ろ: "ro",
-    わ: "wa",
-    ゐ: "wi",
-    ゑ: "we",
-    を: { hepburn: "o", kunrei: "wo" },
-    ん: "n",
-    が: "ga",
-    ぎ: "gi",
-    ぐ: "gu",
-    げ: "ge",
-    ご: "go",
-    ざ: "za",
-    じ: { hepburn: "ji", kunrei: "zi" },
-    ず: "zu",
-    ぜ: "ze",
-    ぞ: "zo",
-    だ: "da",
-    ぢ: { hepburn: "ji", kunrei: "di" },
-    づ: { hepburn: "zu", kunrei: "du" },
-    で: "de",
-    ど: "do",
-    ば: "ba",
-    び: "bi",
-    ぶ: "bu",
-    べ: "be",
-    ぼ: "bo",
-    ぱ: "pa",
-    ぴ: "pi",
-    ぷ: "pu",
-    ぺ: "pe",
-    ぽ: "po",
-    きゃ: "kya",
-    きぃ: "kyi",
-    きゅ: "kyu",
-    きぇ: "kye",
-    きょ: "kyo",
-    くぁ: "qa",
-    くぃ: "qi",
-    くぇ: "qe",
-    くぉ: "qo",
-    くゃ: "qya",
-    くゅ: "qyu",
-    くょ: "qyo",
-    しゃ: { hepburn: "sha", kunrei: "sya" },
-    しぃ: "syi",
-    しゅ: { hepburn: "shu", kunrei: "syu" },
-    しぇ: "sye",
-    しょ: { hepburn: "sho", kunrei: "syo" },
-    ちゃ: { hepburn: "cha", kunrei: "tya" },
-    ちぃ: { hepburn: "chi", kunrei: "tyi" },
-    ちゅ: { hepburn: "chu", kunrei: "tyu" },
-    ちぇ: { hepburn: "che", kunrei: "tye" },
-    ちょ: { hepburn: "cho", kunrei: "tyo" },
-    てゃ: "tha",
-    てぃ: "thi",
-    てゅ: "thu",
-    てぇ: "the",
-    てょ: "tho",
-    ひゃ: "hya",
-    ひゅ: "hyu",
-    ひぇ: "hye",
-    ひょ: "hyo",
-    ふぁ: "fa",
-    ふぃ: "fi",
-    ふぇ: "fe",
-    ふぉ: "fo",
-    みゃ: "mya",
-    みゅ: "myu",
-    みぇ: "mye",
-    みょ: "myo",
-    ヴぁ: "va",
-    ヴぃ: "vi",
-    ヴぇ: "ve",
-    ヴぉ: "vo",
-    ぎゃ: "gya",
-    ぎゅ: "gyu",
-    ぎぇ: "gye",
-    ぎょ: "gyo",
-    じゃ: { hepburn: "ja", kunrei: "zya" },
-    じゅ: { hepburn: "ju", kunrei: "zyu" },
-    じぇ: "zye",
-    じょ: { hepburn: "jo", kunrei: "zyo" },
-    ぢゃ: { hepburn: "dya", kunrei: "zya" },
-    ぢゅ: { hepburn: "dyu", kunrei: "zya" },
-    ぢぇ: "dye",
-    ぢょ: { hepburn: "dyo", kunrei: "zya" },
-    びゃ: "bya",
-    びゅ: "byu",
-    びぇ: "bye",
-    びょ: "byo",
-    ぴゃ: "pya",
-    ぴゅ: "pyu",
-    ぴぇ: "pye",
-    ぴょ: "pyo",
-    りゃ: "rya",
-    りゅ: "ryu",
-    りぇ: "rye",
-    りょ: "ryo",
-    にゃ: "nya",
-    にゅ: "nyu",
-    にぇ: "nye",
-    にょ: "nyo",
-    ゔ: "bu",
-    "、": ",",
-    "，": ",",
-    "。": ".",
-    ー: "-",
-    "〜": "~",
-    "＿": "_",
-    "＝": "=",
-    "？": "?",
-    "！": "!",
-    "（": "(",
-    "）": ")",
-    "「": "[",
-    "」": "]",
-    "＜": "<",
-    "＞": ">",
-    "＃": "#",
-    "＄": "$",
-    "％": "%",
-    "＆": "&",
-    "＾": "^",
-    "＊": "*",
-    "＋": "+",
-    "＠": "@",
-    "：": ":",
-    "；": ";",
-    "／": "/",
-    "・": "/",
-    "’": "'",
-    "”": '"',
-    "￥": "\\",
-    "｜": "|",
-    "１": "1",
-    "２": "2",
-    "３": "3",
-    "４": "4",
-    "５": "5",
-    "６": "6",
-    "７": "7",
-    "８": "8",
-    "９": "9",
-    "０": "0",
-    ぁ: "a",
-    ぃ: "i",
-    ぅ: "u",
-    ぇ: "e",
-    ぉ: "o",
   };
 
   sutegana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ"];
@@ -270,6 +78,28 @@ export default class Romanizer {
     return this.upper(this.convertChouon(romanText));
   }
 
+  isHiragana(kana, k, roma, r) {
+    let result = "";
+    let tmp = "";
+    console.log(kana[k]);
+
+    if (
+      kana[k].match(/[\p{sc=Hiragana}ー]/u) ||
+      kana[k].match(/^\p{scx=Katakana}+$/u)
+    ) {
+      tmp = roma.substr(r - 1, 2);
+      console.log("tmp",tmp); // この文字が含まれているか判定する
+      const romanChar = this.getRomanChar(kana, k, tmp, roma);
+      console.log(romanChar);
+      // if (roma[r] in hiraTree) {
+      //   const next = hiraTree[roma[r]];
+
+      // }
+      return true;
+    } else {
+      return false;
+    }
+  }
   /**
    * 日本語の文字を取得する
    * 以下の条件に合致する場合は捨て仮名も含めた２文字を取得します。
@@ -285,7 +115,7 @@ export default class Romanizer {
   getChar(text, i) {
     if (this.isWithSutegana(text, i)) {
       const charWithSutegana = text.substr(i, 2);
-      return charWithSutegana in this.romanMap ? charWithSutegana : text[i];
+      return charWithSutegana in romanMap ? charWithSutegana : text[i];
     } else {
       return text[i];
     }
@@ -303,11 +133,11 @@ export default class Romanizer {
     let romanChar = char;
     if (char === "っ") {
       return "";
-    } else if (char in this.romanMap) {
-      if (typeof this.romanMap[char] === "object") {
-        romanChar = this.romanMap[char][this.mappingMode];
+    } else if (char in romanMap) {
+      if (typeof romanMap[char] === "object") {
+        romanChar = romanMap[char][this.mappingMode];
       } else {
-        romanChar = this.romanMap[char];
+        romanChar = romanMap[char];
       }
     }
 
