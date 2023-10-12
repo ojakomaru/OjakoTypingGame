@@ -1,4 +1,4 @@
-export const hiraTree = {
+export const tree = {
   "-": "ー",
   a: "あ",
   i: "い",
@@ -579,46 +579,3 @@ export const romanMap = {
     ぉ: "o",
   };
 
-export function romaToHira(roma) {
-  let result = "";
-  let tmp = "";
-  let index = 0;
-  let node = tree;
-  const len = roma.length;
-
-  const push = (char, toRoot = true) => {
-    result += char;
-    tmp = "";
-    node = toRoot ? tree : node;
-  };
-
-  while (index < len) {
-    const char = roma.charAt(index);
-    if (char.match(/[a-z-]/)) {
-      if (char in node) {
-        const next = node[char];
-        if (typeof next === "string") {
-          push(next);
-        } else {
-          tmp += roma.charAt(index);
-          node = next;
-        }
-        index++;
-        continue;
-      }
-      const prev = roma.charAt(index - 1);
-      if (prev && (prev === "n" || prev === char)) {
-        push(prev === "n" ? "ん" : "っ", false);
-      }
-      if (node !== tree && char in tree) {
-        push(tmp);
-        continue;
-      }
-    }
-    push(tmp + char);
-    index++;
-  }
-  tmp = tmp.replace(/n$/, "ん");
-  push(tmp);
-  return result;
-}

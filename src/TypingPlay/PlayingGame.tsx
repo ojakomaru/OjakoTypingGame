@@ -73,25 +73,27 @@ export default function PlayingGame({
         inputText[position].classList.add("typed-letters");
         inputText[position].classList.remove("current-letter");
 
-        // ローマ字から平仮名を取得
         if (
-          romanizer.isHiragana(
-            kanaText?.split(""),
-            kanaPos,
-            romajiText!,
-            position
-          )
+          kanaText![kanaPos].match(/[\p{sc=Hiragana}ー]/u) ||
+          kanaText![kanaPos].match(/^\p{scx=Katakana}+$/u)
         ) {
-        setKanaPos(kanaPos - 1);
+          setKanaPos(kanaPos - 1);
+          if (romanizer.isHiragana(kanaText![kanaPos], romajiText!, position)) {
+            // ローマ字から平仮名を取得
+          };
+        }
 
-        } 
-        setKanaPos(kanaPos + 1);
+
+
+        hiragana[kanaPos].classList.add("typed-letters");
+        hiragana[kanaPos].classList.remove("current-letter");
 
         // まだ入力していない文字があるとき
         if (position <= romajiText!.length - 2) {
           // 次の位置へ移動
           inputText[position + 1].className = "current-letter";
           setPosition(position + 1);
+          setKanaPos(kanaPos + 1);
           // すべての文字を入力したとき
         } else {
           setPosition(0);

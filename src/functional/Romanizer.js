@@ -1,4 +1,4 @@
-import { romanMap, hiraTree } from "./stringMap";
+import { romanMap, tree } from "./stringMap";
 
 export default class Romanizer {
   static MAPPING_HEPBURN = "hepburn";
@@ -78,27 +78,59 @@ export default class Romanizer {
     return this.upper(this.convertChouon(romanText));
   }
 
-  isHiragana(kana, k, roma, r) {
+  isHiragana(kana, roma, r) {
     let result = "";
     let tmp = "";
-    console.log(kana[k]);
 
-    if (
-      kana[k].match(/[\p{sc=Hiragana}ー]/u) ||
-      kana[k].match(/^\p{scx=Katakana}+$/u)
-    ) {
-      tmp = roma.substr(r - 1, 2);
-      console.log("tmp",tmp); // この文字が含まれているか判定する
-      const romanChar = this.getRomanChar(kana, k, tmp, roma);
-      console.log(romanChar);
-      // if (roma[r] in hiraTree) {
-      //   const next = hiraTree[roma[r]];
+    tmp = roma.substr(r - 1, 2);
+    console.log("tmp", tmp); // この文字が含まれているか判定する
+    result = this.romaToHira(tmp.toLowerCase());
+    console.log("kana", kana[k], "result", result);
+    return result == kana[k] ? true : false;
+  }
 
-      // }
-      return true;
-    } else {
-      return false;
+  romaToHira(roma) {
+    let result = "";
+    let tmp = "";
+    let index = 0;
+    let node = tree;
+    const len = roma.length;
+
+    const push = (char, toRoot = true) => {
+      result += char;
+      tmp = "";
+      node = toRoot ? tree : node;
+    };
+
+    while (index < len) {
+      const char = roma.charAt(index);
+      if (char.match(/[a-z-]/)) {
+        if (char in node) {
+          const next = node[char];
+          if (typeof next === "string") {
+            push(next);
+          } else {
+            tmp += roma.charAt(index);
+            node = next;
+          }
+          index++;
+          continue;
+        }
+        const prev = roma.charAt(index - 1);
+        if (prev && (prev === "n" || prev === char)) {
+          push(prev === "n" ? "ん" : "っ", false);
+        }
+        if (node !== tree && char in tree) {
+          push(tmp);
+          continue;
+        }
+      }
+      push(tmp + char);
+      index++;
     }
+    tmp = tmp.replace(/n$/, "ん");
+    push(tmp);
+    return result;
   }
   /**
    * 日本語の文字を取得する
