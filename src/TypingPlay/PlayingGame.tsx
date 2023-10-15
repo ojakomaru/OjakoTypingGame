@@ -80,7 +80,6 @@ export default function PlayingGame({
           setPosition(position + 1);
           hiragana[kanaPos].classList.add("typed-letters");
 
-          console.log("kana", kanaText![kanaPos]);
           let isKanaMove: number = romanizer.isKanaMove(
             kanaText![kanaPos],
             romajiText!,
@@ -103,6 +102,7 @@ export default function PlayingGame({
           // すべての文字を入力したとき
         } else {
           setPosition(0);
+          setKanaPos(0);
           inputText[0].classList.add("current-letter");
           Array.from(inputText).forEach((char) => {
             char.classList.remove("typed-letters");

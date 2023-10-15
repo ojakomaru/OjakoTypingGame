@@ -47,6 +47,10 @@ export default class Romanizer {
     },
   };
 
+  boin = ["a", "i", "u", "e", "o"];
+
+  youon = ["h", "y"];
+
   mappingMode = Romanizer.MAPPING_HEPBURN;
   chouonMode = Romanizer.CHOUON_MACRON;
   upperMode = Romanizer.UPPER_WORD_INITIAL;
@@ -78,8 +82,16 @@ export default class Romanizer {
     return this.upper(this.convertChouon(romanText));
   }
 
-  boin = ["a", "i", "u", "e", "o"];
-  youon = ["h", "y"];
+  /**
+   * 入力した文字から平仮名を何文字入力できたか判定しその移動量を返します
+   * @param {string} kana 現在入力中の平仮名
+   * @param {string} roma 問題文のローマ字テキスト
+   * @param {number} r 現在入力中のローマ字の位置
+   * @returns {number} それぞれのパターンで以下の戻り値になる
+   *                   2: 拗音を含む文字を入力完了
+   *                   1: 通常のローマ字を入力完了またはアルファベットor記号の時
+   *                   0: 現在の文字が入力途中またはローマ字として成立していない
+   */
   isKanaMove(kana, roma, r) {
     let result = "";
     let tmp = "";
@@ -118,6 +130,12 @@ export default class Romanizer {
     return isKanaPos;
   }
 
+  /**
+   * ローマ字から平仮名へ変換する
+   * 何文字でも可能
+   * @param {string} roma ローマ字の文字列
+   * @returns {string} 平仮名に変換後の文字列
+   */
   romaToHira(roma) {
     let result = "";
     let tmp = "";
