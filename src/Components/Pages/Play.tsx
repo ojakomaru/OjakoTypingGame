@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 import Header from "../molecules/Header";
 import { MainDisplay } from "../organisms/MainDisplay";
 import Footer from "../atoms/Footer";
-import { PlayingProps } from "../../@types/ModuleTypes";
+import { PlayingProps } from "../../@types";
 import { useLocation } from "react-router-dom";
 
 const Play: React.FC<PlayingProps> = (props) => {

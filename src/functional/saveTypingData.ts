@@ -1,4 +1,4 @@
-import { type TypingDataType } from "../@types/ModuleTypes";
+import { type TypingDataType } from "../@types";
 import Analyzer from "./Analyzer";
 import Romanizer from "./Romanizer";
 

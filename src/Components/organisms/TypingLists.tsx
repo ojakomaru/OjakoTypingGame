@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import Home from "../Pages/Home";
-import { TypingDataType } from "../../@types/ModuleTypes";
+import { TypingDataType } from "../../@types";
 type G_Props = React.ComponentPropsWithRef<typeof Home>;
 type TypingListProps = {
   moveTo: () => void;

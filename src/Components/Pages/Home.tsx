@@ -4,7 +4,7 @@ import Header from "../molecules/Header";
 import {MainDisplay} from "../organisms/MainDisplay";
 import TypingLists from "../organisms/TypingLists";
 import Footer from "../atoms/Footer";
-import { type HomeProps } from "../../@types/ModuleTypes";
+import { type HomeProps } from "../../@types/";
 import { useScroll } from "../../functional/useScroll";
 
 export default function Home(props: HomeProps) {

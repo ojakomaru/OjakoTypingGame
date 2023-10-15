@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Components/Pages/Home";
 import Play from "./Components/Pages/Play";
 import AddTyping from "./Components/Pages/AddTyping";
-import { type TypingDataType } from "./@types/ModuleTypes";
+import { type TypingDataType } from "./@types";
 
 let initialData: TypingDataType = {
   id: "1",

@@ -29,6 +29,8 @@ root.render(
 // npm i markdown-to-js;
 // 同階層にglobal.d.tsを作成し「declare module "*.md";」を追記
 //  npm install react-router-dom
+// kuroshiroライブラリと依存関係の解決
+// Analyzerの辞書ファイルのローカル化
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

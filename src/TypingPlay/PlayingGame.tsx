@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { type TypingDataType } from "../@types/ModuleTypes";
+import { type TypingDataType } from "../@types";
 import { RomajiText } from "../Components/molecules/RomajiText";
 import { HiraganaText } from "../Components/atoms/HiraganaText";
 import { useNavigate } from "react-router-dom";

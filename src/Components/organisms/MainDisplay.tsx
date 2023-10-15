@@ -1,4 +1,4 @@
-import { HomeDisplayProps } from "../../@types/ModuleTypes";
+
 import PlayModal from "../molecules/playModal";
 import PlayingGame from "../../TypingPlay/PlayingGame";
 import HomeDisplay from "../molecules/homeDisplay";
