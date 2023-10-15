@@ -73,27 +73,33 @@ export default function PlayingGame({
         inputText[position].classList.add("typed-letters");
         inputText[position].classList.remove("current-letter");
 
-        if (
-          kanaText![kanaPos].match(/[\p{sc=Hiragana}ー]/u) ||
-          kanaText![kanaPos].match(/^\p{scx=Katakana}+$/u)
-        ) {
-          setKanaPos(kanaPos - 1);
-          if (romanizer.isHiragana(kanaText![kanaPos], romajiText!, position)) {
-            // ローマ字から平仮名を取得
-          };
-        }
-
-
-
-        hiragana[kanaPos].classList.add("typed-letters");
-        hiragana[kanaPos].classList.remove("current-letter");
-
         // まだ入力していない文字があるとき
         if (position <= romajiText!.length - 2) {
           // 次の位置へ移動
           inputText[position + 1].className = "current-letter";
           setPosition(position + 1);
-          setKanaPos(kanaPos + 1);
+          hiragana[kanaPos].classList.add("typed-letters");
+
+          console.log("kana", kanaText![kanaPos]);
+          let isKanaMove: number = romanizer.isKanaMove(
+            kanaText![kanaPos],
+            romajiText!,
+            position
+          );
+          switch (isKanaMove) {
+            case 2:
+              hiragana[kanaPos].classList.add("typed-letters");
+              hiragana[kanaPos + 1].classList.add("typed-letters");
+              setKanaPos(kanaPos + isKanaMove);
+              break;
+            case 1:
+              hiragana[kanaPos].classList.add("typed-letters");
+              setKanaPos(kanaPos + isKanaMove);
+              break;
+            case 0:
+              hiragana[kanaPos].classList.remove("typed-letters");
+              break;
+          }
           // すべての文字を入力したとき
         } else {
           setPosition(0);
@@ -103,6 +109,9 @@ export default function PlayingGame({
             char.classList.remove("typo");
             char.classList.add("waiting-letters");
           });
+          Array.from(hiragana).forEach((char) =>
+            char.classList.remove("typed-letters")
+          );
           let isProblem = reloadProblem();
           if (!isProblem) console.log("GameSet!!");
         }

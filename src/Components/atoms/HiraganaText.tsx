@@ -27,10 +27,10 @@ function HiraganaTextCore(
   const { className, kanaText } = props;
   return (
     <StyleHiraganaText ref={ref} id="hiraganaText" className={className}>
-      <span className="current-letter">{kanaText![0]}</span>
+      {/* <span className="current-letter">{kanaText![0]}</span> */}
       {kanaText!
         .split("")
-        .slice(1)
+        .slice(0)
         .map((char: string, index: number) => (
           <span className="waiting-letters" key={index}>
             {char}

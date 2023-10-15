@@ -78,15 +78,44 @@ export default class Romanizer {
     return this.upper(this.convertChouon(romanText));
   }
 
-  isHiragana(kana, roma, r) {
+  boin = ["a", "i", "u", "e", "o"];
+  youon = ["h", "y"];
+  isKanaMove(kana, roma, r) {
     let result = "";
     let tmp = "";
+    let isKanaPos = 1;
 
-    tmp = roma.substr(r - 1, 2);
-    console.log("tmp", tmp); // この文字が含まれているか判定する
-    result = this.romaToHira(tmp.toLowerCase());
-    console.log("kana", kana[k], "result", result);
-    return result == kana[k] ? true : false;
+    if (kana.match(/^[ぁ-ん]+$/) || kana.match(/^[ァ-ヶ]+$/)) {
+      // 現在の文字が母音であるか
+      if (this.boin.includes(roma[r].toLowerCase())) {
+        // 一つ前の文字が拗音かどうか
+        if (this.youon.includes(roma.substr(r - 1, 1).toLowerCase())) {
+          tmp = roma.substr(r - 2, 3);
+          isKanaPos = 2;
+        }
+        // 一文字前が母音かどうか
+        else if (this.boin.includes(roma.substr(r - 1, 1).toLowerCase())) {
+          tmp = roma.substr(r, 1);
+          isKanaPos = 1;
+        } else {
+          tmp = roma.substr(r - 1, 2);
+          isKanaPos = 1;
+        }
+        result = this.romaToHira(tmp.toLowerCase());
+        isKanaPos = result in romanMap ? isKanaPos : 0;
+      } else {
+        isKanaPos = 0;
+        // 現在の文字が「ん」の場合はOK
+        if (
+          roma[r] === "N" &&
+          !this.boin.includes(roma.substr(r + 1, 1).toLowerCase())
+        )
+          isKanaPos = 1;
+      }
+    } else {
+      return isKanaPos;
+    }
+    return isKanaPos;
   }
 
   romaToHira(roma) {
