@@ -27,7 +27,6 @@ function HiraganaTextCore(
   const { className, kanaText } = props;
   return (
     <StyleHiraganaText ref={ref} id="hiraganaText" className={className}>
-      {/* <span className="current-letter">{kanaText![0]}</span> */}
       {kanaText!
         .split("")
         .slice(0)

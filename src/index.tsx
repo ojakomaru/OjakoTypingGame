@@ -1,23 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import "./styles/index.css";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material";
-import defaultTheme from "./themes/defaultTheme";
+import defaultTheme from "./styles/defaultTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import App from "./App";
+import { TypingDataProvider } from "./Contexts/AppContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <ThemeProvider theme={defaultTheme}>
-    <CssBaseline enableColorScheme />
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ThemeProvider>
+  <TypingDataProvider>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline enableColorScheme />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
+  </TypingDataProvider>
 );
 
 /**

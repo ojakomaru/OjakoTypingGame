@@ -23,19 +23,13 @@ export interface TypingDataType {
 
   /**
    * 問題文を格納した配列
-   * @type {Array<string>}
+   * @type {problems[]}
    * @memberof any
    * @property problems
    * @required textのみ必須
    * @example
-   * "git switch -c {ブランチ名} 対象ブランチを新規作成し、切り替える"
+   * "[{} as problems]"
    * @optional kana romazi furigana
-   * @example kana
-   * "git switch -c {ブランチめい} たいしょうブランチをしんきさくせいし、きりかえる"
-   * @example romazi
-   * "GIT SWITCH -C {BURANTIMEI} TAISYOUBURANTIWOSINKISAKUSEISI,KIRIKAERU"
-   * @example furigana
-   *"<ruby>..."
    */
   problems: {
     text: string;
