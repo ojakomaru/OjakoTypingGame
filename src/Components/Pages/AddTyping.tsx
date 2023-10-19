@@ -7,6 +7,7 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../../functional/saveTypingData";
 import TitleInput from "../atoms/TitleInput";
 import ProblemList from "../organisms/ProblemList";
+import { TypingDataContext } from "../../Contexts/TypingDataContext";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
@@ -24,6 +25,7 @@ const FormLayout = css`
 `;
 
 const AddTyping: React.FC = () => {
+  const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
   const id = uuidv4();
   const methods = useForm<TypingDataType>({
@@ -43,6 +45,7 @@ const AddTyping: React.FC = () => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
+    setTypingDatas([...typingdatas, typingdata]);
     methods.reset();
     navigate("/");
   };

@@ -39,7 +39,7 @@ export default function PlayModal({ setIsPlaying }: PlayModalProps) {
         <Typography variant="h5" color="inherit" paragraph>
           Press "Space" or "Enter" key to start!!
         </Typography>
-        <Link variant="subtitle1" href="#" color={rgbToHex("#ffffff")}>
+        <Link variant="subtitle1" href="/" color={rgbToHex("#ffffff")}>
           ※ゲーム中はescキーでホーム画面に戻ります。
         </Link>
       </Box>

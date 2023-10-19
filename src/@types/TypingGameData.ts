@@ -1,6 +1,6 @@
 import { TypingDataType } from "./TypingDataType";
 
-export interface HomeProps {
+export interface TypingGameData {
   typingdata: TypingDataType;
   setTypingData: (a: TypingDataType) => void;
   typingdatas: TypingDataType[];

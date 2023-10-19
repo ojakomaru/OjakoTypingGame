@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Grid,
   Card,
@@ -7,15 +8,15 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import Home from "../Pages/Home";
 import { TypingDataType } from "../../@types";
-type G_Props = React.ComponentPropsWithRef<typeof Home>;
+import { TypingDataContext } from "../../Contexts/TypingDataContext";
+
 type TypingListProps = {
   moveTo: () => void;
-} & G_Props;
+};
 
-export default function TypingLists(props: TypingListProps) {
-  const { typingdatas, setTypingData, moveTo } = props;
+export default function TypingLists({ moveTo }: TypingListProps) {
+  const { typingdatas, setTypingData } = React.useContext(TypingDataContext);
   const selectedTypingToTop = (post: TypingDataType): void => {
     moveTo();
     setTypingData(post);

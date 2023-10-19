@@ -4,13 +4,14 @@ import { Container } from "@mui/material";
 import Header from "../molecules/Header";
 import { MainDisplay } from "../organisms/MainDisplay";
 import Footer from "../atoms/Footer";
-import { PlayingProps } from "../../@types";
 import { useLocation } from "react-router-dom";
+import { TypingDataContext } from "../../Contexts/TypingDataContext";
 
-const Play: React.FC<PlayingProps> = (props) => {
+const Play: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  // 繊維元からデータを取得
-  const typingdata = useLocation().state;
+  const { typingdata } = React.useContext(TypingDataContext);
+  // 繊維元からデータを取得※useContextの使用につ寄付用となったためコメント化
+  // const typingdata = useLocation().state;
 
   return (
     <>
@@ -18,7 +19,6 @@ const Play: React.FC<PlayingProps> = (props) => {
         <Header title="OjakoTypingGame" />
         <main>
           <MainDisplay
-            {...props}
             typingdata={typingdata}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}

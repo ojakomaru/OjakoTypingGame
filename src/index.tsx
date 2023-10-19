@@ -7,7 +7,7 @@ import { ThemeProvider } from "@mui/material";
 import defaultTheme from "./styles/defaultTheme";
 import CssBaseline from "@mui/material/CssBaseline";
 import App from "./App";
-import { TypingDataProvider } from "./Contexts/AppContext";
+import { TypingDataProvider } from "./Contexts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

@@ -1,18 +1,6 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { TypingDataType } from "../@types";
-
-interface TypingGameData {
-  typingdata: TypingDataType;
-  setTypingData: (a: TypingDataType) => void;
-  typingdatas: TypingDataType[];
-  setTypingDatas: (a: TypingDataType[]) => void;
-}
+import { TypingGameData } from "../@types";
 
 let initialData: TypingDataType = {
   id: "1",
@@ -26,9 +14,11 @@ let initialData: TypingDataType = {
     },
   ],
 };
-export const TypingDataContext = createContext<TypingGameData>( {} as TypingGameData);
+export const TypingDataContext = createContext<TypingGameData>(
+  {} as TypingGameData
+);
 
-export const TypingDataProvider: React.FC<{ children: React.ReactNode }> = ({
+export const TypingDataProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   // 登録済みのデータの取得

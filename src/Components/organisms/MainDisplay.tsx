@@ -1,19 +1,20 @@
-
+import React from "react";
 import PlayModal from "../molecules/playModal";
 import PlayingGame from "../../TypingPlay/PlayingGame";
 import HomeDisplay from "../molecules/homeDisplay";
 import MainDiaplayLayout from "../templates/MainDiaplayLayout";
-import Home from "../Pages/Home";
+import { TypingDataType } from "../../@types";
 import { Ref, RefObject, forwardRef } from "react";
+import { TypingDataContext } from "../../Contexts/TypingDataContext";
 
-type G_Props = React.ComponentPropsWithRef<typeof Home>;
 type MainFeaturedPostProps = {
+  typingdata?: TypingDataType;
   ref?: RefObject<HTMLDivElement>;
   ishome?: boolean;
   setIsHome?: (a: boolean) => void;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
-} & G_Props;
+};
 
 function MainDisplayCore(
   props: MainFeaturedPostProps,
@@ -23,9 +24,10 @@ function MainDisplayCore(
     ishome,
     setIsHome,
     isPlaying = false,
-    setIsPlaying,
-    typingdata,
+    setIsPlaying
   } = props;
+  const { typingdata } = React.useContext(TypingDataContext);
+
 
   // 画面のモードによって内容を出し分ける
   const SwitchMode = () => {

@@ -1,3 +1,3 @@
-import { TypingDataProvider } from "./AppContext";
+import { TypingDataProvider } from "./TypingDataContext";
 
 export { TypingDataProvider };
