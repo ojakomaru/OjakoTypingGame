@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Keyboard from "../../TypingPlay/Keyboard";
+import Keyboard from "../TypingPlay/presentation/Keyboard";
 import { Container } from "@mui/material";
-import Header from "../molecules/Header";
-import { MainDisplay } from "../organisms/MainDisplay";
-import Footer from "../atoms/Footer";
+import Header from "../ui/Header";
+import { MainDisplay } from "../MainDisplay/container/MainDisplay";
+import Footer from "../ui/Footer";
 import { useLocation } from "react-router-dom";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 

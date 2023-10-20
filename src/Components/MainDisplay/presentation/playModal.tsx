@@ -4,23 +4,14 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { rgbToHex } from "@mui/material";
+import { useStartGame } from "../container/useStartGame";
 
 interface PlayModalProps {
   setIsPlaying?: (a: boolean) => void;
 }
 export default function PlayModal({ setIsPlaying }: PlayModalProps) {
   // ゲームをスタートする処理
-  useEffect(() => {
-    window.document.onkeydown = function (event) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        setIsPlaying!(true);
-      }
-    };
-    return () => {
-      window.document.onkeydown = null;
-    };
-  });
+  useStartGame(setIsPlaying!, []);
 
   return (
     <Grid container justifyContent="center">

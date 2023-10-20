@@ -1,6 +1,6 @@
 import React, { Ref, RefObject, forwardRef } from "react";
 import styled from "styled-components";
-import Paragraph from "../atoms/Paragraph";
+import Paragraph from "../../ui/Paragraph";
 
 type HiraganaTextProps = {
   ref: RefObject<HTMLParagraphElement>;

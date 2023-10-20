@@ -1,12 +1,12 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { type TypingDataType } from "../@types";
-import { RomajiText } from "../Components/molecules/RomajiText";
-import { HiraganaText } from "../Components/atoms/HiraganaText";
+import { type TypingDataType } from "../../../@types";
+import { RomajiText } from "../presentation/RomajiText";
+import { HiraganaText } from "../presentation/HiraganaText";
 import { useNavigate } from "react-router-dom";
-import { QuestionText } from "../Components/atoms/QuestionText";
-import GameBoard from "../Components/atoms/GameBoard";
-import Romanizer from "../functional/Romanizer";
+import { QuestionText } from "../presentation/QuestionText";
+import GameBoard from "../presentation/GameBoard";
+import Romanizer from "../../../functional/Romanizer";
 
 export default function PlayingGame({
   typingdata,

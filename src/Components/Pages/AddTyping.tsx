@@ -5,8 +5,8 @@ import { type TypingDataType } from "../../@types";
 import { Stack, Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../../functional/saveTypingData";
-import TitleInput from "../atoms/TitleInput";
-import ProblemList from "../organisms/ProblemList";
+import TitleInput from "../form/TitleInput";
+import ProblemList from "../form/ProblemList";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";

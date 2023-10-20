@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { type TypingDataType } from "../../@types";
+import { type TypingDataType } from "../../../@types";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;
@@ -16,7 +16,7 @@ const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
   const navigate = useNavigate();
   const GameStart = () => {
     setIsHome!(false);
-    navigate("/play", {state: displayData});
+    navigate("/play", { state: displayData });
   };
 
   return (
