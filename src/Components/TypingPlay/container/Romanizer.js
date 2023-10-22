@@ -1,4 +1,4 @@
-import { romanMap, tree } from "./stringMap";
+import { romanMap, tree } from "../../../Config/stringMap";
 
 export default class Romanizer {
   static MAPPING_HEPBURN = "hepburn";

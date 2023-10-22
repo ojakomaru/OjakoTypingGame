@@ -6,7 +6,7 @@ import { HiraganaText } from "../presentation/HiraganaText";
 import { useNavigate } from "react-router-dom";
 import { QuestionText } from "../presentation/QuestionText";
 import GameBoard from "../presentation/GameBoard";
-import Romanizer from "../../../functional/Romanizer";
+import Romanizer from "./Romanizer";
 
 export default function PlayingGame({
   typingdata,

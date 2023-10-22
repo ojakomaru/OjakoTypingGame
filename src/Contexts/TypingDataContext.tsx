@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import React, { ReactNode, createContext, useEffect, useState } from "react";
 import { TypingDataType } from "../@types";
 import { TypingGameData } from "../@types";
 

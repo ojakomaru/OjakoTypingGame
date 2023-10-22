@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from "uuid";
 import { type TypingDataType } from "../../@types";
 import { Stack, Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import saveTypingData from "../../functional/saveTypingData";
-import TitleInput from "../form/TitleInput";
-import ProblemList from "../form/ProblemList";
+import saveTypingData from "../form/container/saveTypingData";
+import TitleInput from "../form/presentation/TitleInput";
+import ProblemList from "../form/presentation/ProblemList";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
@@ -24,7 +24,7 @@ const FormLayout = css`
   }
 `;
 
-const AddTyping: React.FC = () => {
+const TypingForm: React.FC = () => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
   const id = uuidv4();
@@ -90,4 +90,4 @@ const AddTyping: React.FC = () => {
   );
 };
 
-export default AddTyping;
+export default TypingForm;

@@ -1,19 +1,14 @@
 import React, { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./Components/Pages/Home";
-import Play from "./Components/Pages/Play";
-import AddTyping from "./Components/Pages/AddTyping";
-
+import { Home, Play, TypingForm, NotFound } from "./Components/Pages";
 
 const App: FC = () => {
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/play" element={<Play />} />
-      <Route path="/addtyping" element={<AddTyping />} />
-      {/* <Route path="/score" element={<Score />} />
-          <Route path="*" element={<Notfound />} /> */}
+      <Route path="/play" element={<Play />}/>
+      <Route path="/form" element={<TypingForm />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

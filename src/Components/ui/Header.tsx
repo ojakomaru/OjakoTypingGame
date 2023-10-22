@@ -13,7 +13,7 @@ interface HeaderProps {
 export default function Header(props: HeaderProps) {
   const {title } = props;
   const navigate = useNavigate();
-  const AddTyping = () => navigate("/addtyping");
+  const AddTyping = () => navigate("/form");
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -35,24 +35,6 @@ export default function Header(props: HeaderProps) {
            新規タイピング追加
         </Button>
       </Toolbar>
-      {/* <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: 'space-between', overflowX: 'auto' }}
-      >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar> */}
     </React.Fragment>
   );
 }

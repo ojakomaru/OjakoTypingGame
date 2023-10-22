@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { type TypingDataType } from "../../@types";
+import { type TypingDataType } from "../../../@types";
 import { TextField } from "@mui/material";
 
 const TitleInput: React.FC = () => {
