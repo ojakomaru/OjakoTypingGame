@@ -22,6 +22,7 @@ const Header = styled.header`
 const MainDisplay = styled.section``;
 
 const Content = styled.section`
+  display: flex;
   width: 100%;
   box-sizing: border-box;
   margin: 2rem auto;
@@ -33,13 +34,16 @@ const Footer = styled.footer`
 `;
 
 const HomeLayout = (props: HomeLayoutProps) => {
-  const { header, maindisplay, typinglists, footer } = props;
+  const { header, maindisplay, typinglists, footer, navigation } = props;
   return (
     <Wrapper>
       <Header>{header}</Header>
       <main>
         <MainDisplay>{maindisplay}</MainDisplay>
-        <Content>{typinglists}</Content>
+        <Content>
+          {navigation}
+          {typinglists}
+        </Content>
       </main>
       <Footer>{footer}</Footer>
     </Wrapper>
@@ -50,6 +54,7 @@ type HomeLayoutProps = {
   header: ReactNode;
   maindisplay: ReactNode;
   footer: ReactNode;
+  navigation: ReactNode;
   typinglists: ReactNode;
 };
 

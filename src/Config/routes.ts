@@ -1,17 +1,14 @@
 import {
   Home as HomeIcon,
-  BarChartOutlined as DashboardIcon,
   CodeOutlined as CodeIcon,
-  GitHub as GitHubIcon,
-  Public as PublicIcon,
-  PublicOff as PrivateIcon,
-  AccountBoxRounded as UserIcon,
   SettingsOutlined as SettingsIcon,
   ListAlt as ListIcon,
-  CreditCard as BillingIcon,
 } from "@mui/icons-material";
+import   SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
+import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
+import SportsScoreSharpIcon from "@mui/icons-material/SportsScoreSharp";
 
-import { Home, Play } from "../Components/Pages";
+import { Home, NotFound, Play, TypingForm } from "../Components/Pages";
 import { Route } from "../@types/Route";
 
 const routes: Array<Route> = [
@@ -30,78 +27,45 @@ const routes: Array<Route> = [
     title: "Play",
     description: "Play View is Start",
     component: Play,
-    path: "/",
+    path: "/play",
     isEnabled: true,
-    icon: CodeIcon,
+    icon: SmartDisplayOutlinedIcon,
     appendDivider: true,
   },
   {
-    key: "router-gh",
-    title: "GitHub",
-    description: "GitHub",
+    key: "router-form",
+    title: "AddTypingForm",
+    description: "Add New Typingdata",
+    path: "/form",
+    component: TypingForm,
     isEnabled: true,
-    icon: GitHubIcon,
-    subRoutes: [
-      {
-        key: "router-gh-public",
-        title: "Public Repos",
-        description: "Public Repos",
-        path: "/gh/public",
-        isEnabled: true,
-        icon: PublicIcon,
-      },
-      {
-        key: "router-gh-private",
-        title: "Private Repos",
-        description: "Private Repos",
-        path: "/gh/private",
-        isEnabled: false,
-        icon: PrivateIcon,
-      },
-    ],
-  },
-  {
-    key: "router-code",
-    title: "Code Editor",
-    description: "Code Editor",
-    path: "/code-editor",
-    isEnabled: true,
-    icon: CodeIcon,
+    icon: AddCircleOutlineSharpIcon,
     appendDivider: true,
   },
   {
-    key: "router-my-account",
-    title: "My Account",
-    description: "My Account",
-    path: "/account",
+    key: "router-scores",
+    title: "ScoreRankings",
+    description: "Typing Score is Rankings",
+    path: "/form",
     isEnabled: true,
-    icon: UserIcon,
-    subRoutes: [
-      {
-        key: "router-settings",
-        title: "Settings",
-        description: "Account Settings",
-        path: "/account/settings",
-        isEnabled: true,
-        icon: SettingsIcon,
-      },
-      {
-        key: "router-preferences",
-        title: "Preferences",
-        description: "Account Preferences",
-        path: "/account/preferences",
-        isEnabled: true,
-        icon: ListIcon,
-      },
-      {
-        key: "router-billing",
-        title: "Billing",
-        description: "Account Billing",
-        path: "/account/billing",
-        isEnabled: true,
-        icon: BillingIcon,
-      },
-    ],
+    icon: SportsScoreSharpIcon,
+    appendDivider: true,
+  },
+  {
+    key: "router-settings",
+    title: "GameSettings",
+    description: "Game Settings",
+    path: "/settings",
+    isEnabled: true,
+    icon: SettingsIcon,
+  },
+  {
+    key: "router-notfound",
+    title: "NotfoundPage",
+    description: "Page is Notfound",
+    path: "*",
+    component: NotFound,
+    isEnabled: true,
   },
 ];
 

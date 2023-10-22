@@ -1,14 +1,30 @@
 import React, { FC } from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Play, TypingForm, NotFound } from "./Components/Pages";
+import { routes } from "./Config";
+import { Route as AppRoute } from "./@types/Route";
+import { PageDefault } from "./Components/PageDefault";
+
+
+const addRoute = (route: AppRoute) => (
+  <Route
+    key={route.key}
+    path={route.path}
+    Component={route.component || PageDefault}
+  />
+);
 
 const App: FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/play" element={<Play />}/>
+      {/* <Route path="/" element={<Home />} />
+      <Route path="/play" element={<Play />} />
       <Route path="/form" element={<TypingForm />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} /> */}
+      {routes.map((route: AppRoute) =>
+        route.subRoutes
+          ? route.subRoutes.map((item: AppRoute) => addRoute(item))
+          : addRoute(route)
+      )}
     </Routes>
   );
 };
