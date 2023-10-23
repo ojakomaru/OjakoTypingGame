@@ -13,10 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.header`
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1500;
+  padding: 0 30px;
 `;
 
 const MainDisplay = styled.section``;
@@ -40,8 +37,8 @@ const HomeLayout = (props: HomeLayoutProps) => {
       <Header>{header}</Header>
       <main>
         <MainDisplay>{maindisplay}</MainDisplay>
-        <Content>
           {navigation}
+        <Content>
           {typinglists}
         </Content>
       </main>

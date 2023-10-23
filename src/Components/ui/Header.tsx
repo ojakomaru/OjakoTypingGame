@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import Typography from '@mui/material/Typography';
+import { Search } from './Search/Search';
+import { AppTitle } from './AppTitle';
 import { AppBar } from '@mui/material';
 import { Hamburger } from './Hamburger/Hamburger';
 
@@ -24,19 +23,8 @@ export default function Header(props: HeaderProps) {
     >
       <Toolbar disableGutters variant="dense">
         <Hamburger toggleNavigation={toggleNavigation} />
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          {title}
-        </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
+        <AppTitle />
+          <Search />
         <Button onClick={AddTyping} variant="outlined">
           新規タイピング追加
         </Button>
