@@ -16,7 +16,7 @@ const Header = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 1500;
 `;
 
 const MainDisplay = styled.section``;

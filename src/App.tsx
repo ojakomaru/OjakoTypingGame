@@ -1,8 +1,12 @@
 import React, { FC } from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "./Config";
 import { Route as AppRoute } from "./@types/Route";
 import { PageDefault } from "./Components/PageDefault";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from "styled-components";
+import { TypingDataProvider } from "./Contexts";
+import defaultTheme from "./styles/defaultTheme";
 
 
 const addRoute = (route: AppRoute) => (
@@ -15,17 +19,20 @@ const addRoute = (route: AppRoute) => (
 
 const App: FC = () => {
   return (
-    <Routes>
-      {/* <Route path="/" element={<Home />} />
-      <Route path="/play" element={<Play />} />
-      <Route path="/form" element={<TypingForm />} />
-      <Route path="*" element={<NotFound />} /> */}
-      {routes.map((route: AppRoute) =>
-        route.subRoutes
-          ? route.subRoutes.map((item: AppRoute) => addRoute(item))
-          : addRoute(route)
-      )}
-    </Routes>
+    <TypingDataProvider>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline enableColorScheme />
+        <BrowserRouter>
+          <Routes>
+            {routes.map((route: AppRoute) =>
+              route.subRoutes
+                ? route.subRoutes.map((item: AppRoute) => addRoute(item))
+                : addRoute(route)
+            )}
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </TypingDataProvider>
   );
 };
 export default App;

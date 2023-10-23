@@ -46,7 +46,7 @@ const routes: Array<Route> = [
     key: "router-scores",
     title: "ScoreRankings",
     description: "Typing Score is Rankings",
-    path: "/form",
+    path: "/scores",
     isEnabled: true,
     icon: SportsScoreSharpIcon,
     appendDivider: true,

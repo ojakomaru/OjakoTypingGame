@@ -45,7 +45,7 @@ export const RouteItem = ({
   const item = (
     <ListItemButton
       css={css`
-        pl: ${nested ? 3 : 1};
+        padding-left: ${nested ? 3 : 1};
         cursor: ${!route.isEnabled ? "not-allowed" : "auto"};
         color: ${!route.isEnabled ? theme.palette.text.secondary : "auto"};
       `}

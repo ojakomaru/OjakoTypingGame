@@ -16,7 +16,7 @@ const Play: React.FC = () => {
   return (
     <>
       <Container maxWidth="lg">
-        <Header title="OjakoTypingGame" />
+        <Header title="OjakoTypingGame"  />
         <main>
           <MainDisplay
             typingdata={typingdata}

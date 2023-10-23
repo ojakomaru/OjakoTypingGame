@@ -1,3 +1,5 @@
+declare module "react-helmet";
+declare module "hamburger-react";
 declare module "js-hira-kata-romanize";
 declare module 'kuroshiro';
 declare module "kuroshiro-analyzer-kuromoji";

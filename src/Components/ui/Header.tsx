@@ -5,19 +5,25 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
+import { AppBar } from '@mui/material';
+import { Hamburger } from './Hamburger/Hamburger';
 
 interface HeaderProps {
   title: string;
+  toggleNavigation?: () => void;
 }
 
 export default function Header(props: HeaderProps) {
-  const {title } = props;
+  const { title, toggleNavigation } = props;
   const navigate = useNavigate();
   const AddTyping = () => navigate("/form");
   return (
-    <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Button size="small">Subscribe</Button>
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
+      <Toolbar disableGutters variant="dense">
+        <Hamburger toggleNavigation={toggleNavigation} />
         <Typography
           component="h2"
           variant="h5"
@@ -32,9 +38,9 @@ export default function Header(props: HeaderProps) {
           <SearchIcon />
         </IconButton>
         <Button onClick={AddTyping} variant="outlined">
-           新規タイピング追加
+          新規タイピング追加
         </Button>
       </Toolbar>
-    </React.Fragment>
+    </AppBar>
   );
 }

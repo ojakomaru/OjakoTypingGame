@@ -16,7 +16,9 @@ export default function Home() {
 
   return (
     <HomeLayout
-      header={<Header title="OjakoTypingGame" />}
+      header={
+        <Header title="OjakoTypingGame" toggleNavigation={toggleNavigation} />
+      }
       maindisplay={
         <MainDisplay ref={ref} ishome={ishome} setIsHome={setIsHome} />
       }
