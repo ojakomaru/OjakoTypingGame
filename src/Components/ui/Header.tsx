@@ -4,8 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { Search } from './Search/Search';
 import { AppTitle } from './AppTitle';
-import { AppBar } from '@mui/material';
+import { AppBar, Box } from '@mui/material';
 import { Hamburger } from './Hamburger/Hamburger';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface HeaderProps {
   title: string;
@@ -24,10 +25,15 @@ export default function Header(props: HeaderProps) {
       <Toolbar disableGutters variant="dense">
         <Hamburger toggleNavigation={toggleNavigation} />
         <AppTitle />
-          <Search />
-        <Button onClick={AddTyping} variant="outlined">
+        <Search />
+        <Box sx={{ flexGrow: 1 }} />
+        <Button onClick={AddTyping} variant="contained" color="secondary">
           新規タイピング追加
         </Button>
+        <Box sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}>
+          <ThemeSwitcher />
+          {/* <Notifications total={2} /> */}
+        </Box>
       </Toolbar>
     </AppBar>
   );

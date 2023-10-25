@@ -22,7 +22,6 @@ const App: FC = () => {
     }),
     []
   );
-
   const theme = useMemo(() => getAppTheme(mode), [mode]);
 
   const addRoute = (route: AppRoute) => (
