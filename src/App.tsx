@@ -3,14 +3,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { routes } from "./Config";
 import { Route as AppRoute } from "./@types/Route";
 import { PageDefault } from "./Components/PageDefault";
-import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "styled-components";
+import { CssBaseline, useMediaQuery } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { TypingDataProvider, ThemeModeContext } from "./Contexts";
 import { getAppTheme } from "./styles/defaultTheme";
 import { DARK_MODE_THEME, LIGHT_MODE_THEME } from "./@types/appTheme";
 
 const App: FC = () => {
-  const [mode, setMode] = useState<typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME>(DARK_MODE_THEME);
+   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)") ? LIGHT_MODE_THEME : DARK_MODE_THEME;
+  const [mode, setMode] = useState<
+    typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME
+  >(prefersDarkMode);
 
   const themeMode = useMemo(
     () => ({
@@ -22,6 +25,7 @@ const App: FC = () => {
     }),
     []
   );
+
   const theme = useMemo(() => getAppTheme(mode), [mode]);
 
   const addRoute = (route: AppRoute) => (

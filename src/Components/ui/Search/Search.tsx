@@ -1,6 +1,5 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, InputBase, alpha } from "@mui/material";
-import styled from "styled-components";
+import { Box, InputBase, alpha, styled } from "@mui/material";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
