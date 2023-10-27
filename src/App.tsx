@@ -7,19 +7,17 @@ import { CssBaseline, useMediaQuery } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { TypingDataProvider, ThemeModeContext } from "./Contexts";
 import { getAppTheme } from "./styles/defaultTheme";
-import { DARK_MODE_THEME, LIGHT_MODE_THEME } from "./@types/appTheme";
+import { DARK_THEME, LIGHT_THEME, AppMode } from "./@types";
 
 const App: FC = () => {
-   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)") ? LIGHT_MODE_THEME : DARK_MODE_THEME;
-  const [mode, setMode] = useState<
-    typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME
-  >(prefersDarkMode);
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)") ? DARK_THEME : LIGHT_THEME;
+  const [mode, setMode] = useState<AppMode>(prefersDarkMode);
 
   const themeMode = useMemo(
     () => ({
       toggleThemeMode: () => {
         setMode((prevMode) =>
-          prevMode === LIGHT_MODE_THEME ? DARK_MODE_THEME : LIGHT_MODE_THEME
+          prevMode === LIGHT_THEME ? DARK_THEME : LIGHT_THEME
         );
       },
     }),

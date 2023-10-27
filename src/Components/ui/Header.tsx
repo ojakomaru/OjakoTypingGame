@@ -32,7 +32,6 @@ export default function Header(props: HeaderProps) {
         </Button>
         <Box sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}>
           <ThemeSwitcher />
-          {/* <Notifications total={2} /> */}
         </Box>
       </Toolbar>
     </AppBar>

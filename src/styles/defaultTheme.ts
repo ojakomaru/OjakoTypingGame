@@ -1,7 +1,7 @@
 import { Theme, createTheme, responsiveFontSizes } from "@mui/material";
-import { DARK_MODE_THEME, LIGHT_MODE_THEME } from "../@types/appTheme";
+import { AppMode } from "../@types/AppMode";
 
-export const getAppTheme = (mode: typeof LIGHT_MODE_THEME | typeof DARK_MODE_THEME): Theme => {
+export const getAppTheme = (mode: AppMode): Theme => {
   let defaultTheme = createTheme({
     palette: {
       mode,
