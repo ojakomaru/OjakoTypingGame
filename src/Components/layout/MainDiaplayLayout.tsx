@@ -6,6 +6,7 @@ type DiaplayLayoutProps = {
   isPlaying: boolean;
 };
 export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayoutProps) {
+  const unsplashURL = "https://source.unsplash.com/random?wallpapers";
   return (
     <Container maxWidth="md">
       <Paper
@@ -19,14 +20,14 @@ export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayout
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          backgroundImage: `url("https://source.unsplash.com/random?wallpapers")`,
+          backgroundImage: `url(${unsplashURL})`,
         }}
       >
         {
           <img
             style={{ display: "none" }}
-            src="https://source.unsplash.com/random?wallpapers"
-            alt="https://source.unsplash.com/random?wallpapers"
+            src={unsplashURL}
+            alt={unsplashURL}
           />
         }
         <Box
@@ -37,7 +38,7 @@ export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayout
             right: 0,
             left: 0,
             backgroundColor: "rgba(0,0,0,.3)",
-            display: isPlaying ? "none" : "inherit"
+            display: isPlaying ? "none" : "inherit",
           }}
         />
         {children}

@@ -20,7 +20,7 @@ export default function Home() {
       navigation={<Navigation open={open} handleClose={toggleNavigation} />}
       footer={<Footer description="Ojako Typing App var.1.0.0" />}
     >
-      <MainDisplay ref={ref} ishome={ishome} setIsHome={setIsHome} />
+      <MainDisplay ishome={ishome} setIsHome={setIsHome} />
       <TypingLists />
     </Layout>
   );

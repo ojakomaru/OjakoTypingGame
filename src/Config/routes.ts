@@ -8,7 +8,13 @@ import   SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined
 import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
 import SportsScoreSharpIcon from "@mui/icons-material/SportsScoreSharp";
 
-import { Home, NotFound, Play, TypingForm } from "../Components/Pages";
+import {
+  Home,
+  NotFound,
+  Play,
+  TypingForm,
+  GameSetting,
+} from "../Components/Pages";
 import { Route } from "../@types/Route";
 
 const routes: Array<Route> = [
@@ -56,6 +62,7 @@ const routes: Array<Route> = [
     title: "GameSettings",
     description: "Game Settings",
     path: "/settings",
+    component: GameSetting,
     isEnabled: true,
     icon: SettingsIcon,
   },
