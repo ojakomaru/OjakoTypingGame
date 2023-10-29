@@ -1,15 +1,16 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { useTheme } from '@mui/material';
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Oja Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -19,28 +20,33 @@ function Copyright() {
 
 interface FooterProps {
   description: string;
-  title: string;
 }
 
-export default function Footer(props: FooterProps) {
-  const { description, title } = props;
+export default function Footer({ description } : FooterProps) {
+  const theme = useTheme();
 
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h6" align="center" gutterBottom>
-          {title}
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          {description}
-        </Typography>
-        <Copyright />
-      </Container>
-    </Box>
+    <div
+      css={css`
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: ${theme.palette.background.paper};
+      `}
+    >
+      <Typography
+        css={css`
+          word-spacing: 0.1rem;
+          text-transform: uppercase;
+        `}
+        variant="caption"
+        align="center"
+        color="textSecondary"
+      >
+        {description}
+      </Typography>
+      <Copyright />
+    </div>
   );
 }

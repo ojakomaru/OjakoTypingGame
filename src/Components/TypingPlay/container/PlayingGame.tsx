@@ -5,6 +5,7 @@ import { RomajiText } from "../presentation/RomajiText";
 import { HiraganaText } from "../presentation/HiraganaText";
 import { useNavigate } from "react-router-dom";
 import { QuestionText } from "../presentation/QuestionText";
+import { useMissMessage } from "./useMissMessage";
 import GameBoard from "../presentation/GameBoard";
 import Romanizer from "./Romanizer";
 
@@ -27,6 +28,8 @@ export default function PlayingGame({
   const [position, setPosition] = useState<number>(0);
   const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
+
+  const [missMessage, messageShow] = useMissMessage();
   const romanizer = new Romanizer({
     mapping: Romanizer.MAPPING_KUNREI,
     chouon: Romanizer.CHOUON_ALPHABET,
@@ -65,7 +68,6 @@ export default function PlayingGame({
       let hiragana = kanaRef.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
       if (e.key === "Escape") {
-        // ホーム画面とプレイ画面のフラグを変更
         navigate("/");
         // 正解時の処理
       } else if (e.key.toUpperCase() === romajiText![position]) {
@@ -119,6 +121,7 @@ export default function PlayingGame({
         // ミスした時の処理
       } else {
         if (e.key !== "Shift") {
+          messageShow();
           // その位置で初めてのうち間違えであるとき
           if (typo.indexOf(position) === -1) {
             // うち間違えた位置の配列にその位置を追加
@@ -137,6 +140,7 @@ export default function PlayingGame({
   // HTML
   return (
     <GameBoard>
+      {missMessage}
       <HiraganaText ref={kanaRef} kanaText={kanaText} />
       <QuestionText ref={questionRef} />
       <RomajiText ref={romajiRef} romaji={romajiText} />

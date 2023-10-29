@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import HomeLayout from "../layout/HomeLayout";
+import Layout from "../layout/Layout";
 import Header from "../ui/Header";
 import { MainDisplay } from "../MainDisplay/container/MainDisplay";
 import TypingLists from "../HomeProblemList/TypingLists";
@@ -10,23 +10,18 @@ import { Navigation } from "../ui/Navigation/Navigation";
 
 export default function Home() {
   const [ishome, setIsHome] = useState<boolean>(true);
-  const [ref, moveTo] = useScroll();
+  const [ref, moveTo] = useScroll(); //クリック箇所にスクロールするも現在利用していない
   const [open, setOpen] = useState(false);
   const toggleNavigation = () => setOpen((status) => !status);
 
   return (
-    <HomeLayout
-      header={
-        <Header title="OjakoTypingGame" toggleNavigation={toggleNavigation} />
-      }
-      maindisplay={
-        <MainDisplay ref={ref} ishome={ishome} setIsHome={setIsHome} />
-      }
+    <Layout
+      header={<Header toggleNavigation={toggleNavigation} />}
       navigation={<Navigation open={open} handleClose={toggleNavigation} />}
-      typinglists={<TypingLists moveTo={moveTo} />}
-      footer={
-        <Footer title="Footer" description="Ojako Typing App var.1.0.0" />
-      }
-    />
+      footer={<Footer description="Ojako Typing App var.1.0.0" />}
+    >
+      <MainDisplay ref={ref} ishome={ishome} setIsHome={setIsHome} />
+      <TypingLists />
+    </Layout>
   );
 }

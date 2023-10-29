@@ -10,15 +10,13 @@ import {
 } from "@mui/material";
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
+import { useScrollToTop } from "../../Hooks/useScrollToTop";
 
-type TypingListProps = {
-  moveTo: () => void;
-};
-
-export default function TypingLists({ moveTo }: TypingListProps) {
+export default function TypingLists() {
   const { typingdatas, setTypingData } = React.useContext(TypingDataContext);
+  const scrollTop = useScrollToTop();
   const selectedTypingToTop = (post: TypingDataType): void => {
-    moveTo();
+    scrollTop();
     setTypingData(post);
   };
 

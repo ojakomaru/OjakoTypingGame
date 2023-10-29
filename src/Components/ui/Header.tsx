@@ -9,12 +9,11 @@ import { Hamburger } from './Hamburger/Hamburger';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
 interface HeaderProps {
-  title: string;
   toggleNavigation?: () => void;
 }
 
-export default function Header(props: HeaderProps) {
-  const { title, toggleNavigation } = props;
+export default function Header({ toggleNavigation }: HeaderProps) {
+
   const navigate = useNavigate();
   const AddTyping = () => navigate("/form");
   return (

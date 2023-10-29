@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import styled from "styled-components";
 
 const StyleGameBoard = styled(Box)`
+  position: relative;
   text-align: center;
   min-height: 35vh;
   display: flex;

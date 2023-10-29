@@ -1,4 +1,4 @@
-import { ReactElement, RefObject, useCallback, useRef } from "react";
+import { RefObject, useCallback, useRef } from "react";
 
 /**
  * スムーススクロールを設定する
