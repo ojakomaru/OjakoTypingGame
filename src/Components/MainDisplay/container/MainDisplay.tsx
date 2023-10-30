@@ -3,18 +3,15 @@ import PlayModal from "../presentation/playModal";
 import PlayingGame from "../../TypingPlay/container/PlayingGame";
 import HomeDisplay from "../presentation/homeDisplay";
 import MainDiaplayLayout from "../../layout/MainDiaplayLayout";
-import { TypingDataType } from "../../../@types";
 import { TypingDataContext } from "../../../Contexts/TypingDataContext";
-import SettingForm from "../../settingForm/SettingForm";
+import SettingExample from "../presentation/SettingExample";
 
 type MainFeaturedPostProps = {
-  typingdata?: TypingDataType;
   ishome?: boolean;
   setIsHome?: (a: boolean) => void;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
   isSetting?: boolean;
-  setIsSetting?: (a: boolean) => void;
 };
 
 export const MainDisplay = (props: MainFeaturedPostProps) => {
@@ -23,8 +20,7 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     setIsHome,
     isPlaying = false,
     setIsPlaying,
-    isSetting,
-    setIsSetting,
+    isSetting
   } = props;
   const { typingdata } = React.useContext(TypingDataContext);
 
@@ -33,9 +29,13 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     if (ishome) {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
-      return <PlayingGame typingdata={typingdata} />;
+      return (
+        <PlayingGame typingdata={typingdata} setIsPlaying={setIsPlaying} />
+      );
     } else if (isSetting) {
-      return <SettingForm setIsSetting={setIsSetting} />;
+      return (
+        <SettingExample typingdata={typingdata} />
+      );
     } else {
       return <PlayModal setIsPlaying={setIsPlaying} />;
     }

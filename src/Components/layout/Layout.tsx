@@ -1,5 +1,8 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useState } from "react";
 import styled from "styled-components";
+import Footer from "../ui/Footer";
+import Header from "../ui/Header";
+import { Navigation } from "../ui/Navigation/Navigation";
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,26 +21,26 @@ const Main = styled.section`
   max-width: 990px;
 `;
 
-const Footer = styled.footer`
+const FooterWrapper = styled.footer`
   margin: 1rem;
   padding: 8 2;
   min-height: 30;
 `;
 
 type LayoutProps = {
-  header: ReactNode;
-  footer: ReactNode;
-  navigation: ReactNode;
   children: ReactNode;
 };
-const Layout = (props: LayoutProps) => {
-  const { header, children, footer, navigation } = props;
+const Layout = ({ children }: LayoutProps) => {
+  const [open, setOpen] = useState(false);
+  const toggleNavigation = () => setOpen((status) => !status);
   return (
     <Wrapper>
-      {header}
-      {navigation}
+      <Header toggleNavigation={toggleNavigation} />
+      <Navigation open={open} handleClose={toggleNavigation} />
       <Main>{children}</Main>
-      <Footer>{footer}</Footer>
+      <FooterWrapper>
+        <Footer description="Ojako Typing App var.1.0.0" />
+      </FooterWrapper>
     </Wrapper>
   );
 };

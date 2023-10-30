@@ -3,7 +3,18 @@ import { TypingGameData } from "./TypingGameData";
 import { MainFeaturedPostProps } from "./MainFeaturedPostProps";
 import { HomeDisplayProps } from "./HomeDisplayProps";
 import { DARK_THEME, LIGHT_THEME, type AppMode } from "./AppMode";
-import { SHORT_TEXT, LONG_TEXT, REAL_TEXT,UPPER, LOWER, SHIFT_REQUIRED, SettingTypes } from "./SettingTypes";
+import {
+  SHORT_TEXT,
+  LONG_TEXT,
+  REAL_TEXT,
+  UPPER,
+  LOWER,
+  SHIFT_REQUIRED,
+  SettingTypes,
+  TYPE_MODE,
+  RadioItem,
+  ROMAJI_TYPE,
+} from "./SettingTypes";
 
 
 export {
@@ -22,5 +33,8 @@ export type {
   MainFeaturedPostProps,
   HomeDisplayProps,
   AppMode,
-  SettingTypes
+  SettingTypes,
+  TYPE_MODE,
+  RadioItem,
+  ROMAJI_TYPE
 };

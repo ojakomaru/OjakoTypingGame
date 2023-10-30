@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback, useState } from "react";
 import styled, { css } from "styled-components";
 
 type MissMessageProps = {
-  isMiss: boolean;
+  $isMiss: boolean;
 };
 const logURL = `${process.env.PUBLIC_URL}/images/Miss.png`;
 const MissMessage = styled.div<MissMessageProps>`
@@ -13,8 +13,8 @@ const MissMessage = styled.div<MissMessageProps>`
   z-index: 9999;
   width: 30%;
   height: 100%;
-  ${({ isMiss }) =>
-    isMiss
+  ${({ $isMiss }) =>
+    $isMiss
       ? css`
           opacity: 1;
         `
@@ -39,5 +39,5 @@ export const useMissMessage = (): [ReactNode, () => void] => {
     }, hiddenedTime);
   }, [miss]);
 
-  return [<MissMessage isMiss={miss} />, messageShow];
+  return [<MissMessage $isMiss={miss} />, messageShow];
 };

@@ -9,11 +9,12 @@ import { useMissMessage } from "./useMissMessage";
 import GameBoard from "../presentation/GameBoard";
 import Romanizer from "./Romanizer";
 
-export default function PlayingGame({
-  typingdata,
-}: {
+type PlayingGameProps = {
+  setIsPlaying?: (a: boolean) => void;
   typingdata: TypingDataType;
-}) {
+};
+export default function PlayingGame(props: PlayingGameProps) {
+  const { typingdata, setIsPlaying } = props;
   const navigate = useNavigate();
   const romajiRef = useRef<HTMLParagraphElement>(null);
   const questionRef = useRef<HTMLParagraphElement>(null);
@@ -68,6 +69,7 @@ export default function PlayingGame({
       let hiragana = kanaRef.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
       if (e.key === "Escape") {
+        setIsPlaying!(false);
         navigate("/");
         // 正解時の処理
       } else if (e.key.toUpperCase() === romajiText![position]) {
