@@ -1,4 +1,4 @@
-import { TypeModeValues } from './Setting';
-import routes from './routes';
+import { TypeModeValues, RomajiTypeValues } from "./Setting";
+import routes from "./routes";
 
-export { routes, TypeModeValues };
+export { routes, TypeModeValues, RomajiTypeValues };

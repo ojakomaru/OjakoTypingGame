@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { RadioItem, SettingTypes } from "../../@types";
+import { Option, SettingTypes } from "../../../@types";
 import {
   FormControl,
   FormControlLabel,
@@ -8,11 +8,7 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { SHORT_TEXT } from "../../@types";
-import { TypeModeValues } from "../../Config";
-
-
-
+import { TypeModeValues } from "../../../Config";
 
 const TypeModeRadio = () => {
   const { control } = useFormContext<SettingTypes>();
@@ -21,11 +17,10 @@ const TypeModeRadio = () => {
       <FormLabel>入力モード</FormLabel>
       <Controller
         name="typeMode"
-        defaultValue={SHORT_TEXT}
         control={control}
         render={({ field }) => (
           <RadioGroup name="typeMode">
-            {TypeModeValues.map((radio: RadioItem) => (
+            {TypeModeValues.map((radio: Option<string>) => (
               <FormControlLabel
                 {...field}
                 key={radio.value}

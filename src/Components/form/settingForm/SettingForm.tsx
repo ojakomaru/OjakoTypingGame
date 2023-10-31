@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { SettingTypes, SHORT_TEXT, UPPER } from "../../@types";
+import { SettingTypes, SHORT_TEXT, UPPER } from "../../../@types";
 import { Stack, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TypeModeRadio from "./TypeModeRadio";
@@ -31,7 +31,7 @@ function SettingForm(props: SettingFormProps) {
   return (
     <FormProvider {...methods}>
       <Stack component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-          <TypeModeRadio />
+        <TypeModeRadio />
         <Box textAlign="center" mt={2}>
           <Button
             variant="outlined"

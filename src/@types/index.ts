@@ -12,7 +12,8 @@ import {
   SHIFT_REQUIRED,
   SettingTypes,
   TYPE_MODE,
-  RadioItem,
+ Option,
+  Options,
   ROMAJI_TYPE,
 } from "./SettingTypes";
 
@@ -34,7 +35,8 @@ export type {
   HomeDisplayProps,
   AppMode,
   SettingTypes,
+  Option,
+  Options,
   TYPE_MODE,
-  RadioItem,
-  ROMAJI_TYPE
+  ROMAJI_TYPE,
 };
