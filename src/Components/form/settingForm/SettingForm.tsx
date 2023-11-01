@@ -4,6 +4,9 @@ import { SettingTypes, SHORT_TEXT, UPPER } from "../../../@types";
 import { Stack, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TypeModeRadio from "./TypeModeRadio";
+import RomajiTypeRadio from "./RomajiTypeRadio";
+import { RomajiTypeValues } from "../../../Config";
+import { RadioForm } from "../../ui/RadioForm";
 
 interface SettingFormProps {
   setIsSetting?: (a: boolean) => void;
@@ -27,11 +30,14 @@ function SettingForm(props: SettingFormProps) {
     defaultValues: defaultSetting as SettingTypes,
   });
 
-  const onSubmit: SubmitHandler<SettingTypes> = (data) => {};
+  const onSubmit: SubmitHandler<SettingTypes> = (data) => {
+    console.log(data);
+  };
   return (
     <FormProvider {...methods}>
       <Stack component="form" onSubmit={methods.handleSubmit(onSubmit)}>
         <TypeModeRadio />
+        <RomajiTypeRadio />
         <Box textAlign="center" mt={2}>
           <Button
             variant="outlined"

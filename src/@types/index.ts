@@ -12,11 +12,10 @@ import {
   SHIFT_REQUIRED,
   SettingTypes,
   TYPE_MODE,
- Option,
+  Option,
   Options,
   ROMAJI_TYPE,
 } from "./SettingTypes";
-
 
 export {
   DARK_THEME,

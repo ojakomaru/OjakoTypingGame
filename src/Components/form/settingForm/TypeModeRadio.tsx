@@ -1,6 +1,6 @@
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Option, SettingTypes } from "../../../@types";
+import { Option, SettingTypes, SHORT_TEXT } from "../../../@types";
 import {
   FormControl,
   FormControlLabel,
@@ -18,6 +18,7 @@ const TypeModeRadio = () => {
       <Controller
         name="typeMode"
         control={control}
+        defaultValue={SHORT_TEXT}
         render={({ field }) => (
           <RadioGroup name="typeMode">
             {TypeModeValues.map((radio: Option<string>) => (
