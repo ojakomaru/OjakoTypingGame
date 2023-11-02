@@ -1,42 +1,43 @@
+import React from "react";
 import {
+  FormControl,
+  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
-  FormControl,
-  FormLabel,
 } from "@mui/material";
-
-import { Options, Option, SettingTypes, ROMAJI_TYPE, TYPE_MODE } from "../../@types";
 import { useFormContext, Controller } from "react-hook-form";
+import { RadioGroupProps } from "@mui/material";
+import { Options, Option, SettingTypes } from "../../@types";
 
-export type RadioProps<T> = {
-  name: string;
+type RomajiTypeRadioProps = {
+  radioGroupProps: RadioGroupProps;
+  options: Options<string>;
   label?: string;
-  options: Options<T>;
 };
-export const RadioForm = (props: RadioProps<string>) => {
-  const { name, label, options } = props;
-  //  const { control } = useFormContext<SettingTypes>();
-  //  return (
-  //    <FormControl>
-  //      <FormLabel>{label}</FormLabel>
-  //      <Controller
-  //        name="radio"
-  //        control={control}
-  //        render={({ field }) => (
-  //          <RadioGroup name={name}>
-  //            {options.map((radio: Option<string>) => (
-  //              <FormControlLabel
-  //                {...field}
-  //                key={radio.value}
-  //                label={radio.label}
-  //                value={radio.value}
-  //                control={<Radio />}
-  //              />
-  //            ))}
-  //          </RadioGroup>
-  //        )}
-  //      />
-  //    </FormControl>
-  //  );
+
+export const RadioForm = ({ radioGroupProps, options, label }: RomajiTypeRadioProps) => {
+  const { control } = useFormContext<SettingTypes>();
+  return (
+    <FormControl>
+      {label ?? <FormLabel>{label}</FormLabel>}
+      <Controller
+        name={radioGroupProps.name as any}
+        control={control}
+        render={({ field }) => (
+          <RadioGroup {...radioGroupProps}>
+            {options.map((radio: Option<string>) => (
+              <FormControlLabel
+                {...field}
+                key={radio.value}
+                label={radio.label}
+                value={radio.value}
+                control={<Radio />}
+              />
+            ))}
+          </RadioGroup>
+        )}
+      />
+    </FormControl>
+  );
 };

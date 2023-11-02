@@ -50,7 +50,6 @@ const TypingForm: React.FC = () => {
     navigate("/");
   };
 
-  // 5. form要素のonSubmitに1.で取得しているhandleSubmitを指定します */
   return (
     <FormProvider {...methods}>
       <Stack

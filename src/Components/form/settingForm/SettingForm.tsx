@@ -1,11 +1,13 @@
 import React from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { SettingTypes, SHORT_TEXT, UPPER } from "../../../@types";
+import { SettingTypes, SHORT_TEXT, SHOW, UPPER } from "../../../@types";
 import { Stack, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import TypeModeRadio from "./TypeModeRadio";
-import RomajiTypeRadio from "./RomajiTypeRadio";
-import { RomajiTypeValues } from "../../../Config";
+import {
+  RomajiTypeValues,
+  TypeModeValues,
+  ShowRadioFLG,
+} from "../../../Config";
 import { RadioForm } from "../../ui/RadioForm";
 
 interface SettingFormProps {
@@ -14,9 +16,9 @@ interface SettingFormProps {
 
 const defaultSetting = {
   typeMode: SHORT_TEXT, // 短文
-  showFurigana: true, // ふりがなを表示
+  showFurigana: SHOW, // ふりがなを表示
   romajiType: UPPER, // 大文字になる
-  showKeyboard: true, // キーボードを表示
+  showKeyboard: SHOW, // キーボードを表示
 };
 
 function SettingForm(props: SettingFormProps) {
@@ -33,11 +35,46 @@ function SettingForm(props: SettingFormProps) {
   const onSubmit: SubmitHandler<SettingTypes> = (data) => {
     console.log(data);
   };
+
   return (
     <FormProvider {...methods}>
       <Stack component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-        <TypeModeRadio />
-        <RomajiTypeRadio />
+        <RadioForm
+          label="入力モード"
+          radioGroupProps={{
+            name: "typeMode",
+            defaultValue: SHORT_TEXT,
+            row: true,
+          }}
+          options={TypeModeValues}
+        />
+        <RadioForm
+          label="ひらがな表示"
+          radioGroupProps={{
+            name: "showHiragana",
+            defaultValue: SHOW,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+        />
+        <RadioForm
+          label="ローマ字設定"
+          radioGroupProps={{
+            name: "romajiType",
+            defaultValue: UPPER,
+            row: true,
+          }}
+          options={RomajiTypeValues}
+        />
+        <RadioForm
+          label="キーボード表示"
+          radioGroupProps={{
+            name: "showKeyboard",
+            defaultValue: SHOW,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+        />
         <Box textAlign="center" mt={2}>
           <Button
             variant="outlined"
