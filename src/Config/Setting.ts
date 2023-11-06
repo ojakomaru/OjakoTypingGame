@@ -16,4 +16,11 @@ const ShowRadioFLG: Options<string> = [
   { value: SHOW, label: "表示" },
   { value: HIDDEN, label: "非表示" },
 ];
-export { TypeModeValues, RomajiTypeValues, ShowRadioFLG };
+
+const defaultSetting = {
+  typeMode: SHORT_TEXT, // 短文
+  showFurigana: SHOW, // ふりがなを表示
+  romajiType: UPPER, // 大文字になる
+  showKeyboard: SHOW, // キーボードを表示
+};
+export { TypeModeValues, RomajiTypeValues, ShowRadioFLG, defaultSetting };

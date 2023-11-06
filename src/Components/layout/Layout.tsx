@@ -22,7 +22,7 @@ const Main = styled.section`
 `;
 
 const FooterWrapper = styled.footer`
-  margin: 1rem;
+  margin-top: 1rem;
   padding: 8 2;
   min-height: 30;
 `;
