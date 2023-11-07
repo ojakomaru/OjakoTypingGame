@@ -1,25 +1,30 @@
 import React, { useState } from "react";
-import {
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from "@mui/material";
+import { FormLabel, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
 import { RadioGroupProps } from "@mui/material";
-import { Options, Option, SettingTypes } from "../../../../@types";
+import {
+  Options,
+  Option,
+  SettingTypes,
+  TYPE_MODE,
+  ROMAJI_TYPE,
+  SHOW_RADIO
+} from "../../../../@types";
 import StyledRadioForm from "./StyledRadioForm";
 
 type RadioProps = {
   radioGroupProps: RadioGroupProps;
   options: Options<string>;
   label?: string;
+  setFunc: any
 };
 
-export const RadioForm = ({ radioGroupProps, options, label }: RadioProps) => {
+export const RadioForm = (props: RadioProps) => {
+  const { radioGroupProps, options, label, setFunc } = props;
   const { control } = useFormContext<SettingTypes>();
   const [checked, setSelectedValue] = useState(radioGroupProps.defaultValue);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFunc(event.target.value);
     setSelectedValue(event.target.value);
   };
 

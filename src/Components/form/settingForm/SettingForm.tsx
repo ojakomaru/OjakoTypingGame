@@ -11,6 +11,7 @@ import {
 } from "../../../Config";
 import { FormWrapper, RadioForm } from "./presentation";
 import saveSettingData from "./container/savaSettingData";
+import { SettingDataContext } from "../../../Contexts";
 
 
 interface SettingFormProps {
@@ -24,6 +25,12 @@ function SettingForm(props: SettingFormProps) {
     props.setIsSetting!(false);
     navigate("/");
   };
+  const {
+    setTypeMode,
+    setShowFurigana,
+    setrRomajiType,
+    setShowKeyboard,
+  } = React.useContext(SettingDataContext);
   const methods = useForm<SettingTypes>({
     defaultValues: defaultSetting as SettingTypes,
   });
@@ -44,6 +51,7 @@ function SettingForm(props: SettingFormProps) {
               row: true,
             }}
             options={TypeModeValues}
+            setFunc={setTypeMode}
           />
           <RadioForm
             label="ひらがな表示"
@@ -53,6 +61,7 @@ function SettingForm(props: SettingFormProps) {
               row: true,
             }}
             options={ShowRadioFLG}
+            setFunc={setShowFurigana}
           />
           <RadioForm
             label="ローマ字設定"
@@ -62,6 +71,7 @@ function SettingForm(props: SettingFormProps) {
               row: true,
             }}
             options={RomajiTypeValues}
+            setFunc={setrRomajiType}
           />
           <RadioForm
             label="キーボード表示"
@@ -71,6 +81,7 @@ function SettingForm(props: SettingFormProps) {
               row: true,
             }}
             options={ShowRadioFLG}
+            setFunc={setShowKeyboard}
           />
           <Box textAlign="center" mt={2}>
             <Button

@@ -7,7 +7,7 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../form/container/saveTypingData";
 import TitleInput from "../form/presentation/TitleInput";
 import ProblemList from "../form/presentation/ProblemList";
-import { TypingDataContext } from "../../Contexts/TypingDataContext";
+import { TypingDataContext } from "../../Contexts";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 

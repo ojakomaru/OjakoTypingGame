@@ -4,6 +4,7 @@ import GameBoard from "../../TypingPlay/presentation/GameBoard";
 import { HiraganaText } from "../../TypingPlay/presentation/HiraganaText";
 import { QuestionText } from "../../TypingPlay/presentation/QuestionText";
 import { RomajiText } from "../../TypingPlay/presentation/RomajiText";
+import { SettingDataContext } from "../../../Contexts";
 
 type SettingExampleProps = {
   typingdata: TypingDataType;
@@ -17,6 +18,16 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
   const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string | undefined>("");
   const [kanaText, setKanaText] = useState<string | undefined>("");
+   const {
+     typeMode,
+     setTypeMode,
+     showFurigana,
+     setShowFurigana,
+     romajiType,
+     setrRomajiType,
+     showKeyboard,
+     setShowKeyboard,
+   } = React.useContext(SettingDataContext);
 
   // 問題文生成
   useEffect(() => {

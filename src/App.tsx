@@ -5,12 +5,18 @@ import { Route as AppRoute } from "./@types/Route";
 import { PageDefault } from "./Components/PageDefault";
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
-import { TypingDataProvider, ThemeModeContext } from "./Contexts";
+import {
+  TypingDataProvider,
+  ThemeModeContext,
+  SettingDataProvider,
+} from "./Contexts";
 import { getAppTheme } from "./styles/defaultTheme";
 import { DARK_THEME, LIGHT_THEME, AppMode } from "./@types";
 
 const App: FC = () => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)") ? DARK_THEME : LIGHT_THEME;
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
+    ? DARK_THEME
+    : LIGHT_THEME;
   const [mode, setMode] = useState<AppMode>(prefersDarkMode);
 
   const themeMode = useMemo(
@@ -36,20 +42,22 @@ const App: FC = () => {
 
   return (
     <TypingDataProvider>
-      <ThemeModeContext.Provider value={themeMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline enableColorScheme />
-          <BrowserRouter>
-            <Routes>
-              {routes.map((route: AppRoute) =>
-                route.subRoutes
-                  ? route.subRoutes.map((item: AppRoute) => addRoute(item))
-                  : addRoute(route)
-              )}
-            </Routes>
-          </BrowserRouter>
-        </ThemeProvider>
-      </ThemeModeContext.Provider>
+      <SettingDataProvider>
+        <ThemeModeContext.Provider value={themeMode}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme />
+            <BrowserRouter>
+              <Routes>
+                {routes.map((route: AppRoute) =>
+                  route.subRoutes
+                    ? route.subRoutes.map((item: AppRoute) => addRoute(item))
+                    : addRoute(route)
+                )}
+              </Routes>
+            </BrowserRouter>
+          </ThemeProvider>
+        </ThemeModeContext.Provider>
+      </SettingDataProvider>
     </TypingDataProvider>
   );
 };

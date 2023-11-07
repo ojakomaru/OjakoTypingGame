@@ -3,7 +3,7 @@ import PlayModal from "../presentation/playModal";
 import PlayingGame from "../../TypingPlay/container/PlayingGame";
 import HomeDisplay from "../presentation/homeDisplay";
 import MainDiaplayLayout from "../../layout/MainDiaplayLayout";
-import { TypingDataContext } from "../../../Contexts/TypingDataContext";
+import { TypingDataContext } from "../../../Contexts";
 import SettingExample from "../presentation/SettingExample";
 
 type MainFeaturedPostProps = {
