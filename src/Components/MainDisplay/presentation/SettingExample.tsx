@@ -18,16 +18,16 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
   const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string | undefined>("");
   const [kanaText, setKanaText] = useState<string | undefined>("");
-   const {
-     typeMode,
-     setTypeMode,
-     showFurigana,
-     setShowFurigana,
-     romajiType,
-     setrRomajiType,
-     showKeyboard,
-     setShowKeyboard,
-   } = React.useContext(SettingDataContext);
+  const {
+    typeMode,
+    setTypeMode,
+    showFurigana,
+    setShowFurigana,
+    romajiType,
+    setrRomajiType,
+    showKeyboard,
+    setShowKeyboard,
+  } = React.useContext(SettingDataContext);
 
   // 問題文生成
   useEffect(() => {
@@ -51,7 +51,7 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
     setProblems(problems);
     return true;
   };
-  return(
+  return (
     <GameBoard>
       <HiraganaText kanaText={kanaText} />
       <QuestionText ref={questionRef} />

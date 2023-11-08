@@ -14,9 +14,13 @@ type HomeDisplayProps = {
 const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
   const { title, problems } = displayData;
   const navigate = useNavigate();
-  const GameStart = () => {
+  const gameStart = () => {
     setIsHome!(false);
     navigate("/play", { state: displayData });
+  };
+  const settingShow = () => {
+    setIsHome!(false);
+    navigate("/settings", { state: displayData });
   };
 
   return (
@@ -50,14 +54,19 @@ const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Button
-          onClick={GameStart}
+          onClick={gameStart}
           variant="contained"
           size="large"
           color="primary"
         >
           Start
         </Button>
-        <Button variant="contained" size="large" color="success">
+        <Button
+          onClick={settingShow}
+          variant="contained"
+          size="large"
+          color="success"
+        >
           Setting
         </Button>
       </Box>

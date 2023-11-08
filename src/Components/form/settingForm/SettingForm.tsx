@@ -26,14 +26,16 @@ function SettingForm(props: SettingFormProps) {
     navigate("/");
   };
   const {
+    typeMode,
     setTypeMode,
+    showFurigana,
     setShowFurigana,
+    romajiType,
     setrRomajiType,
+    showKeyboard,
     setShowKeyboard,
   } = React.useContext(SettingDataContext);
-  const methods = useForm<SettingTypes>({
-    defaultValues: defaultSetting as SettingTypes,
-  });
+  const methods = useForm<SettingTypes>();
 
   const onSubmit: SubmitHandler<SettingTypes> = (data) => {
     saveSettingData(data);
@@ -47,7 +49,7 @@ function SettingForm(props: SettingFormProps) {
             label="入力モード"
             radioGroupProps={{
               name: "typeMode",
-              defaultValue: SHORT_TEXT,
+              defaultValue: typeMode,
               row: true,
             }}
             options={TypeModeValues}
@@ -57,7 +59,7 @@ function SettingForm(props: SettingFormProps) {
             label="ひらがな表示"
             radioGroupProps={{
               name: "showFurigana",
-              defaultValue: SHOW,
+              defaultValue: showFurigana,
               row: true,
             }}
             options={ShowRadioFLG}
@@ -67,7 +69,7 @@ function SettingForm(props: SettingFormProps) {
             label="ローマ字設定"
             radioGroupProps={{
               name: "romajiType",
-              defaultValue: UPPER,
+              defaultValue: romajiType,
               row: true,
             }}
             options={RomajiTypeValues}
@@ -77,7 +79,7 @@ function SettingForm(props: SettingFormProps) {
             label="キーボード表示"
             radioGroupProps={{
               name: "showKeyboard",
-              defaultValue: SHOW,
+              defaultValue: showKeyboard,
               row: true,
             }}
             options={ShowRadioFLG}

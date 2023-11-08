@@ -6,9 +6,6 @@ import {
   Options,
   Option,
   SettingTypes,
-  TYPE_MODE,
-  ROMAJI_TYPE,
-  SHOW_RADIO
 } from "../../../../@types";
 import StyledRadioForm from "./StyledRadioForm";
 
