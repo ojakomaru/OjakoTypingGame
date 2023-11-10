@@ -1,6 +1,7 @@
 import React, { Ref, RefObject, forwardRef } from "react";
 import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
+import { RomajiTyping } from "../container/RomajiTyping";
 
 type RomajiTextProps = {
   romaji: string | undefined;
@@ -40,15 +41,7 @@ function RomajiTextCore(
   const { romaji, className } = props;
   return (
     <StyleRomajiText ref={ref} id="checkText" className={className}>
-      <span className="current-letter">{romaji![0]}</span>
-      {romaji!
-        .split("")
-        .slice(1)
-        .map((char: string, index: number) => (
-          <span className="waiting-letters" key={index}>
-            {char}
-          </span>
-        ))}
+      <RomajiTyping romaji={romaji} />
     </StyleRomajiText>
   );
 }

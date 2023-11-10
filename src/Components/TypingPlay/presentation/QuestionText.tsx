@@ -3,8 +3,7 @@ import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
 
 type QuestionTextProps = {
-  ref: RefObject<HTMLParagraphElement>;
-  className?: string;
+  questionText: string;
 };
 
 const StyleQuestionText = styled(Paragraph)`
@@ -14,15 +13,14 @@ const StyleQuestionText = styled(Paragraph)`
   padding: 3px 5px;
 `;
 
-function QuestionTextCore(
-  props: QuestionTextProps,
-  ref: Ref<HTMLParagraphElement>
-) {
-  const { className } = props;
+export function QuestionText(props: QuestionTextProps) {
+  const { questionText } = props;
   return (
-    <StyleQuestionText ref={ref} id="questionText" className={className} />
+    <StyleQuestionText id="questionText" >
+      {questionText}
+    </StyleQuestionText>
   );
 }
-export const QuestionText = forwardRef<HTMLParagraphElement, QuestionTextProps>(
-  QuestionTextCore
-);
+// export const questionText = forwardRef<HTMLParagraphElement, QuestionTextProps>(
+//   QuestionTextCore
+// );

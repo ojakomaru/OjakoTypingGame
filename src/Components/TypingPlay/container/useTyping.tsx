@@ -2,11 +2,11 @@ import { DependencyList, useCallback } from "react";
 import { useWindowEvent } from "../../../Hooks/useWindowEvent";
 
 /**
- * useStartGame
+ * useTyping
  * @param setIsPlaying ゲーム実行中フラグを切り替える為のステート関数
  * @param deps 実行依存ステートの配列 空でも可
  */
-export const useStartGame = (
+export const useTyping = (
   setIsPlaying: (a: boolean) => void,
   deps: DependencyList
 ) => {

@@ -1,13 +1,15 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { type TypingDataType } from "../../../@types";
+import { SHOW, type TypingDataType } from "../../../@types";
 import { RomajiText } from "../presentation/RomajiText";
 import { HiraganaText } from "../presentation/HiraganaText";
 import { useNavigate } from "react-router-dom";
 import { QuestionText } from "../presentation/QuestionText";
 import { useMissMessage } from "./useMissMessage";
+import useReloadProblem from "./useReloadProblem";
 import GameBoard from "../presentation/GameBoard";
 import Romanizer from "./Romanizer";
+import { SettingDataContext } from "../../../Contexts";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -16,20 +18,20 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, setIsPlaying } = props;
   const navigate = useNavigate();
+  const {
+    typeMode,
+    showFurigana,
+    romajiType,
+    showKeyboard,
+  } = React.useContext(SettingDataContext);
   const romajiRef = useRef<HTMLParagraphElement>(null);
-  const questionRef = useRef<HTMLParagraphElement>(null);
   const kanaRef = useRef<HTMLParagraphElement>(null);
-  // 問題をコピーしておく（破壊的な配列操作を行うため）
-  const cpProblems = structuredClone(typingdata.problems);
-  const [problems, setProblems] = useState(cpProblems);
-  // 問題文の数
-  const [problemLength] = useState(problems.length);
-  const [romajiText, setRomajiText] = useState<string | undefined>("");
-  const [kanaText, setKanaText] = useState<string | undefined>("");
+  const [romajiText, kanaText, questionText, reloadProblem] =
+    useReloadProblem(typingdata);
   const [position, setPosition] = useState<number>(0);
   const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
-
+  // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
   const romanizer = new Romanizer({
     mapping: Romanizer.MAPPING_KUNREI,
@@ -41,24 +43,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   useEffect(() => {
     reloadProblem();
   }, []);
-  const reloadProblem = (): boolean => {
-    if (problems.length == 0) return false;
-    // 初期表示はランダムにする
-    if (problemLength === problems.length) {
-      const rnd = Math.floor(Math.random() * (problemLength - 1));
-      const problem = problems.splice(rnd, 1);
-      setRomajiText(problem[0].romazi);
-      setKanaText(problem[0].kana);
-      questionRef.current!.innerText = problem[0].text;
-    } else {
-      const problem = problems.splice(0, 1);
-      setRomajiText(problem[0].romazi);
-      setKanaText(problem[0].kana);
-      questionRef.current!.innerText = problem[0].text;
-    }
-    setProblems(problems);
-    return true;
-  };
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -143,8 +127,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   return (
     <GameBoard>
       {missMessage}
-      <HiraganaText ref={kanaRef} kanaText={kanaText} />
-      <QuestionText ref={questionRef} />
+      {showFurigana  === SHOW && <HiraganaText ref={kanaRef} kanaText={kanaText} />}
+      <QuestionText questionText={questionText} />
       <RomajiText ref={romajiRef} romaji={romajiText} />
     </GameBoard>
   );
