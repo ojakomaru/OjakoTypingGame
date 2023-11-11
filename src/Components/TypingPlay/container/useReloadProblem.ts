@@ -1,9 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react'
-import { TypingDataType } from '../../../@types'
+import React, { useCallback, useRef, useState } from "react";
+import { TypingDataType } from "../../../@types";
 
 const useReloadProblem = (
   typingdata: TypingDataType
-): [string, string, string, () => boolean] => {
+) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
   const cpProblems = structuredClone(typingdata.problems);
   const [problems, setProblems] = useState(cpProblems);
@@ -33,7 +33,7 @@ const useReloadProblem = (
     return true;
   };
 
-  return [romajiText, kanaText, questionText, reloadProblem];
+  return { romajiText, kanaText, questionText, reloadProblem };
 };
 
-export default useReloadProblem
+export default useReloadProblem;

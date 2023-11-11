@@ -18,7 +18,7 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
   useEffect(() => {
     reloadProblem();
   }, []);
-  const [romajiText, kanaText, questionText, reloadProblem] =
+  const { romajiText, kanaText, questionText, reloadProblem } =
     useReloadProblem(typingdata);
   return (
     <GameBoard>

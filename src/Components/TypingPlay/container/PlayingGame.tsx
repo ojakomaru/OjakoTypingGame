@@ -19,18 +19,13 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, setIsPlaying } = props;
   const navigate = useNavigate();
-  const {
-    typeMode,
-    showFurigana,
-    romajiType,
-    showKeyboard,
-  } = React.useContext(SettingDataContext);
-  // const romajiRef = useRef<HTMLParagraphElement>(null);
+  const { typeMode, showFurigana, romajiType, showKeyboard } =
+    React.useContext(SettingDataContext);
   const kanaRef = useRef<HTMLParagraphElement>(null);
-  const [romajiText, kanaText, questionText, reloadProblem] =
+  const { romajiText, kanaText, questionText, reloadProblem } =
     useReloadProblem(typingdata);
-    const [position, setPosition] = useState<number>(0);
-    const {romajiRef, romajiInit} = useRomajiTypedMove();
+  const [position, setPosition] = useState<number>(0);
+  const { romajiRef, romajiInit } = useRomajiTypedMove();
   const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
   // ミスした際のポップアップロジック
@@ -52,7 +47,6 @@ export default function PlayingGame(props: PlayingGameProps) {
     document.onkeydown = function (e) {
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
-      // let inputText = romajiRef.current!.children;
       let hiragana = kanaRef.current!.children;
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
       if (e.key === "Escape") {
@@ -61,15 +55,10 @@ export default function PlayingGame(props: PlayingGameProps) {
         // 正解時の処理
       } else if (e.key.toUpperCase() === romajiText![position]) {
         romajiTyped.success(position);
-        // 正解時現在の文字を入力済みとする
-        // inputText[position].classList.add("typed-letters");
-        // inputText[position].classList.remove("current-letter");
 
         // まだ入力していない文字があるとき
         if (position <= romajiText!.length - 2) {
-          // 次の位置へ移動
           romajiTyped.next(position);
-          // inputText[position + 1].className = "current-letter";
           setPosition(position + 1);
           hiragana[kanaPos].classList.add("typed-letters");
 
@@ -97,12 +86,6 @@ export default function PlayingGame(props: PlayingGameProps) {
           setPosition(0);
           setKanaPos(0);
           romajiTyped.reset();
-          // inputText[0].classList.add("current-letter");
-          // Array.from(inputText).forEach((char) => {
-          //   char.classList.remove("typed-letters");
-          //   char.classList.remove("typo");
-          //   char.classList.add("waiting-letters");
-          // });
           Array.from(hiragana).forEach((char) =>
             char.classList.remove("typed-letters")
           );
@@ -119,8 +102,6 @@ export default function PlayingGame(props: PlayingGameProps) {
             // うち間違えた位置の配列にその位置を追加
             setTypo([...typo, position]);
             romajiTyped.miss(position);
-            // 打ち間違えた文字であることを示すclassを追加
-            // inputText[position].classList.add("typo");
           }
         }
       }
@@ -130,11 +111,12 @@ export default function PlayingGame(props: PlayingGameProps) {
     };
   });
 
-  // HTML
   return (
     <GameBoard>
       {missMessage}
-      {showFurigana  === SHOW && <HiraganaText ref={kanaRef} kanaText={kanaText} />}
+      {showFurigana === SHOW && (
+        <HiraganaText ref={kanaRef} kanaText={kanaText} />
+      )}
       <QuestionText questionText={questionText} />
       <RomajiText ref={romajiRef} romaji={romajiText} />
     </GameBoard>
