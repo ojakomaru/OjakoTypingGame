@@ -13,7 +13,6 @@ import { FormWrapper, RadioForm } from "./presentation";
 import saveSettingData from "./container/savaSettingData";
 import { SettingDataContext } from "../../../Contexts";
 
-
 interface SettingFormProps {
   setIsSetting?: (a: boolean) => void;
 }
@@ -35,7 +34,9 @@ function SettingForm(props: SettingFormProps) {
     showKeyboard,
     setShowKeyboard,
   } = React.useContext(SettingDataContext);
-  const methods = useForm<SettingTypes>();
+  const methods = useForm<SettingTypes>({
+    defaultValues: defaultSetting as SettingTypes,
+  });
 
   const onSubmit: SubmitHandler<SettingTypes> = (data) => {
     saveSettingData(data);

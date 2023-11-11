@@ -1,4 +1,4 @@
-import React, { Ref, RefObject, forwardRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
 
@@ -21,6 +21,3 @@ export function QuestionText(props: QuestionTextProps) {
     </StyleQuestionText>
   );
 }
-// export const questionText = forwardRef<HTMLParagraphElement, QuestionTextProps>(
-//   QuestionTextCore
-// );

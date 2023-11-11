@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useRef, useState } from 'react'
 import { TypingDataType } from '../../../@types'
 
 const useReloadProblem = (

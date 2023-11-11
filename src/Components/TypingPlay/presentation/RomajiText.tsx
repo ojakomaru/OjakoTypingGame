@@ -4,7 +4,7 @@ import Paragraph from "../../ui/Paragraph";
 import { RomajiTyping } from "../container/RomajiTyping";
 
 type RomajiTextProps = {
-  romaji: string | undefined;
+  romaji: string;
   ref: RefObject<HTMLParagraphElement>;
   className?: string;
 };

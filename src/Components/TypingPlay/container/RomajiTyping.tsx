@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export const RomajiTyping = ({ romaji }: { romaji: string | undefined }) => {
+export const RomajiTyping = ({ romaji }: { romaji: string }) => {
   return (
     <React.Fragment>
       <span className="current-letter">{romaji![0]}</span>

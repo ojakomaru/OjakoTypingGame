@@ -4,7 +4,7 @@ import Paragraph from "../../ui/Paragraph";
 
 type HiraganaTextProps = {
   ref: RefObject<HTMLParagraphElement>;
-  kanaText: string | undefined;
+  kanaText: string ;
   className?: string;
 };
 
