@@ -24,7 +24,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   const kanaRef = useRef<HTMLParagraphElement>(null);
   const { romajiText, kanaText, questionText, reloadProblem } =
     useReloadProblem(typingdata);
-  const [position, setPosition] = useState<number>(0);
+  const [romaPos, setPosition] = useState<number>(0);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
@@ -53,19 +53,19 @@ export default function PlayingGame(props: PlayingGameProps) {
         setIsPlaying!(false);
         navigate("/");
         // 正解時の処理
-      } else if (e.key.toUpperCase() === romajiText![position]) {
-        romajiTyped.success(position);
+      } else if (e.key.toUpperCase() === romajiText![romaPos]) {
+        romajiTyped.success(romaPos);
 
         // まだ入力していない文字があるとき
-        if (position <= romajiText!.length - 2) {
-          romajiTyped.next(position);
-          setPosition(position + 1);
+        if (romaPos <= romajiText!.length - 2) {
+          romajiTyped.next(romaPos);
+          setPosition(romaPos + 1);
           hiragana[kanaPos].classList.add("typed-letters");
 
           let isKanaMove: number = romanizer.isKanaMove(
             kanaText![kanaPos],
             romajiText!,
-            position
+            romaPos
           );
           switch (isKanaMove) {
             case 2:
@@ -98,10 +98,10 @@ export default function PlayingGame(props: PlayingGameProps) {
         if (e.key !== "Shift") {
           messageShow();
           // その位置で初めてのうち間違えであるとき
-          if (typo.indexOf(position) === -1) {
+          if (typo.indexOf(romaPos) === -1) {
             // うち間違えた位置の配列にその位置を追加
-            setTypo([...typo, position]);
-            romajiTyped.miss(position);
+            setTypo([...typo, romaPos]);
+            romajiTyped.miss(romaPos);
           }
         }
       }

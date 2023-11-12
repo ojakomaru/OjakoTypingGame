@@ -13,11 +13,10 @@ const StyleQuestionText = styled(Paragraph)`
   padding: 3px 5px;
 `;
 
-export function QuestionText(props: QuestionTextProps) {
+const QuestionText = React.memo((props: QuestionTextProps) => {
   const { questionText } = props;
   return (
-    <StyleQuestionText id="questionText" >
-      {questionText}
-    </StyleQuestionText>
+    <StyleQuestionText id="questionText">{questionText}</StyleQuestionText>
   );
-}
+});
+export { QuestionText };

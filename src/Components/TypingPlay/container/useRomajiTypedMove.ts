@@ -2,8 +2,6 @@ import React, { useCallback, useRef, useState } from "react";
 
 const useRomajiTypedMove = () => {
   const romajiRef = useRef<HTMLParagraphElement>(null);
-  const [position, setPosition] = useState<number>(0);
-
   const romajiInit = useCallback(() => {
     let inputText = romajiRef.current!.children;
     return {
@@ -28,10 +26,6 @@ const useRomajiTypedMove = () => {
       miss: (position: number) => inputText[position].classList.add("typo"),
     };
   }, []);
-
-  const romajiTyping = useCallback((key: string, romajiText: string) => {
-
-  },[]);
 
   return { romajiRef, romajiInit };
 };

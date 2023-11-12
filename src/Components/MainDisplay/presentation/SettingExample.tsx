@@ -11,8 +11,7 @@ type SettingExampleProps = {
   typingdata: TypingDataType;
 };
 const SettingExample = ({ typingdata }: SettingExampleProps) => {
-  const { typeMode, showFurigana, romajiType, showKeyboard } =
-    React.useContext(SettingDataContext);
+  const { showFurigana } = React.useContext(SettingDataContext);
 
   // 問題文生成
   useEffect(() => {
