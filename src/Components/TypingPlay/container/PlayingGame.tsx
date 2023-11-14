@@ -23,7 +23,7 @@ export default function PlayingGame(props: PlayingGameProps) {
     React.useContext(SettingDataContext);
   const kanaRef = useRef<HTMLParagraphElement>(null);
   const { romajiText, kanaText, questionText, reloadProblem } =
-    useReloadProblem(typingdata);
+    useReloadProblem(typingdata, );
   const [romaPos, setPosition] = useState<number>(0);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const [kanaPos, setKanaPos] = useState(0);
@@ -38,7 +38,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // 問題文生成
   useEffect(() => {
-    reloadProblem();
+    reloadProblem(typeMode, romajiType);
   }, []);
 
   /* タイピング入力処理 */
@@ -52,8 +52,9 @@ export default function PlayingGame(props: PlayingGameProps) {
       if (e.key === "Escape") {
         setIsPlaying!(false);
         navigate("/");
-        // 正解時の処理
-      } else if (e.key.toUpperCase() === romajiText![romaPos]) {
+      }
+      // 正解時の処理
+      if (e.key.toUpperCase() === romajiText![romaPos]) {
         romajiTyped.success(romaPos);
 
         // まだ入力していない文字があるとき
@@ -81,7 +82,7 @@ export default function PlayingGame(props: PlayingGameProps) {
               hiragana[kanaPos].classList.remove("typed-letters");
               break;
           }
-          // すべての文字を入力したとき
+        // すべての文字を入力したとき
         } else {
           setPosition(0);
           setKanaPos(0);
@@ -89,11 +90,11 @@ export default function PlayingGame(props: PlayingGameProps) {
           Array.from(hiragana).forEach((char) =>
             char.classList.remove("typed-letters")
           );
-          let isProblem = reloadProblem();
+          let isProblem = reloadProblem(typeMode, romajiType);
           if (!isProblem) console.log("GameSet!!");
         }
 
-        // ミスした時の処理
+      // ミスした時の処理
       } else {
         if (e.key !== "Shift") {
           messageShow();
@@ -117,8 +118,8 @@ export default function PlayingGame(props: PlayingGameProps) {
       {showFurigana === SHOW && (
         <HiraganaText ref={kanaRef} kanaText={kanaText} />
       )}
-      <QuestionText questionText={questionText} />
       <RomajiText ref={romajiRef} romaji={romajiText} />
+      <QuestionText questionText={questionText} />
     </GameBoard>
   );
 }

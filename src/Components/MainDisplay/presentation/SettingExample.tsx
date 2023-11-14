@@ -11,14 +11,15 @@ type SettingExampleProps = {
   typingdata: TypingDataType;
 };
 const SettingExample = ({ typingdata }: SettingExampleProps) => {
-  const { showFurigana } = React.useContext(SettingDataContext);
+  const { typeMode, romajiType,showFurigana } =
+    React.useContext(SettingDataContext);
 
   // 問題文生成
   useEffect(() => {
-    reloadProblem();
+    reloadProblem(typeMode, romajiType);
   }, []);
-  const { romajiText, kanaText, questionText, reloadProblem } =
-    useReloadProblem(typingdata);
+   const { romajiText, kanaText, questionText, reloadProblem } =
+     useReloadProblem(typingdata);
   return (
     <GameBoard>
       {showFurigana === SHOW && <HiraganaText kanaText={kanaText} />}
