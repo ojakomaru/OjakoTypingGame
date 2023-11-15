@@ -46,41 +46,65 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     typeMode: TYPE_MODE,
     romajiType: ROMAJI_TYPE
   ): boolean => {
-    // 問題文がないなら真っ白
-    if (problems.length == 0) return false;
-
-    if (problemLength === problems.length) {
-      switch (typeMode) {
-        case SHORT_TEXT:
+    let isMore = false;
+    const spliceSet = () => {
+      const problem = problems.splice(0, 1);
+      setRomajiText(problem[0].romazi as string);
+      setKanaText(problem[0].kana as string);
+    };
+    // 問題文が無くなったらfalse
+    if (problems.length == 0) return isMore;
+    // 設定モードにより分岐
+    switch (typeMode) {
+      case SHORT_TEXT: // 短文モードの場合
+        if (problemLength === problems.length) {
           const rnd = Math.floor(Math.random() * (problemLength - 1));
-          const rnd_problem = problems.splice(rnd, 1);
-          setRomajiText(rnd_problem[0].romazi as string);
-          setKanaText(rnd_problem[0].kana as string);
-          setQesutionText(rnd_problem[0].text);
-          break;
-        case LONG_TEXT:
-          let text;
-          for (let i = 0; i < problems.length; i++) {
-            text = problems[i].text + "\r";
-          }
-          setQesutionText(text as string);
-          const problem = problems.splice(0, 1);
-
+          const problem = problems.splice(rnd, 1);
           setRomajiText(problem[0].romazi as string);
           setKanaText(problem[0].kana as string);
-          break;
-        case REAL_TEXT:
-          break;
-        default:
-      }
-    } else {
-      // const problem = problems.splice(0, 1);
-      // setRomajiText(problem[0].romazi as string);
-      // setKanaText(problem[0].kana as string);
-      // setQesutionText(problem[0].text as string);
+          setQesutionText(problem[0].text);
+        } else {
+          const problem = problems.splice(0, 1);
+          setRomajiText(problem[0].romazi as string);
+          setKanaText(problem[0].kana as string);
+          setQesutionText(problem[0].text as string);
+        }
+        setProblems(problems);
+        isMore = true;
+        break;
+      case LONG_TEXT: // 長文モードの場合
+        if (problemLength === problems.length) {
+          let text: string = "";
+          for (let i = 0; i < problems.length; i++) {
+            text += `${problems[i].text}\n`;
+          }
+          setQesutionText(text);
+          spliceSet();
+        } else {
+          spliceSet();
+        }
+        setProblems(problems);
+        isMore = true;
+        break;
+      case REAL_TEXT:
+        if (problemLength === problems.length) {
+          const rnd = Math.floor(Math.random() * (problemLength - 1));
+          const problem = problems.splice(rnd, 1);
+          setRomajiText(problem[0].romazi as string);
+          setKanaText(problem[0].kana as string);
+          setQesutionText(problem[0].text);
+        } else {
+          const problem = problems.splice(0, 1);
+          setRomajiText(problem[0].romazi as string);
+          setKanaText(problem[0].kana as string);
+          setQesutionText(problem[0].text as string);
+        }
+        setProblems(problems);
+        isMore = true;
+        break;
+      default:
     }
-    setProblems(problems);
-    return true;
+    return isMore;
   };
 
   return { romajiText, kanaText, questionText, reloadProblem };

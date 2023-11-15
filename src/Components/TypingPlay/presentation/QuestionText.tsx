@@ -15,8 +15,12 @@ const StyleQuestionText = styled(Paragraph)`
 
 const QuestionText = React.memo((props: QuestionTextProps) => {
   const { questionText } = props;
-  return (
-    <StyleQuestionText id="questionText">{questionText}</StyleQuestionText>
-  );
+  const texts = questionText.split('\n').map((item, index) => (
+    <React.Fragment key={index}>
+      {item}
+      <br />
+    </React.Fragment>
+  ))
+  return <StyleQuestionText id="questionText">{texts}</StyleQuestionText>;
 });
 export { QuestionText };
