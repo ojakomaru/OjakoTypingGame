@@ -1,16 +1,13 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { SHOW, type TypingDataType } from "../../../@types";
-import { RomajiText } from "../presentation/RomajiText";
-import { HiraganaText } from "../presentation/HiraganaText";
 import { useNavigate } from "react-router-dom";
-import { QuestionText } from "../presentation/QuestionText";
+import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
 import { useMissMessage } from "./useMissMessage";
 import useReloadProblem from "./useReloadProblem";
 import useRomajiTypedMove from "./useRomajiTypedMove";
-import GameBoard from "../presentation/GameBoard";
 import Romanizer from "./Romanizer";
 import { SettingDataContext } from "../../../Contexts";
+import { GameBoard, HiraganaText, RomajiText, QuestionText } from "../presentation";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -28,6 +25,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const [kanaPos, setKanaPos] = useState(0);
   const [typo, setTypo] = useState(new Array(0));
+  const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
   const romanizer = new Romanizer({
@@ -119,7 +117,15 @@ export default function PlayingGame(props: PlayingGameProps) {
         <HiraganaText ref={kanaRef} kanaText={kanaText} />
       )}
       <RomajiText ref={romajiRef} romaji={romajiText} />
-      <QuestionText questionText={questionText} />
+      {typeMode === LONG_TEXT ? (
+        <QuestionText
+          questionText={questionText}
+          longTextMode
+          scrollOn={scrollCount}
+        />
+      ) : (
+        <QuestionText questionText={questionText} />
+      )}
     </GameBoard>
   );
 }

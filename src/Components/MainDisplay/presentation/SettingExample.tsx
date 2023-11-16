@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SHOW, type TypingDataType } from "../../../@types";
-import GameBoard from "../../TypingPlay/presentation/GameBoard";
-import { HiraganaText } from "../../TypingPlay/presentation/HiraganaText";
-import { QuestionText } from "../../TypingPlay/presentation/QuestionText";
-import { RomajiText } from "../../TypingPlay/presentation/RomajiText";
 import { SettingDataContext } from "../../../Contexts";
 import useReloadProblem from "../../TypingPlay/container/useReloadProblem";
+import { GameBoard, HiraganaText, QuestionText, RomajiText } from "../../TypingPlay/presentation";
 
 type SettingExampleProps = {
   typingdata: TypingDataType;
