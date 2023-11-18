@@ -14,30 +14,10 @@ const TitleInput: React.FC = () => {
         minLength: { value: 2, message: "2文字以上で入力してください。" },
       }}
       textFieldProps={{
-        label :"タイピングタイトル",
+        label: "タイピングタイトル",
+        sx: { width: "100%" },
       }}
     />
-
-    // <>
-    //   {/*Controllerコンポーネントで TextFieldをReactHookFormと紐づける*/}
-    //   <Controller
-    //     name="title"
-    //     control={control}
-    //     rules={{
-    //       required: "名前を入力してください。",
-    //       minLength: { value: 2, message: "2文字以上で入力してください。" },
-    //     }}
-    //     render={({ field, fieldState }) => (
-    //       <TextField
-    //         {...field}
-    //         type="text"
-    //         label="タイピングタイトル"
-    //         error={fieldState.invalid}
-    //         helperText={fieldState.error?.message}
-    //       />
-    //     )}
-    //   />
-    // </>
   );
 };
 export default TitleInput;

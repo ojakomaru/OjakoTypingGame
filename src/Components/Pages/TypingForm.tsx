@@ -2,29 +2,14 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { type TypingDataType } from "../../@types";
-import { Stack, Button, Box } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import saveTypingData from "../form/container/saveTypingData";
 import TitleInput from "../form/presentation/TitleInput";
 import ProblemList from "../form/presentation/ProblemList";
 import { TypingDataContext } from "../../Contexts";
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { FormWrapper } from "../form/settingForm/presentation";
 import Layout from "../layout/Layout";
-
-const FormLayout = css`
-  min-height: 45vh;
-  min-width: 65ch;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 3rem auto;
-  > div {
-    width: 55%;
-  }
-`;
 
 const TypingForm: React.FC = () => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
