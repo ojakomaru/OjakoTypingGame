@@ -7,7 +7,13 @@ import useReloadProblem from "./useReloadProblem";
 import useRomajiTypedMove from "./useRomajiTypedMove";
 import Romanizer from "./Romanizer";
 import { SettingDataContext } from "../../../Contexts";
-import { GameBoard, HiraganaText, RomajiText, QuestionText } from "../presentation";
+import {
+  GameBoard,
+  HiraganaText,
+  RomajiText,
+  QuestionText,
+} from "../presentation";
+import { Divider } from "@mui/material";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -20,7 +26,7 @@ export default function PlayingGame(props: PlayingGameProps) {
     React.useContext(SettingDataContext);
   const kanaRef = useRef<HTMLParagraphElement>(null);
   const { romajiText, kanaText, questionText, reloadProblem } =
-    useReloadProblem(typingdata, );
+    useReloadProblem(typingdata);
   const [romaPos, setPosition] = useState<number>(0);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const [kanaPos, setKanaPos] = useState(0);
@@ -80,7 +86,7 @@ export default function PlayingGame(props: PlayingGameProps) {
               hiragana[kanaPos].classList.remove("typed-letters");
               break;
           }
-        // すべての文字を入力したとき
+          // すべての文字を入力したとき
         } else {
           setPosition(0);
           setKanaPos(0);
@@ -92,7 +98,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           if (!isProblem) console.log("GameSet!!");
         }
 
-      // ミスした時の処理
+        // ミスした時の処理
       } else {
         if (e.key !== "Shift") {
           messageShow();
@@ -113,18 +119,26 @@ export default function PlayingGame(props: PlayingGameProps) {
   return (
     <GameBoard>
       {missMessage}
-      {showFurigana === SHOW && (
+      {showFurigana === SHOW && ( // ふりがな表示がOnの時
         <HiraganaText ref={kanaRef} kanaText={kanaText} />
       )}
-      <RomajiText ref={romajiRef} romaji={romajiText} />
-      {typeMode === LONG_TEXT ? (
-        <QuestionText
-          questionText={questionText}
-          longTextMode
-          scrollOn={scrollCount}
-        />
+      {typeMode === LONG_TEXT ? ( // 長文モード時
+        <>
+          <RomajiText ref={romajiRef} romaji={romajiText} className="romajiLongMode" />
+          <Divider
+            variant="middle"
+            sx={{ borderColor: "primary.main", width: "100%", height: "3px" }}
+          />
+          <QuestionText
+            questionText={questionText}
+            longModeScrollOn={scrollCount}
+          />
+        </>
       ) : (
-        <QuestionText questionText={questionText} />
+        <>
+          <RomajiText ref={romajiRef} romaji={romajiText} />
+          <QuestionText questionText={questionText} />
+        </>
       )}
     </GameBoard>
   );

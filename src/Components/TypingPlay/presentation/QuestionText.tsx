@@ -1,27 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
-import { Divider } from "@mui/material";
 
 type QuestionTextProps = {
   questionText: string;
-  longTextMode?: boolean;
-  scrollOn?: number;
+  longModeScrollOn?: number;
 };
 
 type StyledTextProps = Omit<QuestionTextProps, "questionText">;
 const StyleQuestionText = styled(Paragraph)<StyledTextProps>(
-  ({ longTextMode, scrollOn }) => ({
-    ...(longTextMode
+  ({ longModeScrollOn }) => ({
+    ...(longModeScrollOn != undefined
       ? {
-          fontSize: "12px",
-          color: "red",
-          lineHeight: "110%",
+          fontSize: "22px",
+          height: "246px",
           padding: "3px 5px",
+          overflowY: "scroll",
+          textAlign: "left",
         }
       : {
           fontSize: "24px",
-          color: "#2d0303",
           lineHeight: "110%",
           padding: "3px 5px",
         }),
@@ -29,7 +27,8 @@ const StyleQuestionText = styled(Paragraph)<StyledTextProps>(
 );
 
 const QuestionText = React.memo((props: QuestionTextProps) => {
-  const { questionText, longTextMode, scrollOn } = props;
+  const { questionText, longModeScrollOn } = props;
+  console.log(longModeScrollOn);
   const texts = questionText.split("\n").map((item, index) => (
     <React.Fragment key={index}>
       {item}
@@ -37,8 +36,7 @@ const QuestionText = React.memo((props: QuestionTextProps) => {
     </React.Fragment>
   ));
   return (
-    <StyleQuestionText id="questionText" longTextMode scrollOn={scrollOn}>
-      {longTextMode ?? <div>"TEST"</div>}
+    <StyleQuestionText id="questionText" longModeScrollOn={longModeScrollOn}>
       {texts}
     </StyleQuestionText>
   );

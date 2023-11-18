@@ -8,6 +8,7 @@ import {
   SettingTypes,
 } from "../../../../@types";
 import StyledRadioForm from "./StyledRadioForm";
+import { ThemeModeContext } from "../../../../Contexts";
 
 type RadioProps = {
   radioGroupProps: RadioGroupProps;
@@ -27,7 +28,7 @@ export const RadioForm = (props: RadioProps) => {
 
   return (
     <StyledRadioForm>
-      {label ?? <FormLabel>{label}</FormLabel>}
+      {label ?? <FormLabel sx={{}}>{label}</FormLabel>}
       <Controller
         name={radioGroupProps.name as any}
         control={control}

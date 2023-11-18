@@ -10,6 +10,8 @@ import ProblemList from "../form/presentation/ProblemList";
 import { TypingDataContext } from "../../Contexts";
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import { FormWrapper } from "../form/settingForm/presentation";
+import Layout from "../layout/Layout";
 
 const FormLayout = css`
   min-height: 45vh;
@@ -28,15 +30,16 @@ const TypingForm: React.FC = () => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
   const id = uuidv4();
+  const defaultValue = {
+    id: id,
+    title: "",
+    problems: [{ text: "" }],
+  };
   const methods = useForm<TypingDataType>({
     mode: "onChange",
     reValidateMode: "onBlur",
     // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
-    defaultValues: {
-      id: id,
-      title: "",
-      problems: [{ text: "" }],
-    },
+    defaultValues: defaultValue,
   });
 
   // 4. サブミット時の処理を作成します。
@@ -51,41 +54,39 @@ const TypingForm: React.FC = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <Stack
-        component="form"
-        onSubmit={methods.handleSubmit(onSubmit)}
-        css={FormLayout}
-      >
-        <TitleInput />
-        <ProblemList />
-        <Box textAlign="center" mt={2}>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              methods.reset({
-                id: id,
-                title: "",
-                problems: [{ text: "" }],
-              });
-            }}
-          >
-            リセット
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ mx: 1 }}
-            disabled={!methods.formState.isDirty || !methods.formState.isValid}
-          >
-            {methods.formState.isValid ? "登録する" : "登録できません"}
-          </Button>
-          <Button variant="outlined" onClick={() => navigate("/")}>
-            ホームに戻る
-          </Button>
-        </Box>
-      </Stack>
-    </FormProvider>
+    <Layout>
+      <FormWrapper>
+        <FormProvider {...methods}>
+          <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
+            <TitleInput />
+            <ProblemList />
+            <Box textAlign="center" mt={2}>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  methods.reset(defaultValue);
+                }}
+              >
+                リセット
+              </Button>
+              <Button
+                variant="contained"
+                type="submit"
+                sx={{ mx: 1 }}
+                disabled={
+                  !methods.formState.isDirty || !methods.formState.isValid
+                }
+              >
+                {methods.formState.isValid ? "登録する" : "登録できません"}
+              </Button>
+              <Button variant="outlined" onClick={() => navigate("/")}>
+                ホームに戻る
+              </Button>
+            </Box>
+          </Box>
+        </FormProvider>
+      </FormWrapper>
+    </Layout>
   );
 };
 

@@ -6,15 +6,18 @@ import Keyboard from "../TypingPlay/presentation/Keyboard";
 import SettingForm from "../form/settingForm/SettingForm";
 import { SHOW } from "../../@types";
 import { SettingDataContext } from "../../Contexts";
+import { FormWrapper } from "../form/settingForm/presentation";
 
 const GameSetting = (): JSX.Element => {
-  const {showKeyboard} = React.useContext(SettingDataContext);
+  const { showKeyboard } = React.useContext(SettingDataContext);
   const [isSetting, setIsSetting] = useState(true);
   return (
     <Layout>
       <MainDisplay isSetting={isSetting} />
       {showKeyboard === SHOW && <Keyboard inputKey="k" />}
-      <SettingForm setIsSetting={setIsSetting} />
+      <FormWrapper isSetting>
+        <SettingForm setIsSetting={setIsSetting} />
+      </FormWrapper>
     </Layout>
   );
 };

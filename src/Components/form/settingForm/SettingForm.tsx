@@ -44,66 +44,64 @@ function SettingForm(props: SettingFormProps) {
 
   return (
     <FormProvider {...methods}>
-      <FormWrapper>
-        <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-          <RadioForm
-            label="入力モード"
-            radioGroupProps={{
-              name: "typeMode",
-              defaultValue: typeMode,
-              row: true,
+      <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
+        <RadioForm
+          label="入力モード"
+          radioGroupProps={{
+            name: "typeMode",
+            defaultValue: typeMode,
+            row: true,
+          }}
+          options={TypeModeValues}
+          setFunc={setTypeMode}
+        />
+        <RadioForm
+          label="ひらがな表示"
+          radioGroupProps={{
+            name: "showFurigana",
+            defaultValue: showFurigana,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+          setFunc={setShowFurigana}
+        />
+        <RadioForm
+          label="ローマ字設定"
+          radioGroupProps={{
+            name: "romajiType",
+            defaultValue: romajiType,
+            row: true,
+          }}
+          options={RomajiTypeValues}
+          setFunc={setrRomajiType}
+        />
+        <RadioForm
+          label="キーボード表示"
+          radioGroupProps={{
+            name: "showKeyboard",
+            defaultValue: showKeyboard,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+          setFunc={setShowKeyboard}
+        />
+        <Box textAlign="center" mt={2}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              methods.reset(defaultSetting as SettingTypes);
             }}
-            options={TypeModeValues}
-            setFunc={setTypeMode}
-          />
-          <RadioForm
-            label="ひらがな表示"
-            radioGroupProps={{
-              name: "showFurigana",
-              defaultValue: showFurigana,
-              row: true,
-            }}
-            options={ShowRadioFLG}
-            setFunc={setShowFurigana}
-          />
-          <RadioForm
-            label="ローマ字設定"
-            radioGroupProps={{
-              name: "romajiType",
-              defaultValue: romajiType,
-              row: true,
-            }}
-            options={RomajiTypeValues}
-            setFunc={setrRomajiType}
-          />
-          <RadioForm
-            label="キーボード表示"
-            radioGroupProps={{
-              name: "showKeyboard",
-              defaultValue: showKeyboard,
-              row: true,
-            }}
-            options={ShowRadioFLG}
-            setFunc={setShowKeyboard}
-          />
-          <Box textAlign="center" mt={2}>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                methods.reset(defaultSetting as SettingTypes);
-              }}
-            >
-              リセット
-            </Button>
-            <Button variant="contained" type="submit" sx={{ mx: 1 }}>
-              設定する
-            </Button>
-            <Button variant="outlined" onClick={backToHome}>
-              ホームに戻る
-            </Button>
-          </Box>
+          >
+            リセット
+          </Button>
+          <Button variant="contained" type="submit" sx={{ mx: 1 }}>
+            設定する
+          </Button>
+          <Button variant="outlined" onClick={backToHome}>
+            ホームに戻る
+          </Button>
         </Box>
-      </FormWrapper>
+      </Box>
     </FormProvider>
   );
 }

@@ -13,7 +13,10 @@ type RomajiTextProps = {
 
 const StyleRomajiText = styled(Paragraph)`
   font-size: 18px;
-  color: #2d0303;
+  width: 100%;
+  &.romajiLongMode {
+    text-align: left;
+  }
   .current-letter {
     color: #2d0303;
     text-decoration: underline;

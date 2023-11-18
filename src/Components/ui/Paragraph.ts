@@ -5,7 +5,8 @@ const Paragraph = styled.p.attrs((props) => ({
   className: props.className,
   id: props.id,
 }))`
-  font-size: 1rem;
+  font-size: 1.2rem;
+  color: #2d0303;
   line-height: 1.3;
   margin: 0.6rem 0 0;
 `;
