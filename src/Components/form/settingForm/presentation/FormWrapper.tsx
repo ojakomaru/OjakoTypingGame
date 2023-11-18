@@ -23,11 +23,11 @@ const FormWrapper = styled("div", {
     : {
         minHeight: "45vh",
         minWidth: "65ch",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         margin: "3rem auto",
+        // display: "flex",
+        // flexDirection: "column",
+        // alignItems: "center",
+        // justifyContent: "center",
       }),
 }));
 

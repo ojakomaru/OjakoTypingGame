@@ -38,12 +38,9 @@ const TypingForm: React.FC = () => {
   const methods = useForm<TypingDataType>({
     mode: "onChange",
     reValidateMode: "onBlur",
-    // 2. useFormで必要な関数を取得し、デフォルト値を指定します。
     defaultValues: defaultValue,
   });
 
-  // 4. サブミット時の処理を作成します。
-  // 検証が成功すると呼び出され、引数で入力値が渡ってきます。
   const onSubmit: SubmitHandler<TypingDataType> = (
     typingdata: TypingDataType
   ) => {

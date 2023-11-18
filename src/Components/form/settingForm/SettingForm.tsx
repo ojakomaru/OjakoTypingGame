@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { SettingTypes, SHORT_TEXT, SHOW, UPPER } from "../../../@types";
+import { SettingTypes } from "../../../@types";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,7 +9,7 @@ import {
   ShowRadioFLG,
   defaultSetting,
 } from "../../../Config";
-import { FormWrapper, RadioForm } from "./presentation";
+import { RadioForm } from "./presentation";
 import saveSettingData from "./container/savaSettingData";
 import { SettingDataContext } from "../../../Contexts";
 

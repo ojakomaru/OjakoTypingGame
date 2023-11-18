@@ -8,7 +8,6 @@ import {
   SettingTypes,
 } from "../../../../@types";
 import StyledRadioForm from "./StyledRadioForm";
-import { ThemeModeContext } from "../../../../Contexts";
 
 type RadioProps = {
   radioGroupProps: RadioGroupProps;
