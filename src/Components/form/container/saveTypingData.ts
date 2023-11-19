@@ -10,7 +10,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
   /* 入力データの変換処理 */
   (async () => {
     for (let i = 0; i < typingdata.problems.length; i++) {
-      //APIで変換したいテキストの␣変換と改行削除
+      //APIで変換したいテキストのトリムと改行削除
       word = typingdata.problems[i].text = typingdata.problems[i].text
         .trim()
         .replace(/\s/g, " ")
@@ -18,8 +18,11 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       let convertString = await Analyzer.getConvertString(word);
       typingdata.problems[i].kana = convertString.hiragana; // かな変換
       typingdata.problems[i].romazi = romanizer
-        .romanize(typingdata.problems[i].kana)
-        .replace(/\s/g, "␣"); // ローマ字変換
+      .romanize(typingdata.problems[i].kana)
+      .replace(/\s/g, "␣"); // ローマ字変換
+      let test = romanizer
+        .createRomajiWords(typingdata.problems[i].kana);
+      console.log(test);
       typingdata.problems[i].furigana = convertString.furigana; //ふりがなマークアップ
     }
     typingDataList.push(typingdata);
@@ -30,7 +33,6 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       typingDataList = [...olddata, typingdata];
     }
     localStorage.setItem("typingData", JSON.stringify(typingDataList));
-    console.log(typingDataList);
   })();
 };
 

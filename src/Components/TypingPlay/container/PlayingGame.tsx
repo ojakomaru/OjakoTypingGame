@@ -35,8 +35,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
   const romanizer = new Romanizer({
-    mapping: Romanizer.MAPPING_KUNREI,
-    chouon: Romanizer.CHOUON_ALPHABET,
     upper: Romanizer.UPPER_ALL,
   });
 

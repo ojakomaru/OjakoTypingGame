@@ -1,85 +1,163 @@
 import { romanMap, tree } from "../../../Config/stringMap";
 
 export default class Romanizer {
-  static MAPPING_HEPBURN = "hepburn";
-  static MAPPING_KUNREI = "kunrei";
-
-  static CHOUON_MACRON = "macron";
-  static CHOUON_CIRCUMFLEX = "circumflex";
-  static CHOUON_ALPHABET = "alphabet";
-  static CHOUON_SKIP = "skip";
-  static CHOUON_HYPHEN = "hyphen";
-
   static UPPER_WORD_INITIAL = "word_initial";
   static UPPER_SENTENCE_INITIAL = "sentence_initial";
   static UPPER_ALL = "all";
   static UPPER_NONE = "none";
 
-  static OPTION_SET_HEPBURN = {
-    mapping: Romanizer.MAPPING_HEPBURN,
-    chouon: Romanizer.CHOUON_MACRON,
-  };
-  static OPTION_SET_KUNREI = {
-    mapping: Romanizer.MAPPING_KUNREI,
-    chouon: Romanizer.CHOUON_CIRCUMFLEX,
-  };
-
   sutegana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ"];
 
   sokuon = "っ";
-
-  chouonMap = {
-    a: {
-      aa: { macron: "ā", circumflex: "â" },
-    },
-    i: {
-      ii: { macron: "ī", circumflex: "î" },
-    },
-    u: {
-      uu: { macron: "ū", circumflex: "û" },
-      ou: { macron: "ō", circumflex: "ô" },
-    },
-    e: {
-      ee: { macron: "ē", circumflex: "ê" },
-    },
-    o: {
-      oo: { macron: "ō", circumflex: "ô" },
-    },
-  };
 
   boin = ["a", "i", "u", "e", "o"];
 
   youon = ["h", "y"];
 
-  mappingMode = Romanizer.MAPPING_KUNREI;
-  chouonMode = Romanizer.CHOUON_ALPHABET;
   upperMode = Romanizer.UPPER_NONE;
 
   constructor(option) {
-    if (option && "mapping" in option) {
-      this.mappingMode = option.mapping;
-    }
-
-    if (option && "chouon" in option) {
-      this.chouonMode = option.chouon;
-    }
-
     if (option && "upper" in option) {
       this.upperMode = option.upper;
     }
   }
 
+  /**
+   * 平仮名からローマ字に変換します
+   * @param {string} text 平仮名テキスト
+   * @return {string} 変換後のローマ字テキスト
+   */
   romanize(_text) {
     const text = this.kanaToHira(_text);
     let romanText = "";
     for (let i = 0; i < text.length; ) {
       const char = this.getChar(text, i);
-      const romanChar = this.getRomanChar(text, i, char, romanText);
-
-      romanText += romanChar + (this.isNeedApostrophe(text, i) ? "'" : "");
+      romanText += this.getRomanChar(text, i, char);
       i += char.length;
     }
-    return this.upper(this.convertChouon(romanText));
+    return this.upper(romanText);
+  }
+
+  /**
+   * カタカナを平仮名に変換します
+   * @param {string} text 入力テキスト
+   * @return 変換後の平仮名文字列
+   */
+  kanaToHira(text) {
+    const str = text.trim().replace(/\s+/g, " ");
+    return str.replace(/[\u30a1-\u30f6]/g, function (match) {
+      const chr = match.charCodeAt(0) - 0x60;
+      return String.fromCharCode(chr);
+    });
+  }
+
+  /**
+   * 日本語の文字を取得する
+   * 以下の条件に合致する場合は捨て仮名も含めた２文字を取得します。
+   * ・次の文字が捨て仮名である（ぁぃぅぇぉゃゅょ）
+   * ・捨て仮名を含めた２文字がromanMapに存在する
+   * @param {string} text 平仮名テキスト
+   * @param {number} i 現在の文字の添字
+   * @returns {string}
+   */
+  getChar(text, i) {
+    if (this.isWithSutegana(text, i)) {
+      const charWithSutegana = text.substr(i, 2);
+      return charWithSutegana in romanMap ? charWithSutegana : text[i];
+    } else {
+      return text[i];
+    }
+  }
+
+  /**
+   * 日本語の文字に対応するローマ字を取得する
+   * 英数記号などもマップにあるため半角へ変換します
+   * @param {string} text 平仮名テキスト
+   * @param {number} i 現在の文字の添字
+   * @param {string} char 一文字（捨て仮名を含む場合は二文字）
+   * @return {string} 変換後のローマ字か英数記号
+   */
+  getRomanChar(text, i, char) {
+    let romanChar = char;
+    if (char === this.sokuon) {
+      return "";
+    } else if (char in romanMap) {
+      romanChar = romanMap[char][0];
+    }
+    // 1文字前が促音なら子音を２つにする
+    if (text[i - 1] === this.sokuon) {
+      romanChar = romanChar[0] + romanChar;
+    }
+    return romanChar;
+  }
+
+  /**
+   * タイピング入力で利用するローマ字の配列を返します
+   * @param {string} _text 漢字を含まない文字列
+   * @returns {Array}
+   * 例）「まとりょしか」：[['ma'], ['to'], ['ryo'], ['si', 'shi', 'ci'], ['ka', 'ca']]
+   */
+  createRomajiWords(_text) {
+    const text = this.kanaToHira(_text);
+    let remStr = String(text),
+      slStr,
+      romaAry,
+      next;
+    let result = [];
+
+    function getFirstStr() {
+      // 現在のテキストから先頭一文字を切り抜く
+      let oneChar = remStr.slice(0, 1);
+      // 現在の先頭文字以降を切り抜き検索対象文字列とする
+      remStr = remStr.slice(1);
+      return oneChar;
+    }
+
+    function isSmallChar() {
+      return !!remStr.slice(0, 1).match(/^[ぁぃぅぇぉゃゅょ]$/);
+    }
+
+    while (remStr) {
+      slStr = getFirstStr();
+      next = romanMap[remStr.slice(0, 1)];
+      if (slStr == "っ") {
+        if (
+          !remStr ||
+          remStr.match(/^[,.]/) ||
+          !next ||
+          next[0].match(/^[aiueon]/)
+        ) {
+          romaAry = [...romanMap[slStr]];
+          result.push(romaAry);
+        } else {
+          slStr = getFirstStr();
+          if (isSmallChar()) slStr += getFirstStr();
+          // 次の先頭文字を複製して追加
+          romaAry = [...romanMap[slStr].map((str) => str.slice(0, 1) + str)];
+          result.push(romaAry);
+        }
+      } else {
+        // 次の文字に小さい文字（捨て仮名）が含まれている場合はひとまとめにする
+        if (isSmallChar()) slStr += getFirstStr();
+        if (slStr == "&") {
+          slStr += remStr.slice(0, 7);
+          remStr = remStr.slice(7);
+        }
+        // 現在の文字がマップに含まれていれば追加
+        romaAry = romanMap[slStr] ? [...romanMap[slStr]] : [...slStr];
+        if (slStr == "ん") {
+          if (!remStr) {
+            // 後続の文字列がなければ"n"を削除
+            romaAry.pop();
+          } else {
+            // 後続の文字列が「あ行な行や行」なら"n"を削除
+            if (next[0].match(/^[aiueony]/)) romaAry.pop();
+          }
+        }
+        result.push(romaAry);
+      }
+    }
+    return result;
   }
 
   /**
@@ -179,54 +257,6 @@ export default class Romanizer {
     push(tmp);
     return result;
   }
-  /**
-   * 日本語の文字を取得する
-   * 以下の条件に合致する場合は捨て仮名も含めた２文字を取得します。
-   * ・次の文字が捨て仮名である
-   * ・捨て仮名を含めた２文字がromanMapに存在する
-   *
-   * romanMapに存在しない場合は１文字づつ処理するためにこのような挙動になっています。
-   *
-   * @param text
-   * @param i
-   * @returns {string|*}
-   */
-  getChar(text, i) {
-    if (this.isWithSutegana(text, i)) {
-      const charWithSutegana = text.substr(i, 2);
-      return charWithSutegana in romanMap ? charWithSutegana : text[i];
-    } else {
-      return text[i];
-    }
-  }
-
-  /**
-   * 日本語の文字に対応するローマ字を取得する
-   * @param text
-   * @param i
-   * @param char
-   * @param romanText
-   * @returns {*}
-   */
-  getRomanChar(text, i, char, romanText) {
-    let romanChar = char;
-    if (char === "っ") {
-      return "";
-    } else if (char in romanMap) {
-      if (typeof romanMap[char] === "object") {
-        romanChar = romanMap[char][this.mappingMode];
-      } else {
-        romanChar = romanMap[char];
-      }
-    }
-
-    // 1文字前が促音なら子音を２つにする
-    if (text[i - 1] === this.sokuon) {
-      romanChar = romanChar[0] + romanChar;
-    }
-
-    return romanChar;
-  }
 
   /**
    * 次の文字が捨て仮名の場合、真を返します
@@ -243,40 +273,6 @@ export default class Romanizer {
 
     const char = text[nextIdx];
     return this.sutegana.includes(char);
-  }
-
-  convertChouon(romanText) {
-    if (this.chouonMode === "alphabet") {
-      return romanText;
-    }
-
-    let result = romanText[0];
-    let prevCharIsChouon = false;
-    for (let i = 1; i < romanText.length; i++) {
-      const char = romanText[i];
-      const twoChar = romanText.substr(i - 1, 2);
-
-      if (
-        !prevCharIsChouon &&
-        char in this.chouonMap &&
-        twoChar in this.chouonMap[char]
-      ) {
-        prevCharIsChouon = true;
-        if (this.chouonMode === "skip") continue;
-
-        if (this.chouonMode === "hyphen") {
-          result += "-";
-        } else {
-          result =
-            result.substr(0, result.length - 1) +
-            this.chouonMap[char][twoChar][this.chouonMode];
-        }
-      } else {
-        result += char;
-        prevCharIsChouon = false;
-      }
-    }
-    return result;
   }
 
   upper(romanText) {
@@ -339,10 +335,8 @@ export default class Romanizer {
 
   /**
    * 以下のいずれかに該当する場合は真を返す
-   *
    * ・撥音「ん」の後に母音やヤ行音が来てナ行音と区別できない場合
    * ・文の末尾に促音がある場合
-   *
    * @param text
    * @param i
    * @returns {boolean}
@@ -354,19 +348,9 @@ export default class Romanizer {
     ) {
       return true;
     }
-
     if (text[i] === this.sokuon && i + 1 >= text.length) {
       return true;
     }
-
     return false;
-  }
-
-  kanaToHira(text) {
-    const str = text.trim().replace(/\s+/g, " ");
-    return str.replace(/[\u30a1-\u30f6]/g, function (match) {
-      const chr = match.charCodeAt(0) - 0x60;
-      return String.fromCharCode(chr);
-    });
   }
 }
