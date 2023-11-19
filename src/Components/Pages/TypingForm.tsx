@@ -30,9 +30,10 @@ const TypingForm: React.FC = () => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    setTypingDatas([...typingdatas, typingdata]);
-    methods.reset();
-    navigate("/");
+    console.log(typingdatas);
+    // setTypingDatas([...typingdatas, typingdata]);
+    // methods.reset();
+    // navigate("/");
   };
 
   return (

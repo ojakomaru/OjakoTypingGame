@@ -16,17 +16,17 @@ const ProblemList = (): JSX.Element => {
   return (
     <>
       {fields.map((item, index) => (
-        <Stack my={3} key={item.id}>
+        <Stack mt={2} key={item.id}>
           <TextField
             sx={{ mr: 2, flex: 3 }}
             variant="standard"
             size="small"
             label="問題文"
+            multiline
             {...register(`problems[${index}].text` as "problems", {
-              required: true,
+              required: "空の問題文は登録できません。",
             })}
           />
-          {/* remove 関数は特定の位置の input を削除、位置を指定しない場合は全てを削除 */}
           <IconButton
             color="warning"
             aria-label="delete"
@@ -36,14 +36,28 @@ const ProblemList = (): JSX.Element => {
           </IconButton>
         </Stack>
       ))}
-      <Button
-        sx={{ mt: 1 }}
-        startIcon={<AddIcon />}
-        // append 関数はフィールドの最後に input を追加する
-        onClick={() => append({ text: "" })}
+      <Stack
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="baseline"
       >
-        行を追加する
-      </Button>
+        <Button
+          sx={{ mt: 1 }}
+          startIcon={<AddIcon />}
+          onClick={() => append({ text: "" })}
+        >
+          問題文を追加
+        </Button>
+        <IconButton
+          color="warning"
+          aria-label="delete"
+          onClick={() => remove()}
+          sx={{fontSize: "0.8rem"}}
+        >
+          <DeleteOutlineIcon />
+          すべての問題を削除
+        </IconButton>
+      </Stack>
     </>
   );
 };

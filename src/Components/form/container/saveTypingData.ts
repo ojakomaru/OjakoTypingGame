@@ -5,22 +5,21 @@ import Romanizer from "../../TypingPlay/container/Romanizer";
 const saveTypingData = (typingdata: TypingDataType): void => {
   let word: string = "";
   let typingDataList: TypingDataType[] = [];
-  const romanizer = new Romanizer({
-    mapping: Romanizer.MAPPING_KUNREI,
-    chouon: Romanizer.CHOUON_ALPHABET,
-    upper: Romanizer.UPPER_ALL,
-  });
+  const romanizer = new Romanizer();
 
   /* 入力データの変換処理 */
   (async () => {
     for (let i = 0; i < typingdata.problems.length; i++) {
-      //APIで変換したいテキスト
-      word = typingdata.problems[i].text.trim().replace(/\s/g, " ");
+      //APIで変換したいテキストの␣変換と改行削除
+      word = typingdata.problems[i].text = typingdata.problems[i].text
+        .trim()
+        .replace(/\s/g, " ")
+        .replace(/\r?\n/g, "");
       let convertString = await Analyzer.getConvertString(word);
       typingdata.problems[i].kana = convertString.hiragana; // かな変換
-      typingdata.problems[i].romazi = romanizer.romanize(
-        typingdata.problems[i].kana
-      ); // ローマ字変換
+      typingdata.problems[i].romazi = romanizer
+        .romanize(typingdata.problems[i].kana)
+        .replace(/\s/g, "␣"); // ローマ字変換
       typingdata.problems[i].furigana = convertString.furigana; //ふりがなマークアップ
     }
     typingDataList.push(typingdata);

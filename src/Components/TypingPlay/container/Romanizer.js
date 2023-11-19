@@ -51,9 +51,9 @@ export default class Romanizer {
 
   youon = ["h", "y"];
 
-  mappingMode = Romanizer.MAPPING_HEPBURN;
-  chouonMode = Romanizer.CHOUON_MACRON;
-  upperMode = Romanizer.UPPER_WORD_INITIAL;
+  mappingMode = Romanizer.MAPPING_KUNREI;
+  chouonMode = Romanizer.CHOUON_ALPHABET;
+  upperMode = Romanizer.UPPER_NONE;
 
   constructor(option) {
     if (option && "mapping" in option) {
