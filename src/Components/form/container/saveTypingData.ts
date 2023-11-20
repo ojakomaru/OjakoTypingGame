@@ -17,13 +17,12 @@ const saveTypingData = (typingdata: TypingDataType): void => {
         .replace(/\r?\n/g, "");
       let convertString = await Analyzer.getConvertString(word);
       typingdata.problems[i].kana = convertString.hiragana; // かな変換
-      typingdata.problems[i].romazi = romanizer
-      .romanize(typingdata.problems[i].kana)
-      .replace(/\s/g, "␣"); // ローマ字変換
-      let test = romanizer
-        .createRomajiWords(typingdata.problems[i].kana);
-      console.log(test);
-      typingdata.problems[i].furigana = convertString.furigana; //ふりがなマークアップ
+      typingdata.problems[i].romaji = romanizer
+        .romanize(typingdata.problems[i].kana)
+        .replace(/\s/g, "␣"); // ローマ字変換
+      typingdata.problems[i].typingWords = romanizer.createRomajiWords(
+        typingdata.problems[i].kana as string
+      ); // タイピングワード変換
     }
     typingDataList.push(typingdata);
     /* 登録されたデータが有れば取得してマージ */

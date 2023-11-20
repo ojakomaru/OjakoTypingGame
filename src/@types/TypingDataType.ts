@@ -34,7 +34,7 @@ export interface TypingDataType {
   problems: {
     text: string;
     kana?: string;
-    romazi?: string;
-    furigana?: string;
+    romaji?: string;
+    typingWords?: Array<string[]>;
   }[];
 }

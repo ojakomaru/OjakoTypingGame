@@ -8,9 +8,9 @@ let initialData: TypingDataType = {
   problems: [
     {
       text: "テスト問題",
-      kana: "かな",
-      romazi: "tesuto",
-      furigana: "テスト",
+      kana: "てすともんだい",
+      romaji: "tesutomondai",
+      typingWords: [['te'], ['su'], ['to'], ['mo'], ['n', 'xn', 'nn'], ['da'], ['i','yi']],
     },
   ],
 };

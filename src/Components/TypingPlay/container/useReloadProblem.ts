@@ -49,7 +49,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     let isMore = false;
     const spliceSet = () => {
       const problem = problems.splice(0, 1);
-      setRomajiText(problem[0].romazi as string);
+      setRomajiText(problem[0].romaji as string);
       setKanaText(problem[0].kana as string);
     };
     // 問題文が無くなったらfalse
@@ -60,12 +60,12 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         if (problemLength === problems.length) {
           const rnd = Math.floor(Math.random() * (problemLength - 1));
           const problem = problems.splice(rnd, 1);
-          setRomajiText(problem[0].romazi as string);
+          setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text);
         } else {
           const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romazi as string);
+          setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text as string);
         }
@@ -90,12 +90,12 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         if (problemLength === problems.length) {
           const rnd = Math.floor(Math.random() * (problemLength - 1));
           const problem = problems.splice(rnd, 1);
-          setRomajiText(problem[0].romazi as string);
+          setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text);
         } else {
           const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romazi as string);
+          setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text as string);
         }
