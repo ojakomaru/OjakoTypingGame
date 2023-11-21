@@ -1,9 +1,10 @@
 import React, { useCallback, useRef } from "react";
 
-const useRomajiTypedMove = () => {
-  const romajiRef = useRef<HTMLParagraphElement>(null);
-  const romajiInit = useCallback(() => {
-    let inputText = romajiRef.current!.children;
+const useKanaTypedMove = () => {
+  const kanaRef = useRef<HTMLParagraphElement>(null);
+
+  const kanaInit = useCallback(() => {
+    let inputText = kanaRef.current!.children;
     return {
       // 正解時現在の文字を入力済みとする
       success: (position: number) => {
@@ -27,7 +28,7 @@ const useRomajiTypedMove = () => {
     };
   }, []);
 
-  return { romajiRef, romajiInit };
+  return { kanaRef, kanaInit };
 };
 
-export default useRomajiTypedMove;
+export default useKanaTypedMove;

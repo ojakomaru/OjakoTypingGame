@@ -14,7 +14,6 @@ import {
   QuestionText,
 } from "../presentation";
 import { Divider } from "@mui/material";
-import useKanaTypedMove from "./useKanaTypedMove";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -27,18 +26,17 @@ export default function PlayingGame(props: PlayingGameProps) {
     React.useContext(SettingDataContext);
   const { romajiText, kanaText, questionText, typingWord, reloadProblem } =
     useReloadProblem(typingdata);
-  // const kanaRef = useRef<HTMLParagraphElement>(null);
+  const kanaRef = useRef<HTMLParagraphElement>(null);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
-  const { kanaRef, kanaInit } = useKanaTypedMove();
   const [romaPos, setPosition] = useState<number>(0);
   const [kanaPos, setKanaPos] = useState(0);
-  // const [typo, setTypo] = useState(new Array(0));
+  const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
-  // const romanizer = new Romanizer({
-  //   upper: Romanizer.UPPER_ALL,
-  // });
+  const romanizer = new Romanizer({
+    upper: Romanizer.UPPER_ALL,
+  });
 
   // 問題文生成
   useEffect(() => {
@@ -48,7 +46,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   /* タイピング入力処理 */
   useEffect(() => {
     const romajiTyped = romajiInit();
-    const kanaTyped = kanaInit();
     let pattern = 0;
     document.onkeydown = function (e) {
       // スペースキーの挙動をキャンセル
@@ -59,27 +56,59 @@ export default function PlayingGame(props: PlayingGameProps) {
         setIsPlaying!(false);
         navigate("/");
       }
-      console.log(typingWord[kanaPos][pattern]);
-      // 正解時の処理
-      if (e.key == typingWord[kanaPos][pattern][romaPos]) {
-        console.log("正解");
-        romajiTyped.success(romaPos);
-        // まだ入力していない文字があるとき
-        if (romaPos <= romajiText!.length - 2) {
-          romajiTyped.next(romaPos);
-          setPosition(romaPos + 1);
-          // すべての文字を入力したとき
+        // 正解時の処理
+        if (e.key.toUpperCase() === romajiText![romaPos]) {
+          romajiTyped.success(romaPos);
+
+          // まだ入力していない文字があるとき
+          if (romaPos <= romajiText!.length - 2) {
+            romajiTyped.next(romaPos);
+            setPosition(romaPos + 1);
+            hiragana[kanaPos].classList.add("typed-letters");
+
+            let isKanaMove: number = romanizer.isKanaMove(
+              kanaText![kanaPos],
+              romajiText!,
+              romaPos
+            );
+            switch (isKanaMove) {
+              case 2:
+                hiragana[kanaPos].classList.add("typed-letters");
+                hiragana[kanaPos + 1].classList.add("typed-letters");
+                setKanaPos(kanaPos + isKanaMove);
+                break;
+              case 1:
+                hiragana[kanaPos].classList.add("typed-letters");
+                setKanaPos(kanaPos + isKanaMove);
+                break;
+              case 0:
+                hiragana[kanaPos].classList.remove("typed-letters");
+                break;
+            }
+            // すべての文字を入力したとき
+          } else {
+            setPosition(0);
+            setKanaPos(0);
+            romajiTyped.reset();
+            Array.from(hiragana).forEach((char) =>
+              char.classList.remove("typed-letters")
+            );
+            let isProblem = reloadProblem(typeMode, romajiType);
+            if (!isProblem) console.log("GameSet!!");
+          }
+
+          // ミスした時の処理
         } else {
-          setPosition(0);
-          setKanaPos(0);
-          romajiTyped.reset();
-          Array.from(hiragana).forEach((char) =>
-            char.classList.remove("typed-letters")
-          );
-          let isProblem = reloadProblem(typeMode, romajiType);
-          if (!isProblem) console.log("GameSet!!");
+          if (e.key !== "Shift") {
+            messageShow();
+            // その位置で初めてのうち間違えであるとき
+            if (typo.indexOf(romaPos) === -1) {
+              // うち間違えた位置の配列にその位置を追加
+              setTypo([...typo, romaPos]);
+              romajiTyped.miss(romaPos);
+            }
+          }
         }
-      }
     };
     return () => {
       window.document.onkeydown = null;

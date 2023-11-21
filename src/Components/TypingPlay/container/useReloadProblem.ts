@@ -20,17 +20,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   const [romajiText, setRomajiText] = useState<string>("");
   const [kanaText, setKanaText] = useState<string>("");
   const [questionText, setQesutionText] = useState<string>("");
-
-  const typingModeSelect = (typeMode: TYPE_MODE) => {
-    switch (typeMode) {
-      case SHORT_TEXT:
-        break;
-      case LONG_TEXT:
-        break;
-      case REAL_TEXT:
-        break;
-    }
-  };
+  const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
 
   const romajiTypeSelect = (ROMAJI_TYPE: ROMAJI_TYPE) => {
     switch (ROMAJI_TYPE) {
@@ -52,6 +42,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
       setRomajiText(problem[0].romaji as string);
       setKanaText(problem[0].kana as string);
     };
+
     // 問題文が無くなったらfalse
     if (problems.length == 0) return isMore;
     // 設定モードにより分岐
@@ -63,11 +54,13 @@ const useReloadProblem = (typingdata: TypingDataType) => {
           setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text);
+          setTypingWord(problem[0].typingWords as string[][]);
         } else {
           const problem = problems.splice(0, 1);
           setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text as string);
+          setTypingWord(problem[0].typingWords as string[][]);
         }
         setProblems(problems);
         isMore = true;
@@ -75,13 +68,20 @@ const useReloadProblem = (typingdata: TypingDataType) => {
       case LONG_TEXT: // 長文モードの場合
         if (problemLength === problems.length) {
           let text: string = "";
-          for (let i = 0; i < problems.length; i++) {
+          cpProblems.reverse();
+          for (let i = 0; i < cpProblems.length; i++) {
             text += `${problems[i].text}\n`;
           }
           setQesutionText(text);
-          spliceSet();
+          const problem = problems.splice(0, 1);
+          setRomajiText(problem[0].romaji as string);
+          setKanaText(problem[0].kana as string);
+          setTypingWord(problem[0].typingWords as string[][]);
         } else {
-          spliceSet();
+          const problem = problems.splice(0, 1);
+          setRomajiText(problem[0].romaji as string);
+          setKanaText(problem[0].kana as string);
+          setTypingWord(problem[0].typingWords as string[][]);
         }
         setProblems(problems);
         isMore = true;
@@ -93,11 +93,13 @@ const useReloadProblem = (typingdata: TypingDataType) => {
           setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text);
+          setTypingWord(problem[0].typingWords as string[][]);
         } else {
           const problem = problems.splice(0, 1);
           setRomajiText(problem[0].romaji as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text as string);
+          setTypingWord(problem[0].typingWords as string[][]);
         }
         setProblems(problems);
         isMore = true;
@@ -107,7 +109,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     return isMore;
   };
 
-  return { romajiText, kanaText, questionText, reloadProblem };
+  return { romajiText, kanaText, questionText, typingWord, reloadProblem };
 };
 
 export default useReloadProblem;

@@ -4,13 +4,13 @@ import Paragraph from "../../ui/Paragraph";
 
 type QuestionTextProps = {
   questionText: string;
-  longModeScrollOn?: number;
+  $longModeScrollOn?: number;
 };
 
 type StyledTextProps = Omit<QuestionTextProps, "questionText">;
 const StyleQuestionText = styled(Paragraph)<StyledTextProps>(
-  ({ longModeScrollOn }) => ({
-    ...(longModeScrollOn != undefined
+  ({ $longModeScrollOn }) => ({
+    ...($longModeScrollOn != undefined
       ? {
           fontSize: "22px",
           height: "246px",
@@ -27,8 +27,7 @@ const StyleQuestionText = styled(Paragraph)<StyledTextProps>(
 );
 
 const QuestionText = React.memo((props: QuestionTextProps) => {
-  const { questionText, longModeScrollOn } = props;
-  console.log(longModeScrollOn);
+  const { questionText, $longModeScrollOn } = props;
   const texts = questionText.split("\n").map((item, index) => (
     <React.Fragment key={index}>
       {item}
@@ -36,7 +35,7 @@ const QuestionText = React.memo((props: QuestionTextProps) => {
     </React.Fragment>
   ));
   return (
-    <StyleQuestionText id="questionText" longModeScrollOn={longModeScrollOn}>
+    <StyleQuestionText id="questionText" $longModeScrollOn={$longModeScrollOn}>
       {texts}
     </StyleQuestionText>
   );
