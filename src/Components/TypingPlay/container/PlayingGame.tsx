@@ -38,8 +38,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romaPosIdx = useRef(0);
   const kanaPosIdx = useRef(0);
   const romaIdx = useRef(0);
-  console.log(typingWord.length);
-  const patternAry = useRef(new Array(typingWord.length).fill(0));
+  let pattern = new Array(typingWord.length).fill(0);
+  const patternAry = useRef<number[]>(pattern);
   // const [pattern, setPattern] = useState(new Array(0));
   // const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
@@ -62,7 +62,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       kanaPos = kanaPosIdx.current,
       romaLength = romaIdx.current;
     let tmp = "";
-    let pattern = new Array(typingWord.length).fill(0);
+    pattern = patternAry.current;
 
     document.onkeydown = function (e) {
       // スペースキーの挙動をキャンセル
@@ -91,20 +91,20 @@ export default function PlayingGame(props: PlayingGameProps) {
         }
         // パターン変更後のローマ字の判定
         if (e.key == typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
-          let inputText = romajiRef.current!.children;
-          inputText[romaLength].classList.remove("current-letter");
           let text = "";
           if (kanaPos > 0) {
+            // 現在入力完了の文字列を生成
             for (let i = 0; i < kanaPos; i++) {
-              inputText[i].classList.add("typed-letters");
               text += typingWord[i][pattern[i]];
             }
           }
+          // 現在入力したローマ字文字を追加
           for (let i = 0; i <= romaPos; i++) {
             text += typingWord[kanaPos][pattern[kanaPos]][i];
           }
-          inputText[text.length].className = "current-letter";
+          romajiTyped.refresh(text.length);
           romaLength = text.length;
+          // 現在入力中のローマ字を追加
           for (
             let i = romaPos + 1;
             i < typingWord[kanaPos][pattern[kanaPos]].length;
@@ -112,6 +112,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           ) {
             text += typingWord[kanaPos][pattern[kanaPos]][i];
           }
+          // 残りの問題文のローマ字を追加
           for (let i = kanaPos + 1; i < typingWord.length; i++) {
             text += typingWord[i][pattern[i]];
           }
