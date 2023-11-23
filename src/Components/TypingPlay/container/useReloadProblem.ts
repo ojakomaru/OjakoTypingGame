@@ -32,6 +32,8 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         break;
     }
   };
+
+  const romajiMod = (text: string) => setRomajiText(text);
   const reloadProblem = (
     typeMode: TYPE_MODE,
     romajiType: ROMAJI_TYPE
@@ -109,7 +111,14 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     return isMore;
   };
 
-  return { romajiText, kanaText, questionText, typingWord, reloadProblem };
+  return {
+    romajiText,
+    kanaText,
+    questionText,
+    typingWord,
+    romajiMod,
+    reloadProblem,
+  };
 };
 
 export default useReloadProblem;
