@@ -35,8 +35,12 @@ export default function PlayingGame(props: PlayingGameProps) {
   } = useReloadProblem(typingdata);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const { kanaRef, kanaInit } = useKanaTypedMove();
-  // const [romaPos, setPosition] = useState<number>(0);
-  // const [kanaPos, setKanaPos] = useState(0);
+  const romaPosIdx = useRef(0);
+  const kanaPosIdx = useRef(0);
+  const romaIdx = useRef(0);
+  console.log(typingWord.length);
+  const patternAry = useRef(new Array(typingWord.length).fill(0));
+  // const [pattern, setPattern] = useState(new Array(0));
   // const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
@@ -54,11 +58,12 @@ export default function PlayingGame(props: PlayingGameProps) {
   useEffect(() => {
     const romajiTyped = romajiInit();
     const kanaTyped = kanaInit();
-    let romaPos = 0,
-      kanaPos = 0,
-      romaLength = 0;
-    let pattern = new Array(typingWord.length).fill(0);
+    let romaPos = romaPosIdx.current,
+      kanaPos = kanaPosIdx.current,
+      romaLength = romaIdx.current;
     let tmp = "";
+    let pattern = new Array(typingWord.length).fill(0);
+
     document.onkeydown = function (e) {
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
@@ -104,13 +109,18 @@ export default function PlayingGame(props: PlayingGameProps) {
             let i = romaPos + 1;
             i < typingWord[kanaPos][pattern[kanaPos]].length;
             i++
-            ) {
+          ) {
             text += typingWord[kanaPos][pattern[kanaPos]][i];
           }
           for (let i = kanaPos + 1; i < typingWord.length; i++) {
             text += typingWord[i][pattern[i]];
           }
           romajiMod(text);
+          romaPos++;
+          romaPosIdx.current = romaPos;
+          kanaPosIdx.current = kanaPos;
+          romaIdx.current = romaLength;
+          patternAry.current = pattern;
         }
       }
       // かな文字が入力完了の場合
