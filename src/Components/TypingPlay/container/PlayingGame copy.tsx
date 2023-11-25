@@ -5,7 +5,7 @@ import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
 import { useMissMessage } from "./useMissMessage";
 import useReloadProblem from "./useReloadProblem";
 import useRomajiTypedMove from "./useRomajiTypedMove";
-import Romanizer from "./Romanizer";
+import Romanizer from "../../../Hooks/Romanizer";
 import { SettingDataContext } from "../../../Contexts";
 import {
   GameBoard,
@@ -56,59 +56,59 @@ export default function PlayingGame(props: PlayingGameProps) {
         setIsPlaying!(false);
         navigate("/");
       }
-        // 正解時の処理
-        if (e.key.toUpperCase() === romajiText![romaPos]) {
-          romajiTyped.success(romaPos);
+      // 正解時の処理
+      if (e.key.toUpperCase() === romajiText![romaPos]) {
+        romajiTyped.success(romaPos);
 
-          // まだ入力していない文字があるとき
-          if (romaPos <= romajiText!.length - 2) {
-            romajiTyped.next(romaPos);
-            setPosition(romaPos + 1);
-            hiragana[kanaPos].classList.add("typed-letters");
+        // まだ入力していない文字があるとき
+        if (romaPos <= romajiText!.length - 2) {
+          romajiTyped.next(romaPos);
+          setPosition(romaPos + 1);
+          hiragana[kanaPos].classList.add("typed-letters");
 
-            let isKanaMove: number = romanizer.isKanaMove(
-              kanaText![kanaPos],
-              romajiText!,
-              romaPos
-            );
-            switch (isKanaMove) {
-              case 2:
-                hiragana[kanaPos].classList.add("typed-letters");
-                hiragana[kanaPos + 1].classList.add("typed-letters");
-                setKanaPos(kanaPos + isKanaMove);
-                break;
-              case 1:
-                hiragana[kanaPos].classList.add("typed-letters");
-                setKanaPos(kanaPos + isKanaMove);
-                break;
-              case 0:
-                hiragana[kanaPos].classList.remove("typed-letters");
-                break;
-            }
-            // すべての文字を入力したとき
-          } else {
-            setPosition(0);
-            setKanaPos(0);
-            romajiTyped.reset();
-            Array.from(hiragana).forEach((char) =>
-              char.classList.remove("typed-letters")
-            );
-            let isProblem = reloadProblem(typeMode, romajiType);
-            if (!isProblem) console.log("GameSet!!");
+          let isKanaMove: number = romanizer.isKanaMove(
+            kanaText![kanaPos],
+            romajiText!,
+            romaPos
+          );
+          switch (isKanaMove) {
+            case 2:
+              hiragana[kanaPos].classList.add("typed-letters");
+              hiragana[kanaPos + 1].classList.add("typed-letters");
+              setKanaPos(kanaPos + isKanaMove);
+              break;
+            case 1:
+              hiragana[kanaPos].classList.add("typed-letters");
+              setKanaPos(kanaPos + isKanaMove);
+              break;
+            case 0:
+              hiragana[kanaPos].classList.remove("typed-letters");
+              break;
           }
-
-          // ミスした時の処理
+          // すべての文字を入力したとき
         } else {
-          if (e.key !== "Shift") {
-            messageShow();
-            // その位置で初めてのうち間違えであるとき
-            if (typo.indexOf(romaPos) === -1) {
-              // うち間違えた位置の配列にその位置を追加
-              setTypo([...typo, romaPos]);
-              romajiTyped.miss(romaPos);
-            }
+          setPosition(0);
+          setKanaPos(0);
+          romajiTyped.reset();
+          Array.from(hiragana).forEach((char) =>
+            char.classList.remove("typed-letters")
+          );
+          let isProblem = reloadProblem(typeMode, romajiType);
+          if (!isProblem) console.log("GameSet!!");
+        }
+
+        // ミスした時の処理
+      } else {
+        if (e.key !== "Shift") {
+          messageShow();
+          // その位置で初めてのうち間違えであるとき
+          if (typo.indexOf(romaPos) === -1) {
+            // うち間違えた位置の配列にその位置を追加
+            setTypo([...typo, romaPos]);
+            romajiTyped.miss(romaPos);
           }
         }
+      }
     };
     return () => {
       window.document.onkeydown = null;

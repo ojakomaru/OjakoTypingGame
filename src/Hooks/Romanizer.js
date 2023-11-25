@@ -1,4 +1,4 @@
-import { romanMap, tree } from "../../../Config/stringMap";
+import { romanMap, tree } from "../Config/stringMap";
 
 export default class Romanizer {
   static UPPER_WORD_INITIAL = "word_initial";

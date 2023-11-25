@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <>
+  <React.StrictMode>
     <Helmet>
       <title>{"OjakoTypingGame"}</title>
       <meta name="description" content={"おジャコのタイピング練習ゲーム"} />
@@ -20,7 +20,7 @@ root.render(
       <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Helmet>
     <App />
-  </>
+  </React.StrictMode>
 );
 
 /**

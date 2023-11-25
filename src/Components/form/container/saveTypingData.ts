@@ -1,6 +1,6 @@
 import { type TypingDataType } from "../../../@types";
 import Analyzer from "./Analyzer";
-import Romanizer from "../../TypingPlay/container/Romanizer";
+import { Romanizer } from "../../../Hooks";
 
 const saveTypingData = (typingdata: TypingDataType): void => {
   let word: string = "";

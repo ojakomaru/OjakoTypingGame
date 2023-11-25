@@ -5,7 +5,6 @@ import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
 import { useMissMessage } from "./useMissMessage";
 import useReloadProblem from "./useReloadProblem";
 import useRomajiTypedMove from "./useRomajiTypedMove";
-import Romanizer from "./Romanizer";
 import { SettingDataContext } from "../../../Contexts";
 import {
   GameBoard,
@@ -15,6 +14,7 @@ import {
 } from "../presentation";
 import { Divider } from "@mui/material";
 import useKanaTypedMove from "./useKanaTypedMove";
+import { useEffectOnce, usePrevious } from "../../../Hooks";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -35,24 +35,20 @@ export default function PlayingGame(props: PlayingGameProps) {
   } = useReloadProblem(typingdata);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const { kanaRef, kanaInit } = useKanaTypedMove();
-  const romaPosIdx = useRef(0);
-  const kanaPosIdx = useRef(0);
-  const romaIdx = useRef(0);
-  let pattern = new Array(typingWord.length).fill(0);
-  const patternAry = useRef<number[]>(pattern);
-  // const [pattern, setPattern] = useState(new Array(0));
-  // const [typo, setTypo] = useState(new Array(0));
+  const tmpRef = useRef(''); // 再レンダリング対策
+  const romaPosIdx = useRef(0); // 再レンダリング対策
+  const kanaPosIdx = useRef(0); // 再レンダリング対策
+  const romaIdx = useRef(0); // 再レンダリング対策
+  const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
+  const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
-  // const romanizer = new Romanizer({
-  //   upper: Romanizer.UPPER_ALL,
-  // });
 
   // 問題文生成
-  useEffect(() => {
+  useEffectOnce(() => {
     reloadProblem(typeMode, romajiType);
-  }, []);
+  });
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -61,10 +57,13 @@ export default function PlayingGame(props: PlayingGameProps) {
     let romaPos = romaPosIdx.current,
       kanaPos = kanaPosIdx.current,
       romaLength = romaIdx.current;
-    let tmp = "";
-    pattern = patternAry.current;
+    let tmp = tmpRef.current;
 
     document.onkeydown = function (e) {
+      /* typingWordがstateの為特別に以下で定義 */
+      patternAry.current.splice(typingWord.length, 100 - typingWord.length);
+      let pattern = patternAry.current;
+
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
@@ -122,6 +121,19 @@ export default function PlayingGame(props: PlayingGameProps) {
           kanaPosIdx.current = kanaPos;
           romaIdx.current = romaLength;
           patternAry.current = pattern;
+          tmpRef.current = tmp;
+        }
+        // 打ち間違い判定
+        else {
+          if (e.key !== "Shift") {
+            messageShow();
+            // その位置で初めてのうち間違えであるとき
+            if (typo.indexOf(romaLength) === -1) {
+              // うち間違えた位置の配列にその位置を追加
+              setTypo([...typo, romaLength]);
+              romajiTyped.miss(romaLength);
+            }
+          }
         }
       }
       // かな文字が入力完了の場合
