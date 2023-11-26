@@ -1,20 +1,22 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Romanizer, useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
-import { useMissMessage } from "./useMissMessage";
-import useReloadProblem from "./useReloadProblem";
-import useRomajiTypedMove from "./useRomajiTypedMove";
 import { SettingDataContext } from "../../../Contexts";
+import {
+  useReloadProblem,
+  useRomajiTypedMove,
+  useKanaTypedMove,
+  useMissMessage,
+} from "./hook";
+import { Divider } from "@mui/material";
 import {
   GameBoard,
   HiraganaText,
   RomajiText,
   QuestionText,
 } from "../presentation";
-import { Divider } from "@mui/material";
-import useKanaTypedMove from "./useKanaTypedMove";
-import { useEffectOnce, usePrevious } from "../../../Hooks";
 
 type PlayingGameProps = {
   setIsPlaying?: (a: boolean) => void;
@@ -35,7 +37,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   } = useReloadProblem(typingdata);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const { kanaRef, kanaInit } = useKanaTypedMove();
-  const tmpRef = useRef(''); // 再レンダリング対策
+  const tmpRef = useRef(""); // 再レンダリング対策
   const romaPosIdx = useRef(0); // 再レンダリング対策
   const kanaPosIdx = useRef(0); // 再レンダリング対策
   const romaIdx = useRef(0); // 再レンダリング対策
@@ -44,6 +46,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
   const [missMessage, messageShow] = useMissMessage();
+  const romanizer = new Romanizer();
 
   // 問題文生成
   useEffectOnce(() => {
@@ -63,7 +66,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       /* typingWordがstateの為特別に以下で定義 */
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
-
+      let missFlg = true;
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
@@ -73,11 +76,12 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       tmp += e.key;
       // ローマ字正解打の処理
-      if (e.key == typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+      if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
         romajiTyped.success(romaLength);
         romajiTyped.next(romaLength);
         romaLength++;
         romaPos++;
+        missFlg = false;
       }
       // 目的のキーでなければpattern[kanaPos]を検索
       else {
@@ -89,7 +93,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
         }
         // パターン変更後のローマ字の判定
-        if (e.key == typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+        if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
           let text = "";
           if (kanaPos > 0) {
             // 現在入力完了の文字列を生成
@@ -122,6 +126,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           romaIdx.current = romaLength;
           patternAry.current = pattern;
           tmpRef.current = tmp;
+          missFlg = false;
         }
         // 打ち間違い判定
         else {
@@ -133,16 +138,27 @@ export default function PlayingGame(props: PlayingGameProps) {
               setTypo([...typo, romaLength]);
               romajiTyped.miss(romaLength);
             }
+            kanaPosIdx.current = kanaPos;
+            romaIdx.current = romaLength;
+            patternAry.current = pattern;
+            missFlg = true;
           }
         }
       }
-      // かな文字が入力完了の場合
-      if (romaPos == typingWord[kanaPos][pattern[kanaPos]].length) {
+
+      // ローマ字入力が完了している場合
+      if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
+        // かな文字が入力完了の場合
+        let kanaStr = romanizer.romaToHira(
+          typingWord[kanaPos][pattern[kanaPos]]
+        );
         kanaTyped.success(kanaPos);
+        if (romanizer.isWithSutegana(kanaStr, 0)) {
+          kanaTyped.success(kanaPos + 1);
+        }
         kanaPos++;
         romaPos = 0;
         tmp = "";
-        console.log("kana正解");
       }
     };
     return () => {

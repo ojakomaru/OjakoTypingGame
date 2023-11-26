@@ -2,9 +2,9 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
-import { useMissMessage } from "./useMissMessage";
-import useReloadProblem from "./useReloadProblem";
-import useRomajiTypedMove from "./useRomajiTypedMove";
+import { useMissMessage } from "./hook/useMissMessage";
+import useReloadProblem from "./hook/useReloadProblem";
+import useRomajiTypedMove from "./hook/useRomajiTypedMove";
 import Romanizer from "../../../Hooks/Romanizer";
 import { SettingDataContext } from "../../../Contexts";
 import {

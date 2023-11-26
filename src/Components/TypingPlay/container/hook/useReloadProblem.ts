@@ -9,7 +9,7 @@ import {
   TYPE_MODE,
   TypingDataType,
   UPPER,
-} from "../../../@types";
+} from "../../../../@types";
 
 const useReloadProblem = (typingdata: TypingDataType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
@@ -46,7 +46,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     };
 
     // 問題文が無くなったらfalse
-    if (problems.length == 0) return isMore;
+    if (problems.length === 0) return isMore;
     // 設定モードにより分岐
     switch (typeMode) {
       case SHORT_TEXT: // 短文モードの場合
