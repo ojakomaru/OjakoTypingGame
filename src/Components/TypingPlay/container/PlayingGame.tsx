@@ -41,6 +41,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romaPosIdx = useRef(0); // 再レンダリング対策
   const kanaPosIdx = useRef(0); // 再レンダリング対策
   const romaIdx = useRef(0); // 再レンダリング対策
+  const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
   const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
@@ -59,14 +60,14 @@ export default function PlayingGame(props: PlayingGameProps) {
     const kanaTyped = kanaInit();
     let romaPos = romaPosIdx.current,
       kanaPos = kanaPosIdx.current,
-      romaLength = romaIdx.current;
+      romaLength = romaIdx.current,
+      kanaLength = kanaIdx.current;
     let tmp = tmpRef.current;
 
     document.onkeydown = function (e) {
       /* typingWordがstateの為特別に以下で定義 */
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
-      let missFlg = true;
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
@@ -74,14 +75,13 @@ export default function PlayingGame(props: PlayingGameProps) {
         setIsPlaying!(false);
         navigate("/");
       }
+      if (e.key.length > 1) return;
       tmp += e.key;
       // ローマ字正解打の処理
       if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
         romajiTyped.success(romaLength);
-        romajiTyped.next(romaLength);
         romaLength++;
         romaPos++;
-        missFlg = false;
       }
       // 目的のキーでなければpattern[kanaPos]を検索
       else {
@@ -124,9 +124,9 @@ export default function PlayingGame(props: PlayingGameProps) {
           romaPosIdx.current = romaPos;
           kanaPosIdx.current = kanaPos;
           romaIdx.current = romaLength;
+          kanaIdx.current = kanaLength;
           patternAry.current = pattern;
           tmpRef.current = tmp;
-          missFlg = false;
         }
         // 打ち間違い判定
         else {
@@ -140,25 +140,43 @@ export default function PlayingGame(props: PlayingGameProps) {
             }
             kanaPosIdx.current = kanaPos;
             romaIdx.current = romaLength;
+            kanaIdx.current = kanaLength;
             patternAry.current = pattern;
-            missFlg = true;
           }
         }
       }
 
-      // ローマ字入力が完了している場合
-      if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
-        // かな文字が入力完了の場合
-        let kanaStr = romanizer.romaToHira(
-          typingWord[kanaPos][pattern[kanaPos]]
-        );
-        kanaTyped.success(kanaPos);
-        if (romanizer.isWithSutegana(kanaStr, 0)) {
-          kanaTyped.success(kanaPos + 1);
+      // まだ入力していない文字があるとき
+      if (romaLength <= romajiText.length - 1) {
+        romajiTyped.next(romaLength - 1);
+        // ローマ字入力が完了している場合
+        if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
+          let kanaStr = romanizer.romaToHira(
+            typingWord[kanaPos][pattern[kanaPos]]
+          );
+          // かな文字が入力完了の場合
+          kanaTyped.success(kanaLength);
+          if (romanizer.isWithSutegana(kanaStr, 0) || kanaStr.includes("っ")) {
+            kanaLength++;
+            kanaTyped.success(kanaLength);
+          }
+          kanaPos++;
+          kanaLength++;
+          romaPos = 0;
+          tmp = "";
         }
-        kanaPos++;
-        romaPos = 0;
-        tmp = "";
+        // すべての文字を入力したとき
+      } else {
+        romajiTyped.reset();
+        kanaTyped.reset();
+        romaPosIdx.current = 0;
+        kanaPosIdx.current = 0;
+        romaIdx.current = 0;
+        kanaIdx.current = 0;
+        patternAry.current = new Array(100).fill(0);
+        tmpRef.current = "";
+        let isProblem = reloadProblem(typeMode, romajiType);
+        if (!isProblem) console.log("GameSet!!");
       }
     };
     return () => {

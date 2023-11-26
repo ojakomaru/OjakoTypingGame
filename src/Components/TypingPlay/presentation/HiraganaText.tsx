@@ -1,7 +1,6 @@
 import React, { Ref, RefObject, forwardRef } from "react";
 import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
-import { Romanizer } from "../../../Hooks";
 
 type HiraganaTextProps = {
   ref: RefObject<HTMLParagraphElement>;
@@ -26,18 +25,7 @@ function HiraganaTextCore(
   ref: Ref<HTMLParagraphElement>
 ) {
   const { className, kanaText } = props;
-  const romanizer = new Romanizer();
-  const kanaAry = kanaText
-    .split("")
-    .slice(0)
-    .map((val, i, array) => {
-      let char = val + array[i + 1];
-      if (romanizer.isWithSutegana(val, 0)) {
-        return char;
-      } else {
-        return val;
-      }
-    });
+  const kanaAry: string[] = kanaText.split("").slice(0);
 
   return (
     <StyleHiraganaText ref={ref} id="hiraganaText" className={className}>
