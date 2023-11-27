@@ -16,11 +16,9 @@ const useKanaTypedMove = () => {
         (inputText[position + 1].className = "current-letter"),
       // 初期の状態に戻す
       reset: () => {
-        inputText[0].classList.add("current-letter");
         Array.from(inputText).forEach((char) => {
           char.classList.remove("typed-letters");
           char.classList.remove("typo");
-          char.classList.add("waiting-letters");
         });
       },
       // 打ち間違えた文字であることを示すclassを追加

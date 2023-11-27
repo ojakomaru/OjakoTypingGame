@@ -68,23 +68,15 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         isMore = true;
         break;
       case LONG_TEXT: // 長文モードの場合
-        if (problemLength === problems.length) {
-          let text: string = "";
-          cpProblems.reverse();
-          for (let i = 0; i < cpProblems.length; i++) {
-            text += `${problems[i].text}\n`;
-          }
-          setQesutionText(text);
-          const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romaji as string);
-          setKanaText(problem[0].kana as string);
-          setTypingWord(problem[0].typingWords as string[][]);
-        } else {
-          const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romaji as string);
-          setKanaText(problem[0].kana as string);
-          setTypingWord(problem[0].typingWords as string[][]);
+        let text: string = "";
+        for (let i = 0; i < problems.length; i++) {
+          text += `${problems[i].text}\n`;
         }
+        setQesutionText(text);
+        const problem = problems.splice(0, 1);
+        setRomajiText(problem[0].romaji as string);
+        setKanaText(problem[0].kana as string);
+        setTypingWord(problem[0].typingWords as string[][]);
         setProblems(problems);
         isMore = true;
         break;

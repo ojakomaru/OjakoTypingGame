@@ -92,8 +92,20 @@ export default function PlayingGame(props: PlayingGameProps) {
             break;
           }
         }
-        // パターン変更後のローマ字の判定
+        if ( //「ん」の時の特別措置
+          typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
+          typingWord[kanaPos].length === 3
+        ) {
+          for (let i = 0; i < typingWord[kanaPos + 1].length; i++) {
+            if (e.key === typingWord[kanaPos + 1][i][0]) {
+              pattern[kanaPos] = 2;
+              pattern[kanaPos + 1] = i;
+              break;
+            }
+          }
+        }
         if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+          // パターン変更後のローマ字の判定
           let text = "";
           if (kanaPos > 0) {
             // 現在入力完了の文字列を生成
@@ -137,20 +149,23 @@ export default function PlayingGame(props: PlayingGameProps) {
               // うち間違えた位置の配列にその位置を追加
               setTypo([...typo, romaLength]);
               romajiTyped.miss(romaLength);
+              kanaTyped.miss(kanaLength);
             }
             kanaPosIdx.current = kanaPos;
+            romaPosIdx.current = romaPos;
             romaIdx.current = romaLength;
             kanaIdx.current = kanaLength;
             patternAry.current = pattern;
+            tmpRef.current = tmp.slice(0, -1);
           }
         }
       }
 
       // まだ入力していない文字があるとき
       if (romaLength <= romajiText.length - 1) {
-        romajiTyped.next(romaLength - 1);
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
+          romajiTyped.next(romaLength - 1);
           let kanaStr = romanizer.romaToHira(
             typingWord[kanaPos][pattern[kanaPos]]
           );

@@ -18,6 +18,9 @@ const StyleHiraganaText = styled(Paragraph)`
   .typed-letters {
     color: #999;
   }
+  .typo {
+    color: #f52727;
+  }
 `;
 
 function HiraganaTextCore(
