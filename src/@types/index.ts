@@ -18,6 +18,9 @@ import {
   SHIFT_REQUIRED,
   ROMAJI_TYPE,
   SettingTypes,
+  ORDER_TYPE,
+  RANDOM,
+  REGI_ORDER,
 } from "./SettingTypes";
 
 export {
@@ -31,6 +34,8 @@ export {
   UPPER,
   LOWER,
   SHIFT_REQUIRED,
+  REGI_ORDER,
+  RANDOM,
 };
 
 export type {
@@ -45,4 +50,5 @@ export type {
   TYPE_MODE,
   SHOW_RADIO,
   ROMAJI_TYPE,
+  ORDER_TYPE,
 };

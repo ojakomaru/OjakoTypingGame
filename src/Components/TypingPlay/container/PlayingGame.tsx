@@ -68,6 +68,15 @@ export default function PlayingGame(props: PlayingGameProps) {
       /* typingWordがstateの為特別に以下で定義 */
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
+      let nFlag = false;
+      const saveRefs = () => {
+        romaPosIdx.current = romaPos;
+        kanaPosIdx.current = kanaPos;
+        romaIdx.current = romaLength;
+        kanaIdx.current = kanaLength;
+        patternAry.current = pattern;
+        tmpRef.current = tmp;
+      };
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
@@ -92,7 +101,8 @@ export default function PlayingGame(props: PlayingGameProps) {
             break;
           }
         }
-        if ( //「ん」の時の特別措置
+        if (
+          //「ん」の時の特別措置
           typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
           typingWord[kanaPos].length === 3
         ) {
@@ -100,45 +110,18 @@ export default function PlayingGame(props: PlayingGameProps) {
             if (e.key === typingWord[kanaPos + 1][i][0]) {
               pattern[kanaPos] = 2;
               pattern[kanaPos + 1] = i;
+              nFlag = true;
               break;
             }
           }
         }
+        // パターン変更後に再チェック
         if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
-          // パターン変更後のローマ字の判定
-          let text = "";
-          if (kanaPos > 0) {
-            // 現在入力完了の文字列を生成
-            for (let i = 0; i < kanaPos; i++) {
-              text += typingWord[i][pattern[i]];
-            }
-          }
-          // 現在入力したローマ字文字を追加
-          for (let i = 0; i <= romaPos; i++) {
-            text += typingWord[kanaPos][pattern[kanaPos]][i];
-          }
-          romajiTyped.refresh(text.length);
-          romaLength = text.length;
-          // 現在入力中のローマ字を追加
-          for (
-            let i = romaPos + 1;
-            i < typingWord[kanaPos][pattern[kanaPos]].length;
-            i++
-          ) {
-            text += typingWord[kanaPos][pattern[kanaPos]][i];
-          }
-          // 残りの問題文のローマ字を追加
-          for (let i = kanaPos + 1; i < typingWord.length; i++) {
-            text += typingWord[i][pattern[i]];
-          }
-          romajiMod(text);
           romaPos++;
-          romaPosIdx.current = romaPos;
-          kanaPosIdx.current = kanaPos;
-          romaIdx.current = romaLength;
-          kanaIdx.current = kanaLength;
-          patternAry.current = pattern;
-          tmpRef.current = tmp;
+          // romajiTyped.refresh(kanaLength + romaPos);
+          // romaLength = kanaLength + romaPos;
+          romajiMod(kanaPos, pattern, romaPos);
+          saveRefs();
         }
         // 打ち間違い判定
         else {
@@ -151,12 +134,8 @@ export default function PlayingGame(props: PlayingGameProps) {
               romajiTyped.miss(romaLength);
               kanaTyped.miss(kanaLength);
             }
-            kanaPosIdx.current = kanaPos;
-            romaPosIdx.current = romaPos;
-            romaIdx.current = romaLength;
-            kanaIdx.current = kanaLength;
-            patternAry.current = pattern;
-            tmpRef.current = tmp.slice(0, -1);
+            tmp = tmp.slice(0, -1);
+            saveRefs();
           }
         }
       }

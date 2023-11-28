@@ -7,6 +7,7 @@ import {
   RomajiTypeValues,
   TypeModeValues,
   ShowRadioFLG,
+  OrderValues,
   defaultSetting,
 } from "../../../Config";
 import { RadioForm } from "./presentation";
@@ -31,6 +32,8 @@ function SettingForm(props: SettingFormProps) {
     setShowFurigana,
     romajiType,
     setrRomajiType,
+    order,
+    setOrder,
     showKeyboard,
     setShowKeyboard,
   } = React.useContext(SettingDataContext);
@@ -74,6 +77,16 @@ function SettingForm(props: SettingFormProps) {
           }}
           options={RomajiTypeValues}
           setFunc={setrRomajiType}
+        />
+        <RadioForm
+          label="出題順"
+          radioGroupProps={{
+            name: "order",
+            defaultValue: order,
+            row: true,
+          }}
+          options={OrderValues}
+          setFunc={setOrder}
         />
         <RadioForm
           label="キーボード表示"

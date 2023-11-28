@@ -27,7 +27,7 @@ export const RadioForm = (props: RadioProps) => {
 
   return (
     <StyledRadioForm>
-      {label ?? <FormLabel sx={{}}>{label}</FormLabel>}
+      {label ?? <FormLabel>{label}</FormLabel>}
       <Controller
         name={radioGroupProps.name as any}
         control={control}

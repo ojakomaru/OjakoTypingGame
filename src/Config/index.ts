@@ -2,6 +2,7 @@ import {
   TypeModeValues,
   RomajiTypeValues,
   ShowRadioFLG,
+  OrderValues,
   defaultSetting,
 } from "./Setting";
 import routes from "./routes";
@@ -11,5 +12,6 @@ export {
   TypeModeValues,
   RomajiTypeValues,
   ShowRadioFLG,
+  OrderValues,
   defaultSetting,
 };

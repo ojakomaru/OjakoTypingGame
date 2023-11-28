@@ -17,11 +17,17 @@ const LOWER = "lower";
 const SHIFT_REQUIRED = "shift";
 type ROMAJI_TYPE = typeof UPPER | typeof LOWER | typeof SHIFT_REQUIRED;
 
+// ORDER_TYPE
+const REGI_ORDER = "registration-order";
+const RANDOM = "random";
+type ORDER_TYPE = typeof REGI_ORDER | typeof RANDOM;
+
 export interface SettingTypes {
-  typeMode: TYPE_MODE;
-  showFurigana: SHOW_RADIO;
-  romajiType: ROMAJI_TYPE; // TextField select用
-  showKeyboard: SHOW_RADIO; // Check用
+  typeMode: TYPE_MODE;     // 問題の種類
+  showFurigana: SHOW_RADIO;// ふりがな表示
+  romajiType: ROMAJI_TYPE; // 大文字小文字もしくはShift操作するか
+  order: ORDER_TYPE;       // 出題順
+  showKeyboard: SHOW_RADIO;// キーボードを表示
 }
 
 export {
@@ -37,5 +43,8 @@ export {
   UPPER,
   LOWER,
   SHIFT_REQUIRED,
-  type ROMAJI_TYPE
+  type ROMAJI_TYPE,
+  REGI_ORDER,
+  RANDOM,
+  type ORDER_TYPE,
 };

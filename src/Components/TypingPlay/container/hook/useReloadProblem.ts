@@ -33,7 +33,38 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     }
   };
 
-  const romajiMod = (text: string) => setRomajiText(text);
+  const romajiMod = (
+    kanaPos: number,
+    pattern: Array<number>,
+    romaPos: number
+  ) => {
+    // パターン変更後のローマ字の判定
+    let text = "";
+    if (kanaPos > 0) {
+      // 現在入力完了の文字列を生成
+      for (let i = 0; i < kanaPos; i++) {
+        text += typingWord[i][pattern[i]];
+      }
+    }
+    // 現在入力したローマ字文字を追加
+    for (let i = 0; i <= romaPos; i++) {
+      text += typingWord[kanaPos][pattern[kanaPos]][i];
+    }
+    // 現在入力中のローマ字を追加
+    for (
+      let i = romaPos + 1;
+      i < typingWord[kanaPos][pattern[kanaPos]].length;
+      i++
+    ) {
+      text += typingWord[kanaPos][pattern[kanaPos]][i];
+    }
+    // 残りの問題文のローマ字を追加
+    for (let i = kanaPos + 1; i < typingWord.length; i++) {
+      text += typingWord[i][pattern[i]];
+    }
+    setRomajiText(text);
+  };
+
   const reloadProblem = (
     typeMode: TYPE_MODE,
     romajiType: ROMAJI_TYPE
