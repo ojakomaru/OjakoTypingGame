@@ -10,6 +10,7 @@ import {
   TypingDataType,
   UPPER,
 } from "../../../../@types";
+import { Romanizer } from "../../../../Hooks";
 
 const useReloadProblem = (typingdata: TypingDataType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
@@ -21,17 +22,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   const [kanaText, setKanaText] = useState<string>("");
   const [questionText, setQesutionText] = useState<string>("");
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
-
-  const romajiTypeSelect = (ROMAJI_TYPE: ROMAJI_TYPE) => {
-    switch (ROMAJI_TYPE) {
-      case UPPER:
-        break;
-      case LOWER:
-        break;
-      case SHIFT_REQUIRED:
-        break;
-    }
-  };
+  const romanizer = new Romanizer();
 
   const romajiMod = (
     kanaPos: number,
@@ -40,6 +31,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   ) => {
     // パターン変更後のローマ字の判定
     let text = "";
+    let currentPosition = 0;
     if (kanaPos > 0) {
       // 現在入力完了の文字列を生成
       for (let i = 0; i < kanaPos; i++) {
@@ -50,6 +42,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     for (let i = 0; i <= romaPos; i++) {
       text += typingWord[kanaPos][pattern[kanaPos]][i];
     }
+    currentPosition = text.length;
     // 現在入力中のローマ字を追加
     for (
       let i = romaPos + 1;
@@ -62,7 +55,8 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     for (let i = kanaPos + 1; i < typingWord.length; i++) {
       text += typingWord[i][pattern[i]];
     }
-    setRomajiText(text);
+    setRomajiText(text.replace(/\s/g, "␣"));
+    return currentPosition;
   };
 
   const reloadProblem = (
@@ -70,11 +64,20 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     romajiType: ROMAJI_TYPE
   ): boolean => {
     let isMore = false;
-    const spliceSet = () => {
-      const problem = problems.splice(0, 1);
-      setRomajiText(problem[0].romaji as string);
-      setKanaText(problem[0].kana as string);
-    };
+   const romajiTypeSelect = (romajiText: <T>) => {
+        let mode = typeof romajiText === 'string';
+     switch (romajiType) {
+       case UPPER:
+        return romanizer.upperAll(romajiText);
+         break;
+       case LOWER:
+        return romanizer.lowerAll(romajiText);
+         break;
+       case SHIFT_REQUIRED:
+         return romajiText;
+         break;
+     }
+   };
 
     // 問題文が無くなったらfalse
     if (problems.length === 0) return isMore;
@@ -105,7 +108,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         }
         setQesutionText(text);
         const problem = problems.splice(0, 1);
-        setRomajiText(problem[0].romaji as string);
+        setRomajiText(romajiTypeSelect(problem[0].romaji as string));
         setKanaText(problem[0].kana as string);
         setTypingWord(problem[0].typingWords as string[][]);
         setProblems(problems);

@@ -333,6 +333,15 @@ export default class Romanizer {
     return result;
   }
 
+  lowerAll(romanText) {
+    let result = "";
+    for (let i = 0; i < romanText.length; i++) {
+      const char = romanText[i];
+      result += char.toLowerCase();
+    }
+    return result;
+  }
+
   /**
    * 以下のいずれかに該当する場合は真を返す
    * ・撥音「ん」の後に母音やヤ行音が来てナ行音と区別できない場合

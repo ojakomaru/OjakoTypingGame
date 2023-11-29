@@ -94,14 +94,22 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       // 目的のキーでなければpattern[kanaPos]を検索
       else {
-        let reg = new RegExp("^" + tmp);
-        for (let i = 0; i < typingWord[kanaPos].length; i++) {
-          if (!!typingWord[kanaPos][i].match(reg)) {
-            pattern[kanaPos] = i;
-            break;
+        if (!tmp.match(/^[ -/:-@[-`{-~]*$/)) {
+          let reg = new RegExp("^" + tmp);
+          for (let i = 0; i < typingWord[kanaPos].length; i++) {
+            if (!!typingWord[kanaPos][i].match(reg)) {
+              pattern[kanaPos] = i;
+              break;
+            }
           }
         }
-        if (
+        // パターン変更後に再チェック
+        if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+          romaLength = romajiMod(kanaPos, pattern, romaPos);
+          romajiTyped.refresh(romaLength);
+          romaPos++;
+          saveRefs();
+        } else if (
           //「ん」の時の特別措置
           typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
           typingWord[kanaPos].length === 3
@@ -114,14 +122,6 @@ export default function PlayingGame(props: PlayingGameProps) {
               break;
             }
           }
-        }
-        // パターン変更後に再チェック
-        if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
-          romaPos++;
-          // romajiTyped.refresh(kanaLength + romaPos);
-          // romaLength = kanaLength + romaPos;
-          romajiMod(kanaPos, pattern, romaPos);
-          saveRefs();
         }
         // 打ち間違い判定
         else {
@@ -144,20 +144,34 @@ export default function PlayingGame(props: PlayingGameProps) {
       if (romaLength <= romajiText.length - 1) {
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
-          romajiTyped.next(romaLength - 1);
           let kanaStr = romanizer.romaToHira(
             typingWord[kanaPos][pattern[kanaPos]]
           );
           // かな文字が入力完了の場合
           kanaTyped.success(kanaLength);
-          if (romanizer.isWithSutegana(kanaStr, 0) || kanaStr.includes("っ")) {
+          if (nFlag) {
+            romaLength = romajiMod(kanaPos, pattern, 0);
+            romaLength++;
+            romajiTyped.refresh(romaLength);
             kanaLength++;
-            kanaTyped.success(kanaLength);
+            kanaPos++;
+            romaPos = 1;
+            tmp = tmp.slice(1);
+            saveRefs();
+          } else {
+            if (
+              romanizer.isWithSutegana(kanaStr, 0) ||
+              kanaStr.includes("っ")
+            ) {
+              kanaLength++;
+              kanaTyped.success(kanaLength);
+            }
+            romajiTyped.next(romaLength - 1);
+            kanaPos++;
+            kanaLength++;
+            romaPos = 0;
+            tmp = "";
           }
-          kanaPos++;
-          kanaLength++;
-          romaPos = 0;
-          tmp = "";
         }
         // すべての文字を入力したとき
       } else {
