@@ -120,7 +120,7 @@ export default class Romanizer {
     while (remStr) {
       slStr = getFirstStr();
       next = romanMap[remStr.slice(0, 1)];
-      if (slStr == "っ") {
+      if (slStr === "っ") {
         if (
           !remStr ||
           remStr.match(/^[,.]/) ||
@@ -139,13 +139,13 @@ export default class Romanizer {
       } else {
         // 次の文字に小さい文字（捨て仮名）が含まれている場合はひとまとめにする
         if (isSmallChar()) slStr += getFirstStr();
-        if (slStr == "&") {
+        if (slStr === "&") {
           slStr += remStr.slice(0, 7);
           remStr = remStr.slice(7);
         }
         // 現在の文字がマップに含まれていれば追加
         romaAry = romanMap[slStr] ? [...romanMap[slStr]] : [...slStr];
-        if (slStr == "ん") {
+        if (slStr === "ん") {
           if (!remStr) {
             // 後続の文字列がなければ"n"を削除
             romaAry.pop();
@@ -295,7 +295,6 @@ export default class Romanizer {
     for (let i = 1; i < romanText.length; i++) {
       const char = romanText[i];
       const prevChar = romanText.substr(i - 1, 1);
-
       if (prevChar.match(/\s/)) {
         result += char.toUpperCase();
       } else {
@@ -303,6 +302,31 @@ export default class Romanizer {
       }
     }
     return result;
+  }
+  upperWordInitialAry(typingWord) {
+    let char = typingWord[0][0][0].toUpperCase();
+    for (let i = 1; i < typingWord[0][0].length; i++) {
+      char += typingWord[0][0][i];
+    }
+    typingWord[0][0] = char;
+    for (let i = 1; i < typingWord.length; i++) {
+      for (let j = 0; j < typingWord[i].length; j++) {
+        char = '';
+        if (typingWord[i - 1][j] === " ") {
+          char = typingWord[i][j][0].toUpperCase();
+          for (let k = 1; k < typingWord[i][j].length; k++) {
+            char += typingWord[i][j][k];
+          }
+          typingWord[i][j] = char;
+        } else {
+          for (let k = 0; k < typingWord[i][j].length; k++) {
+            char += typingWord[i][j][k].toLowerCase();
+          }
+          typingWord[i][j] = char;
+        }
+      }
+    }
+    return typingWord;
   }
 
   upperSentenceInitial(romanText) {
@@ -332,6 +356,15 @@ export default class Romanizer {
     }
     return result;
   }
+  upperAllAry(typingWord) {
+    for (let i = 0; i < typingWord.length; i++) {
+      for (let j = 0; j < typingWord[i].length; j++) {
+        let text = typingWord[i][j];
+        typingWord[i][j] = this.upperAll(text);
+      }
+    }
+    return typingWord;
+  }
 
   lowerAll(romanText) {
     let result = "";
@@ -340,6 +373,15 @@ export default class Romanizer {
       result += char.toLowerCase();
     }
     return result;
+  }
+  lowerAllAry(typingWord) {
+    for (let i = 0; i < typingWord.length; i++) {
+      for (let j = 0; j < typingWord[i].length; j++) {
+        let text = typingWord[i][j];
+        typingWord[i][j] = this.lowerAll(text);
+      }
+    }
+    return typingWord;
   }
 
   /**

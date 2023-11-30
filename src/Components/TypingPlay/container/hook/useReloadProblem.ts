@@ -64,20 +64,27 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     romajiType: ROMAJI_TYPE
   ): boolean => {
     let isMore = false;
-   const romajiTypeSelect = (romajiText: <T>) => {
-        let mode = typeof romajiText === 'string';
-     switch (romajiType) {
-       case UPPER:
-        return romanizer.upperAll(romajiText);
-         break;
-       case LOWER:
-        return romanizer.lowerAll(romajiText);
-         break;
-       case SHIFT_REQUIRED:
-         return romajiText;
-         break;
-     }
-   };
+    let convRomaText: string | string[][];
+    const romajiTypeSelect = <T extends typeof convRomaText>(
+      romajiText: T
+    ): typeof convRomaText => {
+      let mode = typeof romajiText === "string";
+      switch (romajiType) {
+        case UPPER:
+          return mode
+            ? romanizer.upperAll(romajiText)
+            : romanizer.upperWordInitialAry(romajiText);
+          break;
+        case LOWER:
+          return mode
+            ? romanizer.lowerAll(romajiText)
+            : romanizer.lowerAllAry(romajiText);
+          break;
+        case SHIFT_REQUIRED:
+          return romajiText;
+          break;
+      }
+    };
 
     // 問題文が無くなったらfalse
     if (problems.length === 0) return isMore;
@@ -87,13 +94,15 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         if (problemLength === problems.length) {
           const rnd = Math.floor(Math.random() * (problemLength - 1));
           const problem = problems.splice(rnd, 1);
-          setRomajiText(problem[0].romaji as string);
+          convRomaText = romajiTypeSelect(problem[0].romaji as string);
+          setRomajiText(convRomaText as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text);
           setTypingWord(problem[0].typingWords as string[][]);
         } else {
           const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romaji as string);
+          convRomaText = romajiTypeSelect(problem[0].romaji as string);
+          setRomajiText(convRomaText as string);
           setKanaText(problem[0].kana as string);
           setQesutionText(problem[0].text as string);
           setTypingWord(problem[0].typingWords as string[][]);
@@ -108,29 +117,15 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         }
         setQesutionText(text);
         const problem = problems.splice(0, 1);
-        setRomajiText(romajiTypeSelect(problem[0].romaji as string));
+        convRomaText = romajiTypeSelect(problem[0].romaji as string);
+        setRomajiText(convRomaText as string);
         setKanaText(problem[0].kana as string);
-        setTypingWord(problem[0].typingWords as string[][]);
+        convRomaText = romajiTypeSelect(problem[0].typingWords as string[][]);
+        setTypingWord(convRomaText as string[][]);
         setProblems(problems);
         isMore = true;
         break;
       case REAL_TEXT:
-        if (problemLength === problems.length) {
-          const rnd = Math.floor(Math.random() * (problemLength - 1));
-          const problem = problems.splice(rnd, 1);
-          setRomajiText(problem[0].romaji as string);
-          setKanaText(problem[0].kana as string);
-          setQesutionText(problem[0].text);
-          setTypingWord(problem[0].typingWords as string[][]);
-        } else {
-          const problem = problems.splice(0, 1);
-          setRomajiText(problem[0].romaji as string);
-          setKanaText(problem[0].kana as string);
-          setQesutionText(problem[0].text as string);
-          setTypingWord(problem[0].typingWords as string[][]);
-        }
-        setProblems(problems);
-        isMore = true;
         break;
       default:
     }
