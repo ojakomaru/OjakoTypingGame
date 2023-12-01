@@ -279,8 +279,6 @@ export default class Romanizer {
     switch (this.upperMode) {
       case Romanizer.UPPER_WORD_INITIAL:
         return this.upperWordInitial(romanText);
-      case Romanizer.UPPER_SENTENCE_INITIAL:
-        return this.upperSentenceInitial(romanText);
       case Romanizer.UPPER_ALL:
         return this.upperAll(romanText);
       case Romanizer.UPPER_NONE:
@@ -291,97 +289,83 @@ export default class Romanizer {
   }
 
   upperWordInitial(romanText) {
-    let result = romanText[0].toUpperCase();
-    for (let i = 1; i < romanText.length; i++) {
-      const char = romanText[i];
-      const prevChar = romanText.substr(i - 1, 1);
-      if (prevChar.match(/\s/)) {
-        result += char.toUpperCase();
-      } else {
-        result += char;
+    let mode = typeof romanText === "string";
+    if (mode) {
+      let result = romanText[0].toUpperCase();
+      for (let i = 1; i < romanText.length; i++) {
+        const char = romanText[i];
+        const prevChar = romanText.substr(i - 1, 1);
+        prevChar === "␣"
+          ? (result += char.toUpperCase())
+          : (result += char.toLowerCase());
       }
-    }
-    return result;
-  }
-  upperWordInitialAry(typingWord) {
-    let char = typingWord[0][0][0].toUpperCase();
-    for (let i = 1; i < typingWord[0][0].length; i++) {
-      char += typingWord[0][0][i];
-    }
-    typingWord[0][0] = char;
-    for (let i = 1; i < typingWord.length; i++) {
-      for (let j = 0; j < typingWord[i].length; j++) {
-        char = '';
-        if (typingWord[i - 1][j] === " ") {
-          char = typingWord[i][j][0].toUpperCase();
-          for (let k = 1; k < typingWord[i][j].length; k++) {
-            char += typingWord[i][j][k];
+      return result;
+    } else {
+      let char = romanText[0][0][0].toUpperCase();
+      for (let i = 1; i < romanText[0][0].length; i++) {
+        char += romanText[0][0][i];
+      }
+      romanText[0][0] = char;
+      for (let i = 1; i < romanText.length; i++) {
+        for (let j = 0; j < romanText[i].length; j++) {
+          char = "";
+          if (romanText[i - 1][j] === " ") {
+            char = romanText[i][j][0].toUpperCase();
+            for (let k = 1; k < romanText[i][j].length; k++) {
+              char += romanText[i][j][k];
+            }
+            romanText[i][j] = char;
+          } else {
+            for (let k = 0; k < romanText[i][j].length; k++) {
+              char += romanText[i][j][k].toLowerCase();
+            }
+            romanText[i][j] = char;
           }
-          typingWord[i][j] = char;
-        } else {
-          for (let k = 0; k < typingWord[i][j].length; k++) {
-            char += typingWord[i][j][k].toLowerCase();
-          }
-          typingWord[i][j] = char;
         }
       }
+      return romanText;
     }
-    return typingWord;
   }
 
-  upperSentenceInitial(romanText) {
-    let result = "";
-    let inSentence = false;
-    for (let i = 0; i < romanText.length; i++) {
-      const char = romanText[i];
-
-      if (char.match(/[a-zA-Zāâīîūûēêōô]/) && inSentence === false) {
-        result += char.toUpperCase();
-        inSentence = true;
-      } else {
-        if (char === ".") {
-          inSentence = false;
-        }
-        result += char;
-      }
-    }
-    return result;
-  }
 
   upperAll(romanText) {
-    let result = "";
-    for (let i = 0; i < romanText.length; i++) {
-      const char = romanText[i];
-      result += char.toUpperCase();
-    }
-    return result;
-  }
-  upperAllAry(typingWord) {
-    for (let i = 0; i < typingWord.length; i++) {
-      for (let j = 0; j < typingWord[i].length; j++) {
-        let text = typingWord[i][j];
-        typingWord[i][j] = this.upperAll(text);
+    let mode = typeof romanText === "string";
+    if (mode) {
+      let result = "";
+      for (let i = 0; i < romanText.length; i++) {
+        const char = romanText[i];
+        result += char.toUpperCase();
       }
+      return result;
+    } else {
+      for (let i = 0; i < romanText.length; i++) {
+        for (let j = 0; j < romanText[i].length; j++) {
+          let text = romanText[i][j];
+          romanText[i][j] = this.upperAll(text);
+        }
+      }
+      return romanText;
     }
-    return typingWord;
   }
 
   lowerAll(romanText) {
-    let result = "";
-    for (let i = 0; i < romanText.length; i++) {
-      const char = romanText[i];
-      result += char.toLowerCase();
-    }
-    return result;
-  }
-  lowerAllAry(typingWord) {
-    for (let i = 0; i < typingWord.length; i++) {
-      for (let j = 0; j < typingWord[i].length; j++) {
-        let text = typingWord[i][j];
-        typingWord[i][j] = this.lowerAll(text);
+    let mode = typeof romanText === "string";
+    if (mode) {
+      let result = "";
+      for (let i = 0; i < romanText.length; i++) {
+        const char = romanText[i];
+        result += char.toLowerCase();
       }
+      return result;
+    } else {
+      for (let i = 0; i < romanText.length; i++) {
+        for (let j = 0; j < romanText[i].length; j++) {
+          let text = romanText[i][j];
+          romanText[i][j] = this.lowerAll(text);
+        }
+      }
+      return romanText;
     }
-    return typingWord;
   }
 
   /**

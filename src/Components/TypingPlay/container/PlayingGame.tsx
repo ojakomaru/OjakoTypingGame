@@ -25,7 +25,7 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const navigate = useNavigate();
   const { typingdata, setIsPlaying } = props;
-  const { typeMode, showFurigana, romajiType } =
+  const { typeMode, showFurigana, romajiType, order} =
     React.useContext(SettingDataContext);
   const {
     romajiText,

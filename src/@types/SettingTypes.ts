@@ -14,8 +14,14 @@ type SHOW_RADIO = typeof SHOW | typeof HIDDEN;
 // ROMAJI_TYPE
 const UPPER = "upper";
 const LOWER = "lower";
-const SHIFT_REQUIRED = "shift";
-type ROMAJI_TYPE = typeof UPPER | typeof LOWER | typeof SHIFT_REQUIRED;
+const WORD_INITIAL = "wordInitial";
+const SENTENCE_INITIAL = "sentenceInitial";
+const NONE = "shift";
+type ROMAJI_TYPE =
+  | typeof UPPER
+  | typeof LOWER
+  | typeof WORD_INITIAL
+  | typeof NONE;
 
 // ORDER_TYPE
 const REGI_ORDER = "registration-order";
@@ -23,11 +29,11 @@ const RANDOM = "random";
 type ORDER_TYPE = typeof REGI_ORDER | typeof RANDOM;
 
 export interface SettingTypes {
-  typeMode: TYPE_MODE;     // 問題の種類
-  showFurigana: SHOW_RADIO;// ふりがな表示
+  typeMode: TYPE_MODE; // 問題の種類
+  showFurigana: SHOW_RADIO; // ふりがな表示
   romajiType: ROMAJI_TYPE; // 大文字小文字もしくはShift操作するか
-  order: ORDER_TYPE;       // 出題順
-  showKeyboard: SHOW_RADIO;// キーボードを表示
+  order: ORDER_TYPE; // 出題順
+  showKeyboard: SHOW_RADIO; // キーボードを表示
 }
 
 export {
@@ -42,7 +48,8 @@ export {
   type SHOW_RADIO,
   UPPER,
   LOWER,
-  SHIFT_REQUIRED,
+  WORD_INITIAL,
+  NONE,
   type ROMAJI_TYPE,
   REGI_ORDER,
   RANDOM,

@@ -1,4 +1,4 @@
-import { SHORT_TEXT, LONG_TEXT, REAL_TEXT, Options, UPPER, LOWER, SHIFT_REQUIRED, HIDDEN, SHOW, RANDOM, REGI_ORDER } from "../@types";
+import { SHORT_TEXT, LONG_TEXT, REAL_TEXT, Options, UPPER, LOWER, NONE, HIDDEN, SHOW, RANDOM, REGI_ORDER, WORD_INITIAL } from "../@types";
 
 const TypeModeValues: Options<string> = [
   { value: SHORT_TEXT, label: "短文" },
@@ -9,7 +9,8 @@ const TypeModeValues: Options<string> = [
 const RomajiTypeValues: Options<string> = [
   { value: UPPER, label: "大文字" },
   { value: LOWER, label: "小文字" },
-  { value: SHIFT_REQUIRED, label: "シフト必須入力" },
+  { value: WORD_INITIAL, label: "先頭単語大文字" },
+  { value: NONE, label: "オリジナル" },
 ];
 
 const OrderValues: Options<string> = [
