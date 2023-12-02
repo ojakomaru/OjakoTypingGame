@@ -10,20 +10,34 @@ import {
   SHORT_TEXT,
   TYPE_MODE,
   TypingDataType,
+  ORDER_TYPE,
+  RANDOM,
 } from "../../../../@types";
-import { Romanizer } from "../../../../Hooks";
+import { Romanizer, useEffectOnce } from "../../../../Hooks";
 
 const useReloadProblem = (typingdata: TypingDataType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
   const cpProblems = structuredClone(typingdata.problems);
   const [problems, setProblems] = useState(cpProblems);
-  // 問題文の数
   const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string>("");
   const [kanaText, setKanaText] = useState<string>("");
   const [questionText, setQesutionText] = useState<string>("");
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
+  const [ridx] = useState(() => {
+    // 問題文の数の配列を生成しランダム値を設定
+    let idx;
+    let initAry = [];
+    let a = [...Array(problemLength).keys()];
+    while (a.length > 0) {
+      idx = Math.floor(Math.random() * a.length);
+      initAry.push(a[idx]);
+      a.splice(idx, 1);
+    }
+    return initAry;
+  });
+  // useEffectOnce(() => {});
 
   const romajiMod = (
     kanaPos: number,
@@ -62,11 +76,15 @@ const useReloadProblem = (typingdata: TypingDataType) => {
 
   const reloadProblem = (
     typeMode: TYPE_MODE,
-    romajiType: ROMAJI_TYPE
+    romajiType: ROMAJI_TYPE,
+    order: ORDER_TYPE
   ): boolean => {
     let isMore = false;
     let convRomaText: string | string[][];
-    let problem: Pick<TypingDataType["problems"], keyof TypingDataType["problems"]>;
+    let problem: Pick<
+      TypingDataType["problems"],
+      keyof TypingDataType["problems"]
+    > | null = null;
     const romajiTypeSelect = <T extends typeof convRomaText>(romajiText: T) => {
       switch (romajiType) {
         case UPPER:
@@ -86,16 +104,13 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     // 設定モードにより分岐
     switch (typeMode) {
       case SHORT_TEXT: // 短文モードの場合
-        const rnd = Math.floor(Math.random() * (problemLength - 1));
-        problem = problems.splice(rnd, 1);
-        setQesutionText(problem[0].text);
-        convRomaText = romajiTypeSelect(problem[0].romaji as string);
-        setRomajiText(convRomaText as string);
-        setKanaText(problem[0].kana as string);
-        convRomaText = romajiTypeSelect(problem[0].typingWords as string[][]);
-        setTypingWord(convRomaText as string[][]);
-
-        setProblems(problems);
+        if (order === RANDOM) {
+          problem = problems.splice(ridx[0], 1);
+          setQesutionText(problem![0].text);
+        } else {
+          problem = problems.splice(0, 1);
+          setQesutionText(problem![0].text);
+        }
         isMore = true;
         break;
       case LONG_TEXT: // 長文モードの場合
@@ -105,18 +120,17 @@ const useReloadProblem = (typingdata: TypingDataType) => {
         }
         setQesutionText(text);
         problem = problems.splice(0, 1);
-        convRomaText = romajiTypeSelect(problem[0].romaji as string);
-        setRomajiText(convRomaText as string);
-        setKanaText(problem[0].kana as string);
-        convRomaText = romajiTypeSelect(problem[0].typingWords as string[][]);
-        setTypingWord(convRomaText as string[][]);
-        setProblems(problems);
         isMore = true;
         break;
       case REAL_TEXT:
         break;
-      default:
     }
+    convRomaText = romajiTypeSelect(problem![0].romaji as string);
+    setRomajiText(convRomaText as string);
+    setKanaText(problem![0].kana as string);
+    convRomaText = romajiTypeSelect(problem![0].typingWords as string[][]);
+    setTypingWord(convRomaText as string[][]);
+    setProblems(problems);
     return isMore;
   };
 

@@ -51,7 +51,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // 問題文生成
   useEffectOnce(() => {
-    reloadProblem(typeMode, romajiType);
+    reloadProblem(typeMode, romajiType, order);
   });
 
   /* タイピング入力処理 */
@@ -183,7 +183,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         kanaIdx.current = 0;
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
-        let isProblem = reloadProblem(typeMode, romajiType);
+        let isProblem = reloadProblem(typeMode, romajiType, order);
         if (!isProblem) console.log("GameSet!!");
       }
     };
