@@ -216,8 +216,8 @@ export default function PlayingGame(props: PlayingGameProps) {
         </>
       ) : (
         <>
-          <RomajiText ref={romajiRef} romaji={romajiText} />
           <QuestionText questionText={questionText} />
+          <RomajiText ref={romajiRef} romaji={romajiText} />
         </>
       )}
     </GameBoard>

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import {
+  SHORT_TEXT,
   LONG_TEXT,
-  LOWER,
   REAL_TEXT,
-  ROMAJI_TYPE,
   UPPER,
+  LOWER,
+  ROMAJI_TYPE,
   WORD_INITIAL,
   NONE,
-  SHORT_TEXT,
   TYPE_MODE,
-  TypingDataType,
   ORDER_TYPE,
   RANDOM,
+  TypingDataType,
 } from "../../../../@types";
-import { Romanizer, useEffectOnce } from "../../../../Hooks";
+import { Romanizer } from "../../../../Hooks";
 
 const useReloadProblem = (typingdata: TypingDataType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
@@ -25,19 +25,22 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   const [questionText, setQesutionText] = useState<string>("");
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
-  const [ridx] = useState(() => {
+  const [randProblems] = useState(() => {
     // 問題文の数の配列を生成しランダム値を設定
     let idx;
     let initAry = [];
+    let randProblems = [];
     let a = [...Array(problemLength).keys()];
     while (a.length > 0) {
       idx = Math.floor(Math.random() * a.length);
       initAry.push(a[idx]);
       a.splice(idx, 1);
     }
-    return initAry;
+    for (let i = 0; i < initAry.length; i++) {
+      randProblems.push(cpProblems[initAry[i]]);
+    }
+    return randProblems;
   });
-  // useEffectOnce(() => {});
 
   const romajiMod = (
     kanaPos: number,
@@ -105,7 +108,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     switch (typeMode) {
       case SHORT_TEXT: // 短文モードの場合
         if (order === RANDOM) {
-          problem = problems.splice(ridx[0], 1);
+          problem = randProblems.splice(0, 1);
           setQesutionText(problem![0].text);
         } else {
           problem = problems.splice(0, 1);

@@ -161,54 +161,6 @@ export default class Romanizer {
   }
 
   /**
-   * 入力した文字から平仮名を何文字入力できたか判定しその移動量を返します
-   * @param {string} kana 現在入力中の平仮名
-   * @param {string} roma 問題文のローマ字テキスト
-   * @param {number} r 現在入力中のローマ字の位置
-   * @returns {number} それぞれのパターンで以下の戻り値になる
-   *                   2: 拗音を含む文字を入力完了
-   *                   1: 通常のローマ字を入力完了またはアルファベットor記号の時
-   *                   0: 現在の文字が入力途中またはローマ字として成立していない
-   */
-  isKanaMove(kana, roma, r) {
-    let result = "";
-    let tmp = "";
-    let isKanaPos = 1;
-
-    if (kana.match(/^[ぁ-ん]+$/) || kana.match(/^[ァ-ヶ]+$/)) {
-      // 現在の文字が母音であるか
-      if (this.boin.includes(roma[r].toLowerCase())) {
-        // 一つ前の文字が拗音かどうか
-        if (this.youon.includes(roma.substr(r - 1, 1).toLowerCase())) {
-          tmp = roma.substr(r - 2, 3);
-          isKanaPos = 2;
-        }
-        // 一文字前が母音かどうか
-        else if (this.boin.includes(roma.substr(r - 1, 1).toLowerCase())) {
-          tmp = roma.substr(r, 1);
-          isKanaPos = 1;
-        } else {
-          tmp = roma.substr(r - 1, 2);
-          isKanaPos = 1;
-        }
-        result = this.romaToHira(tmp.toLowerCase());
-        isKanaPos = result in romanMap ? isKanaPos : 0;
-      } else {
-        isKanaPos = 0;
-        // 現在の文字が「ん」の場合はOK
-        if (
-          roma[r] === "N" &&
-          !this.boin.includes(roma.substr(r + 1, 1).toLowerCase())
-        )
-          isKanaPos = 1;
-      }
-    } else {
-      return isKanaPos;
-    }
-    return isKanaPos;
-  }
-
-  /**
    * ローマ字から平仮名へ変換する
    * 何文字でも可能
    * @param {string} roma ローマ字の文字列

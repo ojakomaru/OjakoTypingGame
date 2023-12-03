@@ -14,12 +14,14 @@ type RomajiTextProps = {
 const StyleRomajiText = styled(Paragraph)`
   font-size: 18px;
   width: 100%;
+  overflow-wrap: break-word;
   &.romajiLongMode {
     text-align: left;
   }
   .current-letter {
-    color: #2d0303;
     text-decoration: underline;
+    text-decoration-skip-ink: none;
+    font-size: 19px;
     font-weight: bold;
     animation: blink 1s linear infinite;
   }
