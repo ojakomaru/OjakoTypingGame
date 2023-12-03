@@ -25,7 +25,7 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const navigate = useNavigate();
   const { typingdata, setIsPlaying } = props;
-  const { typeMode, showFurigana, romajiType, order} =
+  const { typeMode, showFurigana, romajiType, order } =
     React.useContext(SettingDataContext);
   const {
     romajiText,
@@ -86,7 +86,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       if (e.key.length > 1) return;
       tmp += e.key;
-      // ローマ字正解打の処理
+      // ローマ字正解打
       if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
         romajiTyped.success(romaLength);
         romaLength++;
@@ -109,39 +109,55 @@ export default function PlayingGame(props: PlayingGameProps) {
           romajiTyped.refresh(romaLength);
           romaPos++;
           saveRefs();
-        } else if (
+        } else {
           //「ん」の時の特別措置
-          typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
-          typingWord[kanaPos].length === 3
-        ) {
-          for (let i = 0; i < typingWord[kanaPos + 1].length; i++) {
-            if (e.key === typingWord[kanaPos + 1][i][0]) {
-              pattern[kanaPos] = 2;
-              pattern[kanaPos + 1] = i;
-              nFlag = true;
-              break;
+          if (
+            typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
+            typingWord[kanaPos].length === 3
+          ) {
+            for (let i = 0; i < typingWord[kanaPos + 1].length; i++) {
+              if (e.key === typingWord[kanaPos + 1][i][0]) {
+                pattern[kanaPos] = 2;
+                pattern[kanaPos + 1] = i;
+                nFlag = true;
+                break;
+              }
+            }
+            // 「ん」の次の文字を打ち間違えた時
+            if (!nFlag) {
+              messageShow();
+              // その位置で初めてのうち間違えであるとき
+              if (typo.indexOf(romaLength) === -1) {
+                // うち間違えた位置の配列にその位置を追加
+                setTypo([...typo, romaLength]);
+                romajiTyped.miss(romaLength);
+                kanaTyped.miss(kanaLength);
+              }
+              tmp = tmp.slice(0, -1);
+              saveRefs();
             }
           }
-        }
-        // 打ち間違い判定
-        else {
-          if (e.key !== "Shift") {
-            messageShow();
-            // その位置で初めてのうち間違えであるとき
-            if (typo.indexOf(romaLength) === -1) {
-              // うち間違えた位置の配列にその位置を追加
-              setTypo([...typo, romaLength]);
-              romajiTyped.miss(romaLength);
-              kanaTyped.miss(kanaLength);
+          // 該当パターンなし、「ん」でもない時は打ち間違い
+          else {
+            if (e.key !== "Shift") {
+              messageShow();
+              // その位置で初めてのうち間違えであるとき
+              if (typo.indexOf(romaLength) === -1) {
+                // うち間違えた位置の配列にその位置を追加
+                setTypo([...typo, romaLength]);
+                romajiTyped.miss(romaLength);
+                kanaTyped.miss(kanaLength);
+              }
+              tmp = tmp.slice(0, -1);
+              saveRefs();
             }
-            tmp = tmp.slice(0, -1);
-            saveRefs();
           }
         }
       }
 
       // まだ入力していない文字があるとき
       if (romaLength <= romajiText.length - 1) {
+        romajiTyped.next(romaLength - 1);
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
           let kanaStr = romanizer.romaToHira(
@@ -153,8 +169,8 @@ export default function PlayingGame(props: PlayingGameProps) {
             romaLength = romajiMod(kanaPos, pattern, 0);
             romaLength++;
             romajiTyped.refresh(romaLength);
-            kanaLength++;
             kanaPos++;
+            kanaLength++;
             romaPos = 1;
             tmp = tmp.slice(1);
             saveRefs();
@@ -166,7 +182,6 @@ export default function PlayingGame(props: PlayingGameProps) {
               kanaLength++;
               kanaTyped.success(kanaLength);
             }
-            romajiTyped.next(romaLength - 1);
             kanaPos++;
             kanaLength++;
             romaPos = 0;

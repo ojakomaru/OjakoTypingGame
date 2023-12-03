@@ -139,10 +139,6 @@ export default class Romanizer {
       } else {
         // 次の文字に小さい文字（捨て仮名）が含まれている場合はひとまとめにする
         if (isSmallChar()) slStr += getFirstStr();
-        if (slStr === "&") {
-          slStr += remStr.slice(0, 7);
-          remStr = remStr.slice(7);
-        }
         // 現在の文字がマップに含まれていれば追加
         romaAry = romanMap[slStr] ? [...romanMap[slStr]] : [...slStr];
         if (slStr === "ん") {

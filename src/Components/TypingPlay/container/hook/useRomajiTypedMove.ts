@@ -12,7 +12,7 @@ const useRomajiTypedMove = () => {
       },
       // 次の位置へ移動
       next: (position: number) =>
-        (inputText[position + 1].className = "current-letter"),
+        inputText[position + 1].classList.add("current-letter"),
       // 初期の状態に戻す
       reset: () => {
         inputText[0].classList.add("current-letter");

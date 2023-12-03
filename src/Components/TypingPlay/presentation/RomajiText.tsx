@@ -20,7 +20,7 @@ const StyleRomajiText = styled(Paragraph)`
   }
   .current-letter {
     text-decoration: underline;
-    text-decoration-skip-ink: none;
+    /* text-decoration-skip-ink: none; */
     font-size: 19px;
     font-weight: bold;
     animation: blink 1s linear infinite;
