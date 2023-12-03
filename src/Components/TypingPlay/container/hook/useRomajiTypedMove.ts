@@ -27,7 +27,7 @@ const useRomajiTypedMove = () => {
           inputText[i].classList.remove("current-letter");
           inputText[i].classList.add("typed-letters");
         }
-        inputText[position].className = "current-letter";
+        inputText[position].classList.add("current-letter");
       },
       // 打ち間違えた文字であることを示すclassを追加
       miss: (position: number) => inputText[position].classList.add("typo"),

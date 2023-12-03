@@ -12,17 +12,18 @@ type RomajiTextProps = {
 };
 
 const StyleRomajiText = styled(Paragraph)`
-  font-size: 18px;
   width: 100%;
+  font-size: 18px;
+  letter-spacing: 1px;
   overflow-wrap: break-word;
   &.romajiLongMode {
     text-align: left;
   }
   .current-letter {
-    text-decoration: underline;
-    /* text-decoration-skip-ink: none; */
     font-size: 19px;
     font-weight: bold;
+    text-decoration: underline;
+    /* text-decoration-skip-ink: none; */
     animation: blink 1s linear infinite;
   }
   @keyframes blink {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SHOW, type TypingDataType } from "../../../@types";
+import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import useReloadProblem from "../../TypingPlay/container/hook/useReloadProblem";
 import {
@@ -9,6 +9,7 @@ import {
   RomajiText,
 } from "../../TypingPlay/presentation";
 import { useEffectOnce } from "../../../Hooks";
+import { Divider } from "@mui/material";
 
 type SettingExampleProps = {
   typingdata: TypingDataType;
@@ -25,9 +26,28 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
     useReloadProblem(typingdata);
   return (
     <GameBoard>
-      {showFurigana === SHOW && <HiraganaText kanaText={kanaText} />}
-      <QuestionText questionText={questionText} />
-      <RomajiText romaji={romajiText} />
+      <HiraganaText kanaText={kanaText} showFurigana={showFurigana} />
+      {typeMode === LONG_TEXT ? ( // 長文モード時
+        <>
+          <RomajiText
+            romaji={romajiText}
+            className="romajiLongMode"
+          />
+          <Divider
+            variant="middle"
+            sx={{ borderColor: "primary.main", width: "100%", height: "3px" }}
+          />
+          <QuestionText
+            questionText={questionText}
+            $longModeScrollOn={0}
+          />
+        </>
+      ) : (
+        <>
+          <QuestionText questionText={questionText} />
+          <RomajiText romaji={romajiText} />
+        </>
+      )}
     </GameBoard>
   );
 };

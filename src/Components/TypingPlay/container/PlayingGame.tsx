@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Romanizer, useEffectOnce } from "../../../Hooks";
-import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
+import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import {
   useReloadProblem,
@@ -210,9 +210,11 @@ export default function PlayingGame(props: PlayingGameProps) {
   return (
     <GameBoard>
       {missMessage}
-      {showFurigana === SHOW && ( // ふりがな表示がOnの時
-        <HiraganaText ref={kanaRef} kanaText={kanaText} />
-      )}
+      <HiraganaText
+        ref={kanaRef}
+        kanaText={kanaText}
+        showFurigana={showFurigana}
+      />
       {typeMode === LONG_TEXT ? ( // 長文モード時
         <>
           <RomajiText
