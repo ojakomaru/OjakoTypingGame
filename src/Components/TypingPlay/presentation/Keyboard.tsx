@@ -1,10 +1,10 @@
 import * as React from 'react';
 interface KeyboradProps {
-  inputKey: string
+  shiftOn: boolean
 }
 
 export default function Keyboard(props: KeyboradProps) {
-const { inputKey } = props;
+const { shiftOn } = props;
   return (
     <>
       <div id="virtual-keyboard">

@@ -615,3 +615,13 @@ export const romanMap = {
   "０": ["0"],
 };
 
+export const keyMap = {
+  "-": "hyphen",
+  "@": "atmark",
+  ";": "semicolon",
+  ":": "colon",
+  ",": "comma",
+  ".": "period",
+  "/": "slash",
+  " ": "space",
+};

@@ -23,7 +23,7 @@ const StyleRomajiText = styled(Paragraph)`
     font-size: 19px;
     font-weight: bold;
     text-decoration: underline;
-    /* text-decoration-skip-ink: none; */
+    text-decoration-skip-ink: none;
     animation: blink 1s linear infinite;
   }
   @keyframes blink {

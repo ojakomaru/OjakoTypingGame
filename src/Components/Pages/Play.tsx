@@ -11,7 +11,7 @@ const Play: React.FC = () => {
   return (
     <Layout>
       <MainDisplay isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
-      {showKeyboard === SHOW && <Keyboard inputKey="k" />}
+      {showKeyboard === SHOW && <Keyboard shiftOn={false} />}
     </Layout>
   );
 };
