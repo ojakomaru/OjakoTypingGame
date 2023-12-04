@@ -19,12 +19,13 @@ import {
 } from "../presentation";
 
 type PlayingGameProps = {
-  setIsPlaying?: (a: boolean) => void;
   typingdata: TypingDataType;
+  setIsPlaying?: (a: boolean) => void;
+  keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
   const navigate = useNavigate();
-  const { typingdata, setIsPlaying } = props;
+  const { typingdata, setIsPlaying, keyboardInit } = props;
   const { typeMode, showFurigana, romajiType, order } =
     React.useContext(SettingDataContext);
   const {
@@ -49,6 +50,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [missMessage, messageShow] = useMissMessage();
   const romanizer = new Romanizer();
 
+  const keyboard = keyboardInit();
+  console.log(keyboard);
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem(typeMode, romajiType, order);
@@ -213,7 +216,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       <HiraganaText
         ref={kanaRef}
         kanaText={kanaText}
-        showFurigana={showFurigana}
+        $showFurigana={showFurigana}
       />
       {typeMode === LONG_TEXT ? ( // 長文モード時
         <>

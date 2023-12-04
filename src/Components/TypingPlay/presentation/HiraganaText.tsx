@@ -6,12 +6,12 @@ import styled, { css } from "styled-components";
 type HiraganaTextProps = {
   ref: RefObject<HTMLParagraphElement>;
   kanaText: string;
-  showFurigana: SHOW_RADIO;
+  $showFurigana: SHOW_RADIO;
   className?: string;
 };
-type StyledTextProps = Pick<HiraganaTextProps, "showFurigana">;
+type StyledTextProps = Pick<HiraganaTextProps, "$showFurigana">;
 const StyleHiraganaText = styled(Paragraph)<StyledTextProps>`
-  ${({showFurigana}) => showFurigana === HIDDEN && css`display: none`};
+  ${({$showFurigana}) => $showFurigana === HIDDEN && css`display: none`};
    .current-letter {
      color: #2d0303;
      font-weight: bold;
@@ -28,7 +28,7 @@ function HiraganaTextCore(
   props: HiraganaTextProps,
   ref: Ref<HTMLParagraphElement>
 ) {
-  const { className, kanaText, showFurigana } = props;
+  const { className, kanaText, $showFurigana } = props;
   const kanaAry: string[] = kanaText.split("").slice(0);
 
   return (
@@ -36,7 +36,7 @@ function HiraganaTextCore(
       ref={ref}
       id="hiraganaText"
       className={className}
-      showFurigana={showFurigana}
+      $showFurigana={$showFurigana}
     >
       {kanaAry.map((char: string, index: number) => (
         <span className="waiting-letters" key={index}>

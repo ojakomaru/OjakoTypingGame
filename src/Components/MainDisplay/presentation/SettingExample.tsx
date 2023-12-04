@@ -26,7 +26,7 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
     useReloadProblem(typingdata);
   return (
     <GameBoard>
-      <HiraganaText kanaText={kanaText} showFurigana={showFurigana} />
+      <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />
       {typeMode === LONG_TEXT ? ( // 長文モード時
         <>
           <RomajiText

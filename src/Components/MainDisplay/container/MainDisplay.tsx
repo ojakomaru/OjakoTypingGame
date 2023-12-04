@@ -12,6 +12,7 @@ type MainFeaturedPostProps = {
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
   isSetting?: boolean;
+  keyboardInit?: any;
 };
 
 export const MainDisplay = (props: MainFeaturedPostProps) => {
@@ -20,7 +21,8 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     setIsHome,
     isPlaying = false,
     setIsPlaying,
-    isSetting
+    isSetting,
+    keyboardInit
   } = props;
   const { typingdata } = React.useContext(TypingDataContext);
 
@@ -30,7 +32,11 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
       return (
-        <PlayingGame typingdata={typingdata} setIsPlaying={setIsPlaying} />
+        <PlayingGame
+          typingdata={typingdata}
+          setIsPlaying={setIsPlaying}
+          keyboardInit={keyboardInit}
+        />
       );
     } else if (isSetting) {
       return (

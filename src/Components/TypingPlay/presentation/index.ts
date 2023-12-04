@@ -1,6 +1,7 @@
 import { RomajiText } from "../presentation/RomajiText";
 import { HiraganaText } from "../presentation/HiraganaText";
 import { QuestionText } from "../presentation/QuestionText";
+import { Keyboard } from "./Keyboard";
 import GameBoard from "../presentation/GameBoard";
 
-export { GameBoard, QuestionText, HiraganaText, RomajiText };
+export { GameBoard, Keyboard, QuestionText, HiraganaText, RomajiText };
