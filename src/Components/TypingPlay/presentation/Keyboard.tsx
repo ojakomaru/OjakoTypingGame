@@ -40,42 +40,49 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
     left: 41px;
   }
 
-  & div.key_2 {
+  & div.key_2,
+  .key_atmark {
     top: 0;
     left: 82px;
   }
 
-  & div.key_3 {
+  & div.key_3,
+  .key_sharp {
     top: 0;
     left: 123px;
   }
 
-  & div.key_4 {
+  & div.key_4,
+  .key_dollar {
     top: 0;
     left: 164px;
   }
 
-  & div.key_5 {
+  & div.key_5,
+  .key_percnt {
     top: 0;
     left: 205px;
   }
 
-  & div.key_6 {
+  & div.key_6,
+  .key_caret {
     top: 0;
     left: 246px;
   }
 
-  & div.key_7 {
+  & div.key_7,
+  .key_and {
     top: 0;
     left: 287px;
   }
 
-  & div.key_8 {
+  & div.key_8,
+  .key_lper {
     top: 0;
     left: 328px;
   }
 
-  & div.key_9 {
+  & div.key_9,.key_rper {
     top: 0;
     left: 369px;
   }
@@ -160,12 +167,12 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
     left: 430px;
   }
 
-  & div.key_atmark {
+  & div.key_lbrack {
     top: 41px;
     left: 471px;
   }
 
-  & div.deco_key6 {
+  & div.key_rbrack {
     top: 41px;
     left: 512px;
   }
@@ -413,15 +420,47 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       ) : (
         <div className="key_1">1</div>
       )}
+      {shift ? (
+        <div className="key_atmark">@</div>
+      ) : (
+        <div className="key_2">2</div>
+      )}
+      {shift ? (
+        <div className="key_sharp">#</div>
+      ) : (
+        <div className="key_3">3</div>
+      )}
+      {shift ? (
+        <div className="key_dollar">$</div>
+      ) : (
+        <div className="key_4">4</div>
+      )}
+      {shift ? (
+        <div className="key_percnt">%</div>
+      ) : (
+        <div className="key_5">5</div>
+      )}
+      {shift ? (
+        <div className="key_caret">^</div>
+      ) : (
+        <div className="key_6">6</div>
+      )}
+      {shift ? (
+        <div className="key_and">&</div>
+      ) : (
+        <div className="key_7">7</div>
+      )}
+      {shift ? (
+        <div className="key_lper">(</div>
+      ) : (
+        <div className="key_8">8</div>
+      )}
+      {shift ? (
+        <div className="key_rper">)</div>
+      ) : (
+        <div className="key_9">9</div>
+      )}
 
-      <div className="key_2">2</div>
-      <div className="key_3">3</div>
-      <div className="key_4">4</div>
-      <div className="key_5">5</div>
-      <div className="key_6">6</div>
-      <div className="key_7">7</div>
-      <div className="key_8">8</div>
-      <div className="key_9">9</div>
       <div className="key_0">0</div>
       <div className="key_hyphen">-</div>
       <div className="deco_key2">=</div>
@@ -438,8 +477,8 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_i">I</div>
       <div className="key_o">O</div>
       <div className="key_p">P</div>
-      <div className="key_atmark">[</div>
-      <div className="deco_key6">]</div>
+      <div className="key_lbrack">[</div>
+      <div className="key_rbrack">]</div>
       <div className="key_Enter"></div>
       <div className="deco_key7"></div>
       <div className="key_a">A</div>
