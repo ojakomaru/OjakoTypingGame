@@ -12,7 +12,11 @@ interface KeyboardProps {
 
 type StyledKeyboardProps = Pick<KeyboardProps, "$showKeyboard">;
 const StyleKeyboard = styled.div<StyledKeyboardProps>`
-  ${({$showKeyboard}) => $showKeyboard === HIDDEN && css`display: none`};
+  ${({ $showKeyboard }) =>
+    $showKeyboard === HIDDEN &&
+    css`
+      display: none;
+    `};
   position: relative;
   width: 610px;
   margin: 0 auto;
@@ -24,13 +28,14 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
     border: 1px solid #d8d8d8;
     border-radius: 3px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 34px;
     text-align: center;
     overflow: hidden;
   }
 
-  & div.key_1 {
+  & div.key_1,
+  .key_exclamation {
     top: 0;
     left: 41px;
   }
@@ -388,13 +393,12 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
   const { className, $showKeyboard } = props;
 
   const shiftToggle = useCallback((e: KeyboardEvent) => {
-    if(e.key === "shift") {
+    if (e.key === "Shift") {
       setShift((shift) => !shift);
     }
-  },[])
+  }, []);
   useWindowEvent("keydown", shiftToggle, []);
-  // useWindowEvent("keyup", shiftToggle, []);
-
+  useWindowEvent("keyup", shiftToggle, []);
 
   return (
     <StyleKeyboard

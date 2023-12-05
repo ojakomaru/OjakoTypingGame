@@ -17,6 +17,7 @@ import {
   RomajiText,
   QuestionText,
 } from "../presentation";
+import MissMessage from "./MissMessage";
 
 type PlayingGameProps = {
   typingdata: TypingDataType;
@@ -47,7 +48,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [typo, setTypo] = useState(new Array(0));
   const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
-  const [missMessage, messageShow] = useMissMessage();
+  const [missFlg, setMissFlg] = useState<boolean>(false);
   const romanizer = new Romanizer();
 
   const keyboard = keyboardInit();
@@ -72,7 +73,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
       let nFlag = false;
-      const saveRefs = () => {
+      function saveRefs() {
         romaPosIdx.current = romaPos;
         kanaPosIdx.current = kanaPos;
         romaIdx.current = romaLength;
@@ -80,6 +81,21 @@ export default function PlayingGame(props: PlayingGameProps) {
         patternAry.current = pattern;
         tmpRef.current = tmp;
       };
+      function missTyped() {
+        setMissFlg(true);
+        setTimeout(function () {
+          setMissFlg(false);
+        }, 800);
+        // その位置で初めてのうち間違えであるとき
+        if (typo.indexOf(romaLength) === -1) {
+          // うち間違えた位置の配列にその位置を追加
+          setTypo([...typo, romaLength]);
+          romajiTyped.miss(romaLength);
+          kanaTyped.miss(kanaLength);
+        }
+        tmp = tmp.slice(0, -1);
+        saveRefs();
+      }
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーの処理（タイマー、タイプカウントのリセット）
@@ -88,6 +104,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         navigate("/");
       }
       if (e.key.length > 1) return;
+      if (missFlg) return;
       tmp += e.key;
       // ローマ字正解打
       if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
@@ -97,7 +114,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       // 目的のキーでなければpattern[kanaPos]を検索
       else {
-        if (!tmp.match(/^[ -/:-@[-`{-~]*$/)) {
+        if (!tmp.match(/[ -/:-@\[-`/{-~]/)) {
           let reg = new RegExp("^" + tmp);
           for (let i = 0; i < typingWord[kanaPos].length; i++) {
             if (!!typingWord[kanaPos][i].match(reg)) {
@@ -128,31 +145,13 @@ export default function PlayingGame(props: PlayingGameProps) {
             }
             // 「ん」の次の文字を打ち間違えた時
             if (!nFlag) {
-              messageShow();
-              // その位置で初めてのうち間違えであるとき
-              if (typo.indexOf(romaLength) === -1) {
-                // うち間違えた位置の配列にその位置を追加
-                setTypo([...typo, romaLength]);
-                romajiTyped.miss(romaLength);
-                kanaTyped.miss(kanaLength);
-              }
-              tmp = tmp.slice(0, -1);
-              saveRefs();
+              missTyped();
             }
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
           else {
             if (e.key !== "Shift") {
-              messageShow();
-              // その位置で初めてのうち間違えであるとき
-              if (typo.indexOf(romaLength) === -1) {
-                // うち間違えた位置の配列にその位置を追加
-                setTypo([...typo, romaLength]);
-                romajiTyped.miss(romaLength);
-                kanaTyped.miss(kanaLength);
-              }
-              tmp = tmp.slice(0, -1);
-              saveRefs();
+              missTyped();
             }
           }
         }
@@ -212,7 +211,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   return (
     <GameBoard>
-      {missMessage}
+      <MissMessage $isMiss={missFlg}/>
       <HiraganaText
         ref={kanaRef}
         kanaText={kanaText}
