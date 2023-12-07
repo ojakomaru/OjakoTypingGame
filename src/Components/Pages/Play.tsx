@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { MainDisplay } from "../MainDisplay/container/MainDisplay";
 import Layout from "../layout/Layout";
 import { useKeyboardTyping } from "../TypingPlay/container/hook";
@@ -8,6 +8,7 @@ const Play: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const { showKeyboard } = React.useContext(SettingDataContext);
   const { keyboardRef, keyboardInit } = useKeyboardTyping();
+  const keyRef = useRef<HTMLDivElement>(null);
   return (
     <Layout>
       <MainDisplay
@@ -15,7 +16,7 @@ const Play: React.FC = () => {
         setIsPlaying={setIsPlaying}
         keyboardInit={keyboardInit}
       />
-      <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
+      <Keyboard ref={keyRef} $showKeyboard={showKeyboard} />
     </Layout>
   );
 };

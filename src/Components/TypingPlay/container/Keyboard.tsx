@@ -77,27 +77,31 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
   }
 
   & div.key_8,
-  .key_lper {
+  .key_aster {
     top: 0;
     left: 328px;
   }
 
-  & div.key_9,.key_rper {
+  & div.key_9,
+  .key_lper {
     top: 0;
     left: 369px;
   }
 
-  & div.key_0 {
+  & div.key_0,
+  .key_rper {
     top: 0;
     left: 410px;
   }
 
-  & div.key_hyphen {
+  & div.key_hyphen,
+  .key_underbar {
     top: 0;
     left: 451px;
   }
 
-  & div.deco_key2 {
+  & div.key_equal,
+  .key_plus {
     top: 0;
     left: 492px;
   }
@@ -414,56 +418,19 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       className={className}
       $showKeyboard={$showKeyboard}
     >
-      <div className="key_backquote"> &prime;</div>
-      {shift ? (
-        <div className="key_exclamation">!</div>
-      ) : (
-        <div className="key_1">1</div>
-      )}
-      {shift ? (
-        <div className="key_atmark">@</div>
-      ) : (
-        <div className="key_2">2</div>
-      )}
-      {shift ? (
-        <div className="key_sharp">#</div>
-      ) : (
-        <div className="key_3">3</div>
-      )}
-      {shift ? (
-        <div className="key_dollar">$</div>
-      ) : (
-        <div className="key_4">4</div>
-      )}
-      {shift ? (
-        <div className="key_percnt">%</div>
-      ) : (
-        <div className="key_5">5</div>
-      )}
-      {shift ? (
-        <div className="key_caret">^</div>
-      ) : (
-        <div className="key_6">6</div>
-      )}
-      {shift ? (
-        <div className="key_and">&</div>
-      ) : (
-        <div className="key_7">7</div>
-      )}
-      {shift ? (
-        <div className="key_lper">(</div>
-      ) : (
-        <div className="key_8">8</div>
-      )}
-      {shift ? (
-        <div className="key_rper">)</div>
-      ) : (
-        <div className="key_9">9</div>
-      )}
-
-      <div className="key_0">0</div>
-      <div className="key_hyphen">-</div>
-      <div className="deco_key2">=</div>
+      <div className="key_backquote key_childa">{shift ? "~" : "`"}</div>
+      <div className="key_1 key_exclamation">{shift ? "!" : "1"}</div>
+      <div className="key_2 key_atmark">{shift ? "@" : "2"}</div>
+      <div className="key_3 key_sharp">{shift ? "#" : "3"}</div>
+      <div className="key_4 key_dollar">{shift ? "$" : "4"}</div>
+      <div className="key_5 key_percnt">{shift ? "%" : "5"}</div>
+      <div className="key_6 key_caret">{shift ? "^" : "6"}</div>
+      <div className="key_7 key_and">{shift ? "&" : "7"}</div>
+      <div className="key_8 key_aster">{shift ? "*" : "8"}</div>
+      <div className="key_9 key_lper">{shift ? "(" : "9"}</div>
+      <div className="key_0 key_rper">{shift ? ")" : "0"}</div>
+      <div className="key_hyphen key_underbar">{shift ? "_" : "-"}</div>
+      <div className="key_equal deco_plus">{shift ? "+" : "="}</div>
       <div className="deco_key3">bk</div>
       <div className="deco_key4"></div>
       <div className="deco_key5"></div>
