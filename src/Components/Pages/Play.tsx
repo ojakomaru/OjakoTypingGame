@@ -8,7 +8,6 @@ const Play: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const { showKeyboard } = React.useContext(SettingDataContext);
   const { keyboardRef, keyboardInit } = useKeyboardTyping();
-  const keyRef = useRef<HTMLDivElement>(null);
   return (
     <Layout>
       <MainDisplay
@@ -16,7 +15,7 @@ const Play: React.FC = () => {
         setIsPlaying={setIsPlaying}
         keyboardInit={keyboardInit}
       />
-      <Keyboard ref={keyRef} $showKeyboard={showKeyboard} />
+      <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
     </Layout>
   );
 };

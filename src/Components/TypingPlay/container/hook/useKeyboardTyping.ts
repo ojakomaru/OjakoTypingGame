@@ -6,15 +6,41 @@ const useKeyboardTyping = () => {
   const keyboardInit = useCallback(() => {
     return {
       selActive: (key: keyType): void => {
-        const prevActive = keyboardRef.current!.querySelector(".active");
-        const selector = ".key_" + keyConvert(key);
-        const target = keyboardRef.current!.querySelector(selector);
-        if (prevActive) {
-          prevActive.classList.remove("active");
+        console.log(keyboardRef.current);
+        if (!!keyboardRef.current) {
+          const prevActive = Array.from(keyboardRef.current.children).filter(
+            (el) => el.classList.contains(".active")
+          );
+          if (!!prevActive) {
+            prevActive.forEach((el) => el.classList.remove("active"));
+          }
+          const selector = ".key_" + keyConvert(key.toLowerCase() as keyType);
+          const target = Array.from(keyboardRef.current.children).filter((el) =>
+            el.classList.contains(selector)
+          );
+          target.forEach((el) => el.classList.add("active"));
         }
-        target!.classList.add("active");
       },
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }, []);
 
   // 対応キーの変換

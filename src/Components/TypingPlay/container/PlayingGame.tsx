@@ -52,11 +52,13 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romanizer = new Romanizer();
 
   const keyboard = keyboardInit();
-  console.log(keyboard);
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem(typeMode, romajiType, order);
   });
+  useEffect(() => {
+    if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
+  },[romajiText])
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -114,7 +116,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       // 目的のキーでなければpattern[kanaPos]を検索
       else {
-        if (!tmp.match(/[ -/:-@\[-`/{-~]/)) {
+        if (!tmp.match(/[ -/:-@[-`/{-~]/)) {
           let reg = new RegExp("^" + tmp);
           for (let i = 0; i < typingWord[kanaPos].length; i++) {
             if (!!typingWord[kanaPos][i].match(reg)) {

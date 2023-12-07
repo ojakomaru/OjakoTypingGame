@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Ref, forwardRef, useCallback, useEffect, useState } from "react";
+import { Ref, useCallback, useState } from "react";
 import { HIDDEN, SHOW_RADIO } from "../../../@types";
 import styled, { css } from "styled-components";
 import { useWindowEvent } from "../../../Hooks";
@@ -13,10 +13,7 @@ interface KeyboardProps {
 type StyledKeyboardProps = Pick<KeyboardProps, "$showKeyboard">;
 const StyleKeyboard = styled.div<StyledKeyboardProps>`
   ${({ $showKeyboard }) =>
-    $showKeyboard === HIDDEN &&
-    css`
-      display: none;
-    `};
+    $showKeyboard === HIDDEN && css`display: none;`};
   position: relative;
   width: 610px;
   margin: 0 auto;
