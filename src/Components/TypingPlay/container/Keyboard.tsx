@@ -13,7 +13,10 @@ interface KeyboardProps {
 type StyledKeyboardProps = Pick<KeyboardProps, "$showKeyboard">;
 const StyleKeyboard = styled.div<StyledKeyboardProps>`
   ${({ $showKeyboard }) =>
-    $showKeyboard === HIDDEN && css`display: none;`};
+    $showKeyboard === HIDDEN &&
+    css`
+      display: none;
+    `};
   position: relative;
   width: 610px;
   margin: 0 auto;
@@ -248,17 +251,20 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
     left: 409px;
   }
 
-  & div.key_semicolon {
+  & div.key_semicolon,
+  .key_colon {
     top: 82px;
     left: 450px;
   }
 
-  & div.key_colon {
+  & div.key_singlequotation,
+  .key_doublequotation {
     top: 82px;
     left: 491px;
   }
 
-  & div.deco_key8 {
+  & div.key_backslash,
+  .key_pipe {
     top: 82px;
     left: 532px;
   }
@@ -304,17 +310,20 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
     left: 347px;
   }
 
-  & div.key_comma {
+  & div.key_comma,
+  .key_less {
     top: 123px;
     left: 388px;
   }
 
-  & div.key_period {
+  & div.key_period,
+  .key_more {
     top: 123px;
     left: 429px;
   }
 
-  & div.key_slash {
+  & div.key_slash,
+  .key_question {
     top: 123px;
     left: 470px;
   }
@@ -427,7 +436,7 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_9 key_lper">{shift ? "(" : "9"}</div>
       <div className="key_0 key_rper">{shift ? ")" : "0"}</div>
       <div className="key_hyphen key_underbar">{shift ? "_" : "-"}</div>
-      <div className="key_equal deco_plus">{shift ? "+" : "="}</div>
+      <div className="key_equal key_plus">{shift ? "+" : "="}</div>
       <div className="deco_key3">bk</div>
       <div className="deco_key4"></div>
       <div className="deco_key5"></div>
@@ -441,8 +450,8 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_i">I</div>
       <div className="key_o">O</div>
       <div className="key_p">P</div>
-      <div className="key_lbrack">[</div>
-      <div className="key_rbrack">]</div>
+      <div className="key_lbrack key_lbraces">{shift ? "{" : "["}</div>
+      <div className="key_rbrack key_rbraces">{shift ? "}" : "]"}</div>
       <div className="key_Enter"></div>
       <div className="deco_key7"></div>
       <div className="key_a">A</div>
@@ -454,9 +463,11 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_j">J</div>
       <div className="key_k">K</div>
       <div className="key_l">L</div>
-      <div className="key_semicolon">;</div>
-      <div className="key_colon">:</div>
-      <div className="deco_key8">\</div>
+      <div className="key_semicolon key_colon">{shift ? ":" : ";"}</div>
+      <div className="key_doublequotation key_singlequotation">
+        {shift ? '"' : "'"}
+      </div>
+      <div className="key_pipe key_backslash">{shift ? "|" : "\\"}</div>
       <div className="key_lShift">shift</div>
       <div className="key_z">Z</div>
       <div className="key_x">X</div>
@@ -465,9 +476,9 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_b">B</div>
       <div className="key_n">N</div>
       <div className="key_m">M</div>
-      <div className="key_comma">,</div>
-      <div className="key_period">.</div>
-      <div className="key_slash">/</div>
+      <div className="key_comma key_less">{shift ? "<" : ","}</div>
+      <div className="key_period key_more">{shift ? ">" : "."}</div>
+      <div className="key_slash key_question">{shift ? "?" : "/"}</div>
       <div className="deco_key9"></div>
       <div className="key_rShift">shift</div>
       <div className="deco_key10"></div>

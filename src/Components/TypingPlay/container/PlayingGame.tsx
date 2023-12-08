@@ -58,7 +58,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   });
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
-  },[romajiText])
+  }, [romajiText]);
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -82,7 +82,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         kanaIdx.current = kanaLength;
         patternAry.current = pattern;
         tmpRef.current = tmp;
-      };
+      }
       function missTyped() {
         setMissFlg(true);
         setTimeout(function () {
@@ -113,9 +113,8 @@ export default function PlayingGame(props: PlayingGameProps) {
         romajiTyped.success(romaLength);
         romaLength++;
         romaPos++;
-      }
-      // 目的のキーでなければpattern[kanaPos]を検索
-      else {
+      } else {
+        // 目的のキーでなければpattern[kanaPos]を検索
         if (!tmp.match(/[ -/:-@[-`/{-~]/)) {
           let reg = new RegExp("^" + tmp);
           for (let i = 0; i < typingWord[kanaPos].length; i++) {
@@ -167,8 +166,8 @@ export default function PlayingGame(props: PlayingGameProps) {
           let kanaStr = romanizer.romaToHira(
             typingWord[kanaPos][pattern[kanaPos]]
           );
-          // かな文字が入力完了の場合
           kanaTyped.success(kanaLength);
+          // 「ん」を省略しつつ次の文字が正解打の場合
           if (nFlag) {
             romaLength = romajiMod(kanaPos, pattern, 0);
             romaLength++;
@@ -176,6 +175,7 @@ export default function PlayingGame(props: PlayingGameProps) {
             kanaPos++;
             kanaLength++;
             romaPos = 1;
+            keyboard.selActive(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
             tmp = tmp.slice(1);
             saveRefs();
           } else {
@@ -189,8 +189,11 @@ export default function PlayingGame(props: PlayingGameProps) {
             kanaPos++;
             kanaLength++;
             romaPos = 0;
+            keyboard.selActive(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
             tmp = "";
           }
+        } else {
+          keyboard.selActive(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
         }
         // すべての文字を入力したとき
       } else {
@@ -213,7 +216,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   return (
     <GameBoard>
-      <MissMessage $isMiss={missFlg}/>
+      <MissMessage $isMiss={missFlg} />
       <HiraganaText
         ref={kanaRef}
         kanaText={kanaText}
