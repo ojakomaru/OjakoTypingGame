@@ -55,10 +55,12 @@ export default function PlayingGame(props: PlayingGameProps) {
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem(typeMode, romajiType, order);
+    if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   });
+  // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
-  }, [romajiText]);
+  }, [questionText]);
 
   /* タイピング入力処理 */
   useEffect(() => {
