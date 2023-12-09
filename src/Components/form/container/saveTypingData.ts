@@ -24,6 +24,8 @@ const saveTypingData = (typingdata: TypingDataType): void => {
         typingdata.problems[i].kana as string
       ); // タイピングワード変換
     }
+    console.log(typingdata);
+    // 全角記号 〜！＠＃＄％＾＆＊（）＿＋｛｝：”｜？＞＜
     typingDataList.push(typingdata);
     /* 登録されたデータが有れば取得してマージ */
     if (localStorage.hasOwnProperty("typingData")) {
@@ -31,7 +33,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       let olddata = JSON.parse(localStorage.getItem("typingData") as string);
       typingDataList = [...olddata, typingdata];
     }
-    localStorage.setItem("typingData", JSON.stringify(typingDataList));
+    // localStorage.setItem("typingData", JSON.stringify(typingDataList));
   })();
 };
 

@@ -394,8 +394,8 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
   }
 
   & div.active {
-    background-color: #ff9c00 !important;
-    border-color: #ff9c00 !important;
+    background-color: #CD853F !important;
+    border-color: #CD853F !important;
     color: #fff !important;
   }
   &::after {
