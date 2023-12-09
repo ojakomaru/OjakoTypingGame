@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { List, Divider, Collapse } from "@mui/material";
-
 import { RouteItem } from "./RouteItem";
-
 import { routes } from "../../../Config";
 import { Route } from "../../../@types/Route";
 

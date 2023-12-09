@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { type TypingDataType } from "../../@types";
 import { Button, Box } from "@mui/material";
@@ -11,7 +11,10 @@ import { TypingDataContext } from "../../Contexts";
 import { FormWrapper } from "../form/settingForm/presentation";
 import Layout from "../layout/Layout";
 
+
 const TypingForm: React.FC = () => {
+  const typingID = useParams();
+  console.log(typingID);
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
   const id = uuidv4();
@@ -30,11 +33,11 @@ const TypingForm: React.FC = () => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    // typingdatas
-    //   ? setTypingDatas([...typingdatas, typingdata])
-    //   : setTypingDatas([typingdata]);
-    // methods.reset();
-    // navigate("/");
+    typingdatas
+      ? setTypingDatas([...typingdatas, typingdata])
+      : setTypingDatas([typingdata]);
+    methods.reset();
+    navigate("/");
   };
 
   return (

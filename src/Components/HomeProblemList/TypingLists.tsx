@@ -11,6 +11,7 @@ import {
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
+import { Link } from "react-router-dom";
 
 export default function TypingLists() {
   const { typingdatas, setTypingData } = React.useContext(TypingDataContext);
@@ -48,8 +49,7 @@ export default function TypingLists() {
                 <Typography>{`${post.problems[0].text}...`}</Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">View</Button>
-                <Button size="small">Edit</Button>
+                <Button size="small"><Link to={`/form/${post.id}`}>Edit</Link></Button>
               </CardActions>
             </Card>
           </Grid>

@@ -3,22 +3,24 @@ import ReactDOM from "react-dom/client";
 import "./styles/index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import { Helmet } from "react-helmet";
- 
+import { HelmetProvider, Helmet } from "react-helmet-async";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Helmet>
-      <title>{"OjakoTypingGame"}</title>
-      <meta name="description" content={"おジャコのタイピング練習ゲーム"} />
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      />
-      <meta name="viewport" content="initial-scale=1, width=device-width" />
-    </Helmet>
+    <HelmetProvider>
+      <Helmet>
+        <title>{"OjakoTypingGame"}</title>
+        <meta name="description" content={"おジャコのタイピング練習ゲーム"} />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Helmet>
+    </HelmetProvider>
     <App />
   </React.StrictMode>
 );
@@ -35,7 +37,6 @@ root.render(
 //  npm install react-router-dom
 // kuroshiroライブラリと依存関係の解決
 // Analyzerの辞書ファイルのローカル化
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
