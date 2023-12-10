@@ -4,10 +4,12 @@ import usePrevious from "./usePrevious";
 import { useScroll } from "./useScroll";
 import { useScrollToTop } from "./useScrollToTop";
 import { useWindowEvent } from "./useWindowEvent";
+import randomArray from "./randomArray";
 
 
 export {
   Romanizer,
+  randomArray,
   useEffectOnce,
   usePrevious,
   useScroll,

@@ -1,12 +1,14 @@
 import {
   Home as HomeIcon,
-  CodeOutlined as CodeIcon,
   SettingsOutlined as SettingsIcon,
-  ListAlt as ListIcon,
+  GitHub as GitHubIcon,
+  Public as PublicIcon,
+  PublicOff as PrivateIcon,
+  SmartDisplayOutlined,
+  AddCircleOutlineSharp,
+  SportsScoreSharp,
+  ModeEdit,
 } from "@mui/icons-material";
-import   SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
-import AddCircleOutlineSharpIcon from "@mui/icons-material/AddCircleOutlineSharp";
-import SportsScoreSharpIcon from "@mui/icons-material/SportsScoreSharp";
 
 import {
   Home,
@@ -35,7 +37,7 @@ const routes: Array<Route> = [
     component: Play,
     path: "/play",
     isEnabled: true,
-    icon: SmartDisplayOutlinedIcon,
+    icon: SmartDisplayOutlined,
     appendDivider: true,
   },
   {
@@ -45,7 +47,17 @@ const routes: Array<Route> = [
     path: "/form",
     component: TypingForm,
     isEnabled: true,
-    icon: AddCircleOutlineSharpIcon,
+    icon: AddCircleOutlineSharp,
+    appendDivider: true,
+  },
+  {
+    key: "router-updateform",
+    title: "UpdateTypingForm",
+    description: "Update Typingdata",
+    path: "/form/:id",
+    component: TypingForm,
+    isEnabled: false,
+    icon: ModeEdit,
     appendDivider: true,
   },
   {
@@ -54,7 +66,7 @@ const routes: Array<Route> = [
     description: "Typing Score is Rankings",
     path: "/scores",
     isEnabled: true,
-    icon: SportsScoreSharpIcon,
+    icon: SportsScoreSharp,
     appendDivider: true,
   },
   {
@@ -67,12 +79,36 @@ const routes: Array<Route> = [
     icon: SettingsIcon,
   },
   {
+    key: "router-gh",
+    title: "GitHub",
+    description: "GitHub",
+    isEnabled: true,
+    icon: GitHubIcon,
+    subRoutes: [
+      {
+        key: "router-gh-public",
+        title: "Public Repos",
+        description: "Public Repos",
+        path: "/gh/public",
+        isEnabled: true,
+        icon: PublicIcon,
+      },
+      {
+        key: "router-gh-private",
+        title: "Private Repos",
+        description: "Private Repos",
+        path: "/gh/private",
+        isEnabled: false,
+        icon: PrivateIcon,
+      },
+    ],
+  },
+  {
     key: "router-notfound",
     title: "NotfoundPage",
-    description: "Page is Notfound",
     path: "*",
     component: NotFound,
-    isEnabled: true,
+    isEnabled: false,
   },
 ];
 

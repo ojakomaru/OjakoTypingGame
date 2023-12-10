@@ -1,11 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { List, Divider, Collapse } from "@mui/material";
 import { RouteItem } from "./RouteItem";
 import { routes } from "../../../Config";
 import { Route } from "../../../@types/Route";
 
 export const Routes = () => {
-  const [routesState, setRoutesStage] = useState<Route[]>(routes);
+  const [routesState, setRoutesStage] = useState<Route[]>(
+    routes.filter((route) => !!route.isEnabled)
+  );
 
   const handleMenuClick = (route: Route) => {
     const items = routesState.map((item) => {
@@ -18,7 +20,7 @@ export const Routes = () => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <List component="nav" sx={{ height: "100%" }}>
         {routesState.map((route: Route) => (
           <div key={route.key}>
@@ -45,6 +47,6 @@ export const Routes = () => {
           </div>
         ))}
       </List>
-    </>
+    </React.Fragment>
   );
 };

@@ -13,7 +13,7 @@ import {
   RANDOM,
   TypingDataType,
 } from "../../../../@types";
-import { Romanizer } from "../../../../Hooks";
+import { Romanizer, randomArray } from "../../../../Hooks";
 
 const useReloadProblem = (typingdata: TypingDataType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
@@ -27,15 +27,8 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   const romanizer = new Romanizer();
   const [randProblems] = useState(() => {
     // 問題文の数の配列を生成しランダム値を設定
-    let idx;
-    let initAry = [];
+    let initAry = randomArray(problemLength);
     let randProblems = [];
-    let a = [...Array(problemLength).keys()];
-    while (a.length > 0) {
-      idx = Math.floor(Math.random() * a.length);
-      initAry.push(a[idx]);
-      a.splice(idx, 1);
-    }
     for (let i = 0; i < initAry.length; i++) {
       randProblems.push(cpProblems[initAry[i]]);
     }
