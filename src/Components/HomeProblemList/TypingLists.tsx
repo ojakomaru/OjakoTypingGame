@@ -1,10 +1,10 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { Grid } from "@mui/material";
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
 import TypingItem from "./TypingItem";
-import { randomArray } from "../../Hooks";
+import { randomArray, useEffectOnce } from "../../Hooks";
 
 export default function TypingLists() {
   const { typingdatas, setTypingDatas, setTypingData } =
@@ -20,7 +20,7 @@ export default function TypingLists() {
   );
 
   // 最大表示件数を制限
-  useEffect(() => {
+  useEffectOnce(() => {
     const datas: TypingDataType[] = [];
     // Articleは一旦ランダム表示として実装
     let rand = randomArray(typingdatas.length, 9);
@@ -28,7 +28,7 @@ export default function TypingLists() {
       datas.push(typingdatas[i]);
     }
     setTypingDatas(datas);
-  }, []);
+  });
 
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>

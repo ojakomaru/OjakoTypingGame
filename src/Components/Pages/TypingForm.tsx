@@ -10,13 +10,22 @@ import ProblemList from "../form/presentation/ProblemList";
 import { TypingDataContext } from "../../Contexts";
 import { FormWrapper } from "../form/settingForm/presentation";
 import Layout from "../layout/Layout";
-
+import { useEffectOnce } from "../../Hooks";
+import AddTypingForm from "../form/AddTypingForm";
 
 const TypingForm: React.FC = () => {
   const typingID = useParams();
-  console.log(typingID);
+  let modData: TypingDataType[] | undefined;
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
+  useEffectOnce(() => {
+    if (typingID.hasOwnProperty("id")) {
+      modData = typingdatas.filter((data) => typingID.id === data.id);
+      modData = typingdatas.splice(typingdatas.indexOf(modData[0]),1);
+      console.log(modData);
+      console.log(typingdatas);
+    }
+  })
   const id = uuidv4();
   const defaultValue = {
     id: id,
@@ -43,6 +52,7 @@ const TypingForm: React.FC = () => {
   return (
     <Layout>
       <FormWrapper>
+        {modData ? (<AddTypingForm></AddTypingForm>): <UpdateTypingForm></UpdateTypingForm>}
         <FormProvider {...methods}>
           <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
             <TitleInput />
