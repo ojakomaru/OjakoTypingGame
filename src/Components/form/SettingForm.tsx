@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { SettingTypes } from "../../../@types";
+import { SettingTypes } from "../../@types";
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,10 +9,10 @@ import {
   ShowRadioFLG,
   OrderValues,
   defaultSetting,
-} from "../../../Config";
-import { RadioForm } from "./presentation";
-import saveSettingData from "./container/savaSettingData";
-import { SettingDataContext } from "../../../Contexts";
+} from "../../Config";
+import { RadioForm } from "./settingForm/presentation";
+import saveSettingData from "./settingForm/container/savaSettingData";
+import { SettingDataContext } from "../../Contexts";
 
 interface SettingFormProps {
   setIsSetting?: (a: boolean) => void;

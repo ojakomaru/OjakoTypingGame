@@ -1,87 +1,27 @@
-import React, { ReactNode } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { type TypingDataType } from "../../@types";
-import { Button, Box } from "@mui/material";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import saveTypingData from "../form/container/saveTypingData";
-import TitleInput from "../form/presentation/TitleInput";
-import ProblemList from "../form/presentation/ProblemList";
 import { TypingDataContext } from "../../Contexts";
 import { FormWrapper } from "../form/settingForm/presentation";
 import Layout from "../layout/Layout";
 import { useEffectOnce } from "../../Hooks";
-import AddTypingForm from "../form/AddTypingForm";
+import { AddTypingForm, UpdateTypingForm } from "../form";
 
 const TypingForm: React.FC = () => {
   const typingID = useParams();
-  let modData: TypingDataType[] | undefined;
-  const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
-  const navigate = useNavigate();
+  const [modData, setModData] = useState<TypingDataType | undefined>(undefined);
+  const { typingdatas } = React.useContext(TypingDataContext);
   useEffectOnce(() => {
     if (typingID.hasOwnProperty("id")) {
-      modData = typingdatas.filter((data) => typingID.id === data.id);
-      modData = typingdatas.splice(typingdatas.indexOf(modData[0]),1);
-      console.log(modData);
-      console.log(typingdatas);
+      let data = typingdatas.filter((data) => typingID.id === data.id);
+      setModData(data[0]);
     }
-  })
-  const id = uuidv4();
-  const defaultValue = {
-    id: id,
-    title: "",
-    problems: [{ text: "" }],
-  };
-  const methods = useForm<TypingDataType>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
-    defaultValues: defaultValue,
   });
-
-  const onSubmit: SubmitHandler<TypingDataType> = (
-    typingdata: TypingDataType
-  ) => {
-    saveTypingData(typingdata);
-    typingdatas
-      ? setTypingDatas([...typingdatas, typingdata])
-      : setTypingDatas([typingdata]);
-    methods.reset();
-    navigate("/");
-  };
 
   return (
     <Layout>
       <FormWrapper>
-        {modData ? (<AddTypingForm></AddTypingForm>): <UpdateTypingForm></UpdateTypingForm>}
-        <FormProvider {...methods}>
-          <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-            <TitleInput />
-            <ProblemList />
-            <Box textAlign="center" mt={2}>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  methods.reset(defaultValue);
-                }}
-              >
-                リセット
-              </Button>
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ mx: 1 }}
-                disabled={
-                  !methods.formState.isDirty || !methods.formState.isValid
-                }
-              >
-                {methods.formState.isValid ? "登録する" : "登録できません"}
-              </Button>
-              <Button variant="outlined" onClick={() => navigate("/")}>
-                ホームに戻る
-              </Button>
-            </Box>
-          </Box>
-        </FormProvider>
+        {modData ? <UpdateTypingForm modData={modData} /> : <AddTypingForm />}
       </FormWrapper>
     </Layout>
   );

@@ -1,23 +1,21 @@
-import { Box, Button } from "@mui/material";
-import React, { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import React, { useEffect } from "react";
 import { TypingDataType } from "../../@types";
+import { Box, Button } from "@mui/material";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { TypingDataContext } from "../../Contexts";
 import saveTypingData from "./container/saveTypingData";
 import ProblemList from "./presentation/ProblemList";
 import TitleInput from "./presentation/TitleInput";
-import { TypingDataContext } from "../../Contexts";
 
-const AddTypingForm = () => {
+type UpdateTypingFormProps = {
+  modData: TypingDataType;
+};
+const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
-  const id = uuidv4();
-  const defaultValue = {
-    id: id,
-    title: "",
-    problems: [{ text: "" }],
-  };
+  const defaultValue = modData;
+
   const methods = useForm<TypingDataType>({
     mode: "onChange",
     reValidateMode: "onBlur",
@@ -65,4 +63,4 @@ const AddTypingForm = () => {
   );
 };
 
-export default AddTypingForm;
+export default UpdateTypingForm;

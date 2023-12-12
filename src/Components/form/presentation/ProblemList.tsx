@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext, useFieldArray } from "react-hook-form";
+import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import { type TypingDataType } from "../../../@types";
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import {
@@ -17,16 +17,26 @@ const ProblemList = (): JSX.Element => {
     <>
       {fields.map((item, index) => (
         <Stack mt={2} key={item.id}>
-          <TextField
-            sx={{ mr: 2, flex: 3 }}
-            variant="standard"
-            size="small"
-            label="問題文"
-            multiline
-            {...register(`problems[${index}].text` as "problems", {
-              required: "空の問題文は登録できません。",
-            })}
+          <Controller
+            render={({ field }) => (
+              <TextField
+              {...field}
+                sx={{ mr: 2, flex: 3 }}
+                variant="standard"
+                size="small"
+                label="問題文"
+                multiline
+                {...register(`problems[${index}].text` as "problems", {
+                  required: "空の問題文は登録できません。",
+                })}
+              />
+            )}
+            // @ts-ignore
+            defaultValue={item.envName}
+            name={`problems[${index}].text` as "problems"}
+            control={control}
           />
+
           <IconButton
             color="warning"
             aria-label="delete"
@@ -52,7 +62,7 @@ const ProblemList = (): JSX.Element => {
           color="warning"
           aria-label="delete"
           onClick={() => remove()}
-          sx={{fontSize: "0.8rem"}}
+          sx={{ fontSize: "0.8rem" }}
         >
           <DeleteOutlineIcon />
           すべての問題を削除

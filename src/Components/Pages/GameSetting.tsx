@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { MainDisplay } from "../MainDisplay/container/MainDisplay";
 import Layout from "../layout/Layout";
-import SettingForm from "../form/settingForm/SettingForm";
+import SettingForm from "../form/SettingForm";
 import { SettingDataContext } from "../../Contexts";
 import { FormWrapper } from "../form/settingForm/presentation";
 import { Keyboard } from "../TypingPlay/presentation";
