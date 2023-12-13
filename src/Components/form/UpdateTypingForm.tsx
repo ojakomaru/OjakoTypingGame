@@ -26,11 +26,12 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    typingdatas
-      ? setTypingDatas([...typingdatas, typingdata])
-      : setTypingDatas([typingdata]);
-    methods.reset();
-    navigate("/");
+    // console.log(typingdata);
+    // typingdatas
+    //   ? setTypingDatas([...typingdatas, typingdata])
+    //   : setTypingDatas([typingdata]);
+    // methods.reset();
+    // navigate("/");
   };
   return (
     <FormProvider {...methods}>

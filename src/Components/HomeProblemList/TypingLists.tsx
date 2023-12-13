@@ -22,12 +22,14 @@ export default function TypingLists() {
   // 最大表示件数を制限
   useEffectOnce(() => {
     const datas: TypingDataType[] = [];
-    // Articleは一旦ランダム表示として実装
-    let rand = randomArray(typingdatas.length, 9);
-    for (let i = 0; i < rand.length; i++) {
-      datas.push(typingdatas[i]);
+    if (!!typingdatas) {
+      // Articleは一旦ランダム表示として実装
+      let rand = randomArray(typingdatas.length, 9);
+      for (let i = 0; i < rand.length; i++) {
+        datas.push(typingdatas[i]);
+      }
+      setTypingDatas(datas);
     }
-    setTypingDatas(datas);
   });
 
   return (
