@@ -57,7 +57,7 @@ const AddTypingForm = () => {
             {methods.formState.isValid ? "登録する" : "登録できません"}
           </Button>
           <Button variant="outlined" onClick={() => navigate("/")}>
-            ホームに戻る
+            キャンセル
           </Button>
         </Box>
       </Box>

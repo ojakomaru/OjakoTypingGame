@@ -53,10 +53,10 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
             sx={{ mx: 1 }}
             disabled={!methods.formState.isDirty || !methods.formState.isValid}
           >
-            {methods.formState.isValid ? "登録する" : "登録できません"}
+            {methods.formState.isValid ? "更新する" : "変更はありません"}
           </Button>
           <Button variant="outlined" onClick={() => navigate("/")}>
-            ホームに戻る
+            キャンセル
           </Button>
         </Box>
       </Box>

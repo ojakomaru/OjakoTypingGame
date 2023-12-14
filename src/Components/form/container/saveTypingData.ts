@@ -24,16 +24,18 @@ const saveTypingData = (typingdata: TypingDataType): void => {
         typingdata.problems[i].kana as string
       ); // タイピングワード変換
     }
-    console.log(typingdata);
     // 全角記号 〜！＠＃＄％＾＆＊（）＿＋｛｝：”｜？＞＜
     typingDataList.push(typingdata);
     /* 登録されたデータが有れば取得してマージ */
     if (localStorage.hasOwnProperty("typingData")) {
-      // 今回登録する配列の結合。。（一旦重複しても構わない仕様として実装する）
       let olddata = JSON.parse(localStorage.getItem("typingData") as string);
+      // IDが重複しているものがあれば削除して入れ替える
+      if (olddata.includes(typingdata.id)) {
+        olddata.splice(olddata.indexOf(typingdata.id), 1);
+      }
       typingDataList = [...olddata, typingdata];
     }
-    localStorage.setItem("typingData", JSON.stringify(typingDataList));
+    // localStorage.setItem("typingData", JSON.stringify(typingDataList));
   })();
 };
 
