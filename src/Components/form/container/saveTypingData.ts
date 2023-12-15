@@ -30,7 +30,10 @@ const saveTypingData = (typingdata: TypingDataType): void => {
     if (localStorage.hasOwnProperty("typingData")) {
       let olddata = JSON.parse(localStorage.getItem("typingData") as string);
       // IDが重複しているものがあれば削除して入れ替える
-      if (olddata.includes(typingdata.id)) {
+      if (
+        olddata.find((data: TypingDataType) => data.id === typingdata.id) ??
+        false
+      ) {
         olddata.splice(olddata.indexOf(typingdata.id), 1);
       }
       typingDataList = [...olddata, typingdata];

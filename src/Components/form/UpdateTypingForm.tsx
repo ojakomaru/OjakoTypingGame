@@ -26,7 +26,6 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    // console.log(typingdata);
     // typingdatas
     //   ? setTypingDatas([...typingdatas, typingdata])
     //   : setTypingDatas([typingdata]);
