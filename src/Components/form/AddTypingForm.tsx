@@ -1,13 +1,12 @@
+import React, { useCallback } from "react";
 import { Box, Button } from "@mui/material";
-import React, { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { TypingDataType } from "../../@types";
 import saveTypingData from "./container/saveTypingData";
-import ProblemList from "./presentation/ProblemList";
-import TitleInput from "./presentation/TitleInput";
 import { TypingDataContext } from "../../Contexts";
+import { TitleInput, ProblemList, SubmitButton, ResetButton } from "./presentation";
 
 const AddTypingForm = () => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
@@ -23,6 +22,10 @@ const AddTypingForm = () => {
     reValidateMode: "onBlur",
     defaultValues: defaultValue,
   });
+
+  const resetFunc = useCallback(() => {
+    methods.reset(defaultValue);
+  }, [methods, defaultValue]);
 
   const onSubmit: SubmitHandler<TypingDataType> = (
     typingdata: TypingDataType
@@ -40,22 +43,12 @@ const AddTypingForm = () => {
         <TitleInput />
         <ProblemList />
         <Box textAlign="center" mt={2}>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              methods.reset(defaultValue);
-            }}
-          >
-            リセット
-          </Button>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{ mx: 1 }}
-            disabled={!methods.formState.isDirty || !methods.formState.isValid}
-          >
-            {methods.formState.isValid ? "登録する" : "登録できません"}
-          </Button>
+          <ResetButton resetFunc={resetFunc} />
+          <SubmitButton
+            possible={"登録する"}
+            unable={"登録できません"}
+            methods={methods}
+          />
           <Button variant="outlined" onClick={() => navigate("/")}>
             キャンセル
           </Button>
