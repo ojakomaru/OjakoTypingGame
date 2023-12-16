@@ -5,14 +5,21 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { TypingDataContext } from "../../Contexts";
 import saveTypingData from "./container/saveTypingData";
-import { TitleInput, ProblemList, SubmitButton, ResetButton } from "./presentation";
-
+import {
+  TitleInput,
+  ProblemList,
+  SubmitButton,
+  ResetButton,
+  DeleteButton,
+} from "./presentation";
+import { useCustomConfirm } from "../../Hooks/useCustomConfirm";
 
 type UpdateTypingFormProps = {
   modData: TypingDataType;
 };
 const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
+  const {confirm, dialogElement} = useCustomConfirm()
   const navigate = useNavigate();
   const defaultValue = modData;
 
@@ -24,17 +31,17 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
 
   const resetFunc = useCallback(() => {
     methods.reset(defaultValue);
-  },[methods, defaultValue])
+  }, [methods, defaultValue]);
 
   const onSubmit: SubmitHandler<TypingDataType> = (
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    // typingdatas
-    //   ? setTypingDatas([...typingdatas, typingdata])
-    //   : setTypingDatas([typingdata]);
-    // methods.reset();
-    // navigate("/");
+    typingdatas
+      ? setTypingDatas([...typingdatas, typingdata])
+      : setTypingDatas([typingdata]);
+    methods.reset();
+    navigate("/");
   };
   return (
     <FormProvider {...methods}>
@@ -52,6 +59,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
             キャンセル
           </Button>
         </Box>
+        <DeleteButton />
       </Box>
     </FormProvider>
   );

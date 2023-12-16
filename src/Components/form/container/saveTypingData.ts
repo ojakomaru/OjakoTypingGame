@@ -38,7 +38,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       }
       typingDataList = [...olddata, typingdata];
     }
-    // localStorage.setItem("typingData", JSON.stringify(typingDataList));
+    localStorage.setItem("typingData", JSON.stringify(typingDataList));
   })();
 };
 
