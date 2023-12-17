@@ -31,7 +31,7 @@ function SettingForm(props: SettingFormProps) {
     showFurigana,
     setShowFurigana,
     romajiType,
-    setrRomajiType,
+    setRomajiType,
     order,
     setOrder,
     showKeyboard,
@@ -76,7 +76,7 @@ function SettingForm(props: SettingFormProps) {
             row: true,
           }}
           options={RomajiTypeValues}
-          setFunc={setrRomajiType}
+          setFunc={setRomajiType}
         />
         <RadioForm
           label="出題順"

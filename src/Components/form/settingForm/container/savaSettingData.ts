@@ -1,7 +1,19 @@
+import React from "react";
 import { SettingTypes } from "../../../../@types";
+import { SettingDataContext } from "../../../../Contexts";
 
 const saveSettingData = (data: SettingTypes): void => {
-  localStorage.setItem("settingData", JSON.stringify(data));
-  console.log(data);
-}
+  const {
+    setTypeMode,
+    setShowFurigana,
+    setRomajiType,
+    setOrder,
+    setShowKeyboard,
+  } = React.useContext(SettingDataContext);
+  setTypeMode(data.typeMode);
+  setShowFurigana(data.showFurigana);
+  setRomajiType(data.romajiType);
+  setOrder(data.order);
+  setShowKeyboard(data.showKeyboard);
+};
 export default saveSettingData;

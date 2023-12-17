@@ -30,17 +30,12 @@ const saveTypingData = (typingdata: TypingDataType): void => {
     if (localStorage.hasOwnProperty("typingData")) {
       let olddata = JSON.parse(localStorage.getItem("typingData") as string);
       // IDが重複しているものがあれば削除して入れ替える
-      if (
-        olddata.find((data: TypingDataType) => data.id === typingdata.id) ??
-        false
-      ) {
-        // いきなりfindIndexを実行すると-1が返って末尾が削除されるためワンクッション
-        olddata.splice(
-          olddata.findIndex(
-            (data: TypingDataType) => data.id === typingdata.id
-          ),
-          1
-        );
+      let modIndex = olddata.findIndex(
+        (data: TypingDataType) => data.id === typingdata.id
+      );
+      // いきなりfindIndexを実行すると-1が返って末尾が削除されるためワンクッション
+      if (!!modIndex) {
+        olddata.splice(modIndex, 1);
       }
       typingDataList = [...olddata, typingdata];
     }
