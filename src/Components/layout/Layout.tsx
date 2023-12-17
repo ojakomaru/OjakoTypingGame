@@ -1,10 +1,12 @@
-import React, { FC, ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
 import Footer from "../ui/Footer";
 import Header from "../ui/Header";
 import { Navigation } from "../ui/Navigation/Navigation";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div.attrs(() => ({
+  id: 'root'
+}))`
   display: flex;
   flex-direction: column;
   padding-top: 3.75rem;

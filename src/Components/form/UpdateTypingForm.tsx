@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { TypingDataType } from "../../@types";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { TypingDataContext } from "../../Contexts";
@@ -8,21 +8,19 @@ import saveTypingData from "./container/saveTypingData";
 import {
   TitleInput,
   ProblemList,
+  CancelButton,
   SubmitButton,
   ResetButton,
   DeleteButton,
 } from "./presentation";
-import { useCustomConfirm } from "../../Hooks/useCustomConfirm";
 
 type UpdateTypingFormProps = {
   modData: TypingDataType;
 };
 const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
-  const {confirm, dialogElement} = useCustomConfirm()
   const navigate = useNavigate();
   const defaultValue = modData;
-
   const methods = useForm<TypingDataType>({
     mode: "onChange",
     reValidateMode: "onBlur",
@@ -55,9 +53,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
             unable={"変更はありません"}
             methods={methods}
           />
-          <Button variant="outlined" onClick={() => navigate("/")}>
-            キャンセル
-          </Button>
+          <CancelButton isDirty={methods.formState.isDirty} />
         </Box>
         <DeleteButton />
       </Box>
