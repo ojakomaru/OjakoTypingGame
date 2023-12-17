@@ -1,8 +1,6 @@
-import React, { ReactNode, createContext, useEffect, useState } from "react";
-import { TypingDataType } from "../@types";
-import { TypingGameData } from "../@types";
-import { useLocalStorage } from "../Hooks/useLocalStorage";
+import React, { ReactNode, createContext, useState } from "react";
 import { useEffectOnce } from "../Hooks";
+import { TypingDataType, TypingGameData } from "../@types";
 
 let initialData: TypingDataType = {
   id: "1",
@@ -32,10 +30,6 @@ export const TypingDataProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   // 登録済みのデータの取得
-  // const [typingdata, setTypingData] = useLocalStorage<TypingDataType>({
-  //   storageKey: "typingData",
-  //   initialState: initialData,
-  // });
   const [typingdata, setTypingData] = useState<TypingDataType>(initialData);
   const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
     JSON.parse(localStorage.getItem("typingData") as string)

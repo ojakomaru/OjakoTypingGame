@@ -34,7 +34,13 @@ const saveTypingData = (typingdata: TypingDataType): void => {
         olddata.find((data: TypingDataType) => data.id === typingdata.id) ??
         false
       ) {
-        olddata.splice(olddata.indexOf(typingdata.id), 1);
+        // いきなりfindIndexを実行すると-1が返って末尾が削除されるためワンクッション
+        olddata.splice(
+          olddata.findIndex(
+            (data: TypingDataType) => data.id === typingdata.id
+          ),
+          1
+        );
       }
       typingDataList = [...olddata, typingdata];
     }

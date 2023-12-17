@@ -6,7 +6,7 @@ import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { TypingDataType } from "../../@types";
 import saveTypingData from "./container/saveTypingData";
 import { TypingDataContext } from "../../Contexts";
-import { TitleInput, ProblemList, SubmitButton, ResetButton } from "./presentation";
+import { TitleInput, ProblemList, SubmitButton, ResetButton, CancelButton } from "./presentation";
 
 const AddTypingForm = () => {
   const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
@@ -49,9 +49,7 @@ const AddTypingForm = () => {
             unable={"登録できません"}
             methods={methods}
           />
-          <Button variant="outlined" onClick={() => navigate("/")}>
-            キャンセル
-          </Button>
+          <CancelButton isDirty={methods.formState.isDirty} />
         </Box>
       </Box>
     </FormProvider>

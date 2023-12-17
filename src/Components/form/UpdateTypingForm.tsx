@@ -35,9 +35,11 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     typingdata: TypingDataType
   ) => {
     saveTypingData(typingdata);
-    typingdatas
-      ? setTypingDatas([...typingdatas, typingdata])
-      : setTypingDatas([typingdata]);
+    typingdatas.splice(
+      typingdatas.findIndex((data: TypingDataType) => data.id === modData.id),
+      1
+    );
+    setTypingDatas([...typingdatas, typingdata]);
     methods.reset();
     navigate("/");
   };
@@ -55,7 +57,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
           />
           <CancelButton isDirty={methods.formState.isDirty} />
         </Box>
-        <DeleteButton />
+        <DeleteButton deleteID={modData.id} />
       </Box>
     </FormProvider>
   );
