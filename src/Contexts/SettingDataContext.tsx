@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState } from "react";
+import React, { ReactNode, createContext } from "react";
 import { defaultSetting } from "../Config";
 import {
   ORDER_TYPE,
@@ -42,25 +42,6 @@ export const SettingDataProvider: React.FC<{ children: ReactNode }> = ({
     storageKey: "showKeyboard",
     initialState: defaultSetting.showKeyboard as SHOW_RADIO,
   });
-
-  // if (localStorage.hasOwnProperty("settingData")) {
-  //   settingData = JSON.parse(localStorage.getItem("settingData") as string);
-  // }
-  // const [typeMode, setTypeMode] = useState<TYPE_MODE>(
-  //   settingData.typeMode as TYPE_MODE
-  // );
-  // const [showFurigana, setShowFurigana] = useState<SHOW_RADIO>(
-  //   settingData.showFurigana as SHOW_RADIO
-  // );
-  // const [romajiType, setrRomajiType] = useState<ROMAJI_TYPE>(
-  //   settingData.romajiType as ROMAJI_TYPE
-  // );
-  // const [order, setOrder] = useState<ORDER_TYPE>(
-  //   settingData.order as ORDER_TYPE
-  // );
-  // const [showKeyboard, setShowKeyboard] = useState<SHOW_RADIO>(
-  //   settingData.showKeyboard as SHOW_RADIO
-  // );
 
   return (
     <SettingDataContext.Provider
