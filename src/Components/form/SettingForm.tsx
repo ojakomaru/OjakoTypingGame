@@ -44,7 +44,13 @@ function SettingForm(props: SettingFormProps) {
     setShowKeyboard,
   } = React.useContext(SettingDataContext);
   const methods = useForm<SettingTypes>({
-    defaultValues: defaultSetting as SettingTypes,
+    defaultValues: {
+      typeMode: typeMode,
+      showFurigana: showFurigana,
+      romajiType: romajiType,
+      order: order,
+      showKeyboard: showKeyboard,
+    },
   });
 
   const resetFunc = useCallback(() => {
@@ -54,7 +60,7 @@ function SettingForm(props: SettingFormProps) {
     setRomajiType(defaultSetting.romajiType as ROMAJI_TYPE);
     setOrder(defaultSetting.order as ORDER_TYPE);
     setShowKeyboard(defaultSetting.showKeyboard as SHOW_RADIO);
-  },[methods]);
+  }, [methods]);
 
   return (
     <FormProvider {...methods}>
@@ -111,7 +117,7 @@ function SettingForm(props: SettingFormProps) {
         />
         <Box textAlign="center" mt={2}>
           <ResetButton resetFunc={resetFunc} />
-          <Button variant="outlined" onClick={backToHome}>
+          <Button variant="outlined" onClick={backToHome} sx={{ mx: 2 }}>
             ホームに戻る
           </Button>
         </Box>

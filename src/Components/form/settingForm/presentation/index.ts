@@ -1,5 +1,6 @@
-import { RadioForm } from "./RadioForm";
+import { RadioForm } from "../container/RadioForm";
 import FormWrapper from "./FormWrapper";
-import StyledRadioForm from "./StyledRadioForm";
+import CustomFormControl from "./CustomFormControl";
+import { CustomFormControlLabel } from "./CustomFormControlLabel";
 
-export { FormWrapper, RadioForm, StyledRadioForm };
+export { FormWrapper, RadioForm, CustomFormControlLabel, CustomFormControl };
