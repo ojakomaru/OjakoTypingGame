@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useCallback } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import {
   ORDER_TYPE,
   ROMAJI_TYPE,
   SHOW_RADIO,
+  SettingTypes,
   TYPE_MODE,
 } from "../../@types";
 import { Box, Button } from "@mui/material";
@@ -29,7 +31,6 @@ function SettingForm(props: SettingFormProps) {
     props.setIsSetting!(false);
     navigate("/");
   };
-
   const {
     typeMode,
     setTypeMode,
@@ -42,73 +43,80 @@ function SettingForm(props: SettingFormProps) {
     showKeyboard,
     setShowKeyboard,
   } = React.useContext(SettingDataContext);
+  const methods = useForm<SettingTypes>({
+    defaultValues: defaultSetting as SettingTypes,
+  });
 
-  const resetFunc = () => {
+  const resetFunc = useCallback(() => {
+    methods.reset(defaultSetting as SettingTypes);
     setTypeMode(defaultSetting.typeMode as TYPE_MODE);
     setShowFurigana(defaultSetting.showFurigana as SHOW_RADIO);
     setRomajiType(defaultSetting.romajiType as ROMAJI_TYPE);
     setOrder(defaultSetting.order as ORDER_TYPE);
     setShowKeyboard(defaultSetting.showKeyboard as SHOW_RADIO);
-  };
+  },[methods]);
+
   return (
-    <Box component="form">
-      <RadioForm
-        label="入力モード"
-        radioGroupProps={{
-          name: "typeMode",
-          defaultValue: typeMode,
-          row: true,
-        }}
-        options={TypeModeValues}
-        setFunc={setTypeMode}
-      />
-      <RadioForm
-        label="ひらがな表示"
-        radioGroupProps={{
-          name: "showFurigana",
-          defaultValue: showFurigana,
-          row: true,
-        }}
-        options={ShowRadioFLG}
-        setFunc={setShowFurigana}
-      />
-      <RadioForm
-        label="ローマ字設定"
-        radioGroupProps={{
-          name: "romajiType",
-          defaultValue: romajiType,
-          row: true,
-        }}
-        options={RomajiTypeValues}
-        setFunc={setRomajiType}
-      />
-      <RadioForm
-        label="出題順"
-        radioGroupProps={{
-          name: "order",
-          defaultValue: order,
-          row: true,
-        }}
-        options={OrderValues}
-        setFunc={setOrder}
-      />
-      <RadioForm
-        label="キーボード表示"
-        radioGroupProps={{
-          name: "showKeyboard",
-          defaultValue: showKeyboard,
-          row: true,
-        }}
-        options={ShowRadioFLG}
-        setFunc={setShowKeyboard}
-      />
-      <Box textAlign="center" mt={2}>
-        <ResetButton resetFunc={resetFunc} />
-        <Button variant="outlined" sx={{ mx: 1 }} onClick={backToHome}>
-          ホームに戻る
-        </Button>
+    <FormProvider {...methods}>
+      <Box component="form">
+        <RadioForm
+          label="入力モード"
+          radioGroupProps={{
+            name: "typeMode",
+            defaultValue: typeMode,
+            row: true,
+          }}
+          options={TypeModeValues}
+          setFunc={setTypeMode}
+        />
+        <RadioForm
+          label="ひらがな表示"
+          radioGroupProps={{
+            name: "showFurigana",
+            defaultValue: showFurigana,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+          setFunc={setShowFurigana}
+        />
+        <RadioForm
+          label="ローマ字設定"
+          radioGroupProps={{
+            name: "romajiType",
+            defaultValue: romajiType,
+            row: true,
+          }}
+          options={RomajiTypeValues}
+          setFunc={setRomajiType}
+        />
+        <RadioForm
+          label="出題順"
+          radioGroupProps={{
+            name: "order",
+            defaultValue: order,
+            row: true,
+          }}
+          options={OrderValues}
+          setFunc={setOrder}
+        />
+        <RadioForm
+          label="キーボード表示"
+          radioGroupProps={{
+            name: "showKeyboard",
+            defaultValue: showKeyboard,
+            row: true,
+          }}
+          options={ShowRadioFLG}
+          setFunc={setShowKeyboard}
+        />
+        <Box textAlign="center" mt={2}>
+          <ResetButton resetFunc={resetFunc} />
+          <Button variant="outlined" onClick={backToHome}>
+            ホームに戻る
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </FormProvider>
   );
 }
 
