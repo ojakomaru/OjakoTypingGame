@@ -5,6 +5,7 @@ import HomeDisplay from "../presentation/homeDisplay";
 import MainDiaplayLayout from "../../layout/MainDiaplayLayout";
 import { TypingDataContext } from "../../../Contexts";
 import SettingExample from "../presentation/SettingExample";
+import { GameStateContext } from "../../../Contexts/GameState";
 
 type MainFeaturedPostProps = {
   ishome?: boolean;
@@ -25,9 +26,11 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     keyboardInit
   } = props;
   const { typingdata } = React.useContext(TypingDataContext);
+  const { gameState, isHome} = React.useContext(GameStateContext);
 
   // 画面のモードによって内容を出し分ける
   const SwitchMode = () => {
+
     if (ishome) {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {

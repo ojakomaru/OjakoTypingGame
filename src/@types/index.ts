@@ -1,8 +1,15 @@
 import { TypingDataType } from "./TypingDataType";
 import { TypingGameData } from "./TypingGameData";
 import { MainFeaturedPostProps } from "./MainFeaturedPostProps";
-import { HomeDisplayProps } from "./HomeDisplayProps";
 import { DARK_THEME, LIGHT_THEME, type AppMode } from "./AppMode";
+import {
+  HOME,
+  READY,
+  PLAYING,
+  FINISHED,
+  SETTING,
+  type GAME_STATE,
+} from "./GameStateType";
 import {
   Option,
   Options,
@@ -25,6 +32,11 @@ import {
 } from "./SettingTypes";
 
 export {
+  HOME,
+  READY,
+  PLAYING,
+  FINISHED,
+  SETTING,
   DARK_THEME,
   LIGHT_THEME,
   SHORT_TEXT,
@@ -41,10 +53,10 @@ export {
 };
 
 export type {
+  GAME_STATE,
   TypingDataType,
   TypingGameData,
   MainFeaturedPostProps,
-  HomeDisplayProps,
   AppMode,
   SettingTypes,
   Option,
