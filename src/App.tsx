@@ -12,7 +12,6 @@ import {
 } from "./Contexts";
 import { getAppTheme } from "./styles/defaultTheme";
 import { DARK_THEME, LIGHT_THEME, AppMode } from "./@types";
-import { GameStateProvider } from "./Contexts/GameState";
 
 const App: FC = () => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
@@ -46,18 +45,16 @@ const App: FC = () => {
       <SettingDataProvider>
         <ThemeModeContext.Provider value={themeMode}>
           <ThemeProvider theme={theme}>
-            <GameStateProvider>
-              <CssBaseline enableColorScheme />
-              <BrowserRouter>
-                <Routes>
-                  {routes.map((route: AppRoute) =>
-                    route.subRoutes
-                      ? route.subRoutes.map((item: AppRoute) => addRoute(item))
-                      : addRoute(route)
-                  )}
-                </Routes>
-              </BrowserRouter>
-            </GameStateProvider>
+            <CssBaseline enableColorScheme />
+            <BrowserRouter>
+              <Routes>
+                {routes.map((route: AppRoute) =>
+                  route.subRoutes
+                    ? route.subRoutes.map((item: AppRoute) => addRoute(item))
+                    : addRoute(route)
+                )}
+              </Routes>
+            </BrowserRouter>
           </ThemeProvider>
         </ThemeModeContext.Provider>
       </SettingDataProvider>

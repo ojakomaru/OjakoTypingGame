@@ -32,10 +32,10 @@ export const RadioForm = (props: RadioProps) => {
             value={field.value}
             onChange={(e) => setFunc(e.target.value)}
           >
-            {options.map((radio: Option<string>) => (
+            {options.map((radio: Option<string>, i) => (
               <CustomFormControlLabel
                 {...field}
-                key={radio.value}
+                key={`radio.value${i}`}
                 label={radio.label}
                 value={radio.value}
                 control={<Radio />}

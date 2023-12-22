@@ -8,7 +8,6 @@ import {
   useReloadProblem,
   useRomajiTypedMove,
   useKanaTypedMove,
-  useMissMessage,
 } from "./hook";
 import { Divider } from "@mui/material";
 import {
