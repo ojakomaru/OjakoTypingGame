@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Box } from "@mui/material";
 import styled from "styled-components";
+import MissMessage from "../container/MissMessage";
 
 const StyleGameBoard = styled(Box)`
   position: relative;
@@ -20,6 +21,16 @@ const StyleGameBoard = styled(Box)`
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
 `;
-export default function GameBoard({ children }: { children: ReactNode }) {
-  return <StyleGameBoard>{children}</StyleGameBoard>;
+
+interface GameBoardProps {
+  miss?: boolean;
+  children: ReactNode;
+}
+export default function GameBoard({ miss, children }: GameBoardProps) {
+  return (
+    <StyleGameBoard>
+      <MissMessage $isMiss={!!miss} />
+      {children}
+    </StyleGameBoard>
+  );
 }

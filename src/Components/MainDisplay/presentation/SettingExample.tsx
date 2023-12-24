@@ -29,17 +29,14 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
       <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />
       {typeMode === LONG_TEXT ? ( // 長文モード時
         <>
-          <RomajiText
-            romaji={romajiText}
-            className="romajiLongMode"
-          />
+          <RomajiText romaji={romajiText} className="romajiLongMode" />
           <Divider
             variant="middle"
             sx={{ borderColor: "primary.main", width: "100%", height: "3px" }}
           />
           <QuestionText
             questionText={questionText}
-            $longModeScrollOn={0}
+            $longMode={typeMode === LONG_TEXT}
           />
         </>
       ) : (

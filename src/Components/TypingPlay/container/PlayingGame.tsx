@@ -4,11 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Romanizer, useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
-import {
-  useReloadProblem,
-  useRomajiTypedMove,
-  useKanaTypedMove,
-} from "./hook";
+import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "./hook";
 import { Divider } from "@mui/material";
 import {
   GameBoard,
@@ -16,7 +12,7 @@ import {
   RomajiText,
   QuestionText,
 } from "../presentation";
-import MissMessage from "./MissMessage";
+import ResultScore from "../../MainDisplay/presentation/ResultScore";
 
 type PlayingGameProps = {
   typingdata: TypingDataType;
@@ -24,6 +20,7 @@ type PlayingGameProps = {
   keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
+  const [isResult, setIsResult] = useState(false);
   const navigate = useNavigate();
   const { typingdata, setIsPlaying, keyboardInit } = props;
   const { typeMode, showFurigana, romajiType, order } =
@@ -45,7 +42,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
   const [typo, setTypo] = useState(new Array(0));
-  const [scrollCount, scrollTrigger] = useState(0);
   // ミスした際のポップアップロジック
   const [missFlg, setMissFlg] = useState<boolean>(false);
   const romanizer = new Romanizer();
@@ -207,7 +203,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
         let isProblem = reloadProblem(typeMode, romajiType, order);
-        if (!isProblem) console.log("GameSet!!");
+        if (!isProblem) setIsResult(true);
       }
     };
     return () => {
@@ -216,35 +212,44 @@ export default function PlayingGame(props: PlayingGameProps) {
   });
 
   return (
-    <GameBoard>
-      <MissMessage $isMiss={missFlg} />
-      <HiraganaText
-        ref={kanaRef}
-        kanaText={kanaText}
-        $showFurigana={showFurigana}
-      />
-      {typeMode === LONG_TEXT ? ( // 長文モード時
-        <>
-          <RomajiText
-            ref={romajiRef}
-            romaji={romajiText}
-            className="romajiLongMode"
-          />
-          <Divider
-            variant="middle"
-            sx={{ borderColor: "primary.main", width: "100%", height: "3px" }}
-          />
-          <QuestionText
-            questionText={questionText}
-            $longModeScrollOn={scrollCount}
-          />
-        </>
+    <React.Fragment>
+      {isResult ? (
+        <ResultScore />
       ) : (
-        <>
-          <QuestionText questionText={questionText} />
-          <RomajiText ref={romajiRef} romaji={romajiText} />
-        </>
+        <GameBoard miss={missFlg}>
+          <HiraganaText
+            ref={kanaRef}
+            kanaText={kanaText}
+            $showFurigana={showFurigana}
+          />
+          {typeMode === LONG_TEXT ? ( // 長文モード時
+            <>
+              <RomajiText
+                ref={romajiRef}
+                romaji={romajiText}
+                className="romajiLongMode"
+              />
+              <Divider
+                variant="middle"
+                sx={{
+                  borderColor: "primary.main",
+                  width: "100%",
+                  height: "3px",
+                }}
+              />
+              <QuestionText
+                questionText={questionText}
+                $longMode={typeMode === LONG_TEXT}
+              />
+            </>
+          ) : (
+            <>
+              <QuestionText questionText={questionText} />
+              <RomajiText ref={romajiRef} romaji={romajiText} />
+            </>
+          )}
+        </GameBoard>
       )}
-    </GameBoard>
+    </React.Fragment>
   );
 }

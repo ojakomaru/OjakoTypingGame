@@ -5,7 +5,7 @@ import Header from "../ui/Header";
 import { Navigation } from "../ui/Navigation/Navigation";
 
 const Wrapper = styled.div.attrs(() => ({
-  id: 'root'
+  id: "root",
 }))`
   display: flex;
   flex-direction: column;
@@ -19,7 +19,7 @@ const Main = styled.section`
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  margin: 2rem auto;
+  margin: 0.5rem auto;
   max-width: 990px;
 `;
 
