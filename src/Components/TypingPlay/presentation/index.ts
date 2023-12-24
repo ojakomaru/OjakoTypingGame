@@ -3,5 +3,13 @@ import { HiraganaText } from "../presentation/HiraganaText";
 import { QuestionText } from "../presentation/QuestionText";
 import { Keyboard } from "../container/Keyboard";
 import GameBoard from "../presentation/GameBoard";
+import GameTimer from "./GameTimer";
 
-export { GameBoard, Keyboard, QuestionText, HiraganaText, RomajiText };
+export {
+  GameBoard,
+  GameTimer,
+  Keyboard,
+  QuestionText,
+  HiraganaText,
+  RomajiText,
+};

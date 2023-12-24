@@ -1,8 +1,4 @@
-import React, {
-  Ref,
-  RefObject,
-  forwardRef,
-} from "react";
+import React, { Ref, forwardRef } from "react";
 import styled from "styled-components";
 import Paragraph from "../../ui/Paragraph";
 

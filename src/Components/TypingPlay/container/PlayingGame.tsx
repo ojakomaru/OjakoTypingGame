@@ -5,12 +5,13 @@ import { Romanizer, useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "./hook";
-import { Divider } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import {
   GameBoard,
   HiraganaText,
   RomajiText,
   QuestionText,
+  GameTimer,
 } from "../presentation";
 import ResultScore from "../../MainDisplay/presentation/ResultScore";
 
@@ -20,7 +21,7 @@ type PlayingGameProps = {
   keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
-  const [isResult, setIsResult] = useState(false);
+  const [finished, setFinished] = useState(false);
   const navigate = useNavigate();
   const { typingdata, setIsPlaying, keyboardInit } = props;
   const { typeMode, showFurigana, romajiType, order } =
@@ -41,10 +42,13 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romaIdx = useRef(0); // 再レンダリング対策
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
-  const [typo, setTypo] = useState(new Array(0));
   // ミスした際のポップアップロジック
   const [missFlg, setMissFlg] = useState<boolean>(false);
   const romanizer = new Romanizer();
+  const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
+  const [totalType, setTotalType] = useState(0); // トータルタイピング数
+  const [missCount, setMissCount] = useState(0); // ミスした回数
+  const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
 
   const keyboard = keyboardInit();
   // 問題文生成
@@ -55,10 +59,11 @@ export default function PlayingGame(props: PlayingGameProps) {
   // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
-  }, [questionText]);
+  }, [questionText, romajiText, keyboard]);
 
   /* タイピング入力処理 */
   useEffect(() => {
+    if (finished) return;
     const romajiTyped = romajiInit();
     const kanaTyped = kanaInit();
     let romaPos = romaPosIdx.current,
@@ -80,18 +85,16 @@ export default function PlayingGame(props: PlayingGameProps) {
         patternAry.current = pattern;
         tmpRef.current = tmp;
       }
-      function missTyped() {
+      function missTyped(key: string) {
         setMissFlg(true);
         setTimeout(function () {
           setMissFlg(false);
         }, 800);
-        // その位置で初めてのうち間違えであるとき
-        if (typo.indexOf(romaLength) === -1) {
-          // うち間違えた位置の配列にその位置を追加
-          setTypo([...typo, romaLength]);
-          romajiTyped.miss(romaLength);
-          kanaTyped.miss(kanaLength);
-        }
+        // うち間違えた文字を追加
+        setTypo((typo) => [...typo, key]);
+        romajiTyped.miss(romaLength);
+        kanaTyped.miss(kanaLength);
+
         tmp = tmp.slice(0, -1);
         saveRefs();
       }
@@ -143,13 +146,15 @@ export default function PlayingGame(props: PlayingGameProps) {
             }
             // 「ん」の次の文字を打ち間違えた時
             if (!nFlag) {
-              missTyped();
+              missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
+              setMissCount((prev) => prev + 1);
             }
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
           else {
             if (e.key !== "Shift") {
-              missTyped();
+              missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
+              setMissCount((prev) => prev + 1);
             }
           }
         }
@@ -202,8 +207,13 @@ export default function PlayingGame(props: PlayingGameProps) {
         kanaIdx.current = 0;
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
+        setTotalType((prev) => prev + romajiText.length);
         let isProblem = reloadProblem(typeMode, romajiType, order);
-        if (!isProblem) setIsResult(true);
+        if (!isProblem) {
+          setTotalType((prev) => prev + missCount);
+          setTimeOfTyping((startTime) => new Date().getTime() - startTime);
+          setFinished(true);
+        }
       }
     };
     return () => {
@@ -213,17 +223,27 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   return (
     <React.Fragment>
-      {isResult ? (
-        <ResultScore />
+      {finished ? (
+        <ResultScore
+          totalType={totalType}
+          missCount={missCount}
+          typo={typo}
+          timeOfTyping={timeOfTyping}
+        />
       ) : (
         <GameBoard miss={missFlg}>
-          <HiraganaText
-            ref={kanaRef}
-            kanaText={kanaText}
-            $showFurigana={showFurigana}
-          />
+          <Box display="flex" justifyContent="flex-end">
+            <Typography>ミスタイプ: {missCount}回</Typography>
+            <GameTimer />
+          </Box>
           {typeMode === LONG_TEXT ? ( // 長文モード時
             <>
+              <HiraganaText
+                ref={kanaRef}
+                kanaText={kanaText}
+                $showFurigana={showFurigana}
+                className="hiraganaLongMode"
+              />
               <RomajiText
                 ref={romajiRef}
                 romaji={romajiText}
@@ -244,6 +264,11 @@ export default function PlayingGame(props: PlayingGameProps) {
             </>
           ) : (
             <>
+              <HiraganaText
+                ref={kanaRef}
+                kanaText={kanaText}
+                $showFurigana={showFurigana}
+              />
               <QuestionText questionText={questionText} />
               <RomajiText ref={romajiRef} romaji={romajiText} />
             </>

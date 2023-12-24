@@ -1,5 +1,5 @@
 import React from "react";
-import { alpha, styled } from "@mui/material";
+import { styled } from "@mui/material";
 
 interface FormWrapperProps {
   isSetting?: boolean;

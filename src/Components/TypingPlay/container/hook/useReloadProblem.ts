@@ -91,7 +91,6 @@ const useReloadProblem = (typingdata: TypingDataType) => {
           return romanizer.upperWordInitial(romajiText);
         case NONE:
           return romajiText;
-          defalut: return romajiText;
       }
     };
 

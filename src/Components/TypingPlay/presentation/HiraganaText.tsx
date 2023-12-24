@@ -11,17 +11,25 @@ type HiraganaTextProps = {
 };
 type StyledTextProps = Pick<HiraganaTextProps, "$showFurigana">;
 const StyleHiraganaText = styled(Paragraph)<StyledTextProps>`
-  ${({$showFurigana}) => $showFurigana === HIDDEN && css`display: none`};
-   .current-letter {
-     color: #2d0303;
-     font-weight: bold;
-   }
-   .typed-letters {
-     color: #999;
-   }
-   .typo {
-     color: #f52727;
-   }
+  ${({ $showFurigana }) =>
+    $showFurigana === HIDDEN &&
+    css`
+      display: none;
+    `};
+  .current-letter {
+    color: #2d0303;
+    font-weight: bold;
+  }
+  .typed-letters {
+    color: #999;
+  }
+  .typo {
+    color: #f52727;
+  }
+  &.hiraganaLongMode {
+    width: 100%;
+    text-align: left;
+  }
 `;
 
 function HiraganaTextCore(
