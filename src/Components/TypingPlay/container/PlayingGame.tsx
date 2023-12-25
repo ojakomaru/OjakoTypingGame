@@ -11,9 +11,9 @@ import {
   HiraganaText,
   RomajiText,
   QuestionText,
-  GameTimer,
+  GameTimer
 } from "../presentation";
-import ResultScore from "../../MainDisplay/presentation/ResultScore";
+import ResultScore from "../../Score/container/ResultScore";
 
 type PlayingGameProps = {
   typingdata: TypingDataType;
