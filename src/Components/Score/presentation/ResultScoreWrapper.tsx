@@ -9,8 +9,6 @@ const StyledResultScoreWrapper = styled.div`
   height: 430px;
   background-color: #fff;
   font-size: 20px;
-  left: 180px;
-  top: 9px;
 `;
 const StyledResultTitle = styled.div`
   padding-top: 10px;

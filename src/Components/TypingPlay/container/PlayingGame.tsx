@@ -59,7 +59,7 @@ export default function PlayingGame(props: PlayingGameProps) {
   // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
-  }, [questionText, romajiText, keyboard]);
+  }, [questionText]);
 
   /* タイピング入力処理 */
   useEffect(() => {

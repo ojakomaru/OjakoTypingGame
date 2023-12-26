@@ -9,57 +9,57 @@ export const timeFormatting = (ms: number) => {
   }
 };
 
-export const cpmToRank = (cpm: number) => {
-  if (cpm >= 600) {
-    return "地球外生命体";
-  } else if (cpm >= 500) {
-    return "よく訓練されたプロ";
-  } else if (cpm >= 430) {
-    return "経験を積んだプロ";
-  } else if (cpm >= 375) {
-    return "プロ並み";
-  } else if (cpm >= 330) {
-    return "セミプロ";
-  } else if (cpm >= 285) {
-    return "よく訓練された一般人";
-  } else if (cpm >= 240) {
-    return "ちょっと速い一般人";
-  } else if (cpm >= 200) {
-    return "平均レベル";
-  } else if (cpm >= 150) {
-    return "平均よりちょっと下";
-  } else if (cpm >= 100) {
-    return "亀さんレベル";
-  } else if (cpm >= 0) {
-    return "原始人レベル";
+export const wpmToRank = (wpm: number) => {
+  if (wpm >= 6000) {
+    return "破壊神";
+  } else if (wpm >= 5000) {
+    return "伝説の超サイヤ人";
+  } else if (wpm >= 4300) {
+    return "クリリンのことかー！";
+  } else if (wpm >= 3750) {
+    return "戦闘力は53万";
+  } else if (wpm >= 3300) {
+    return "サイヤ人";
+  } else if (wpm >= 2850) {
+    return "ザーボンさん";
+  } else if (wpm >= 2400) {
+    return "ドドリアさん";
+  } else if (wpm >= 2000) {
+    return "ナメック星人";
+  } else if (wpm >= 1500) {
+    return "クリリン";
+  } else if (wpm >= 1000) {
+    return "サイバイマン";
+  } else if (wpm >= 50) {
+    return "ヤムチャ";
   } else {
     return "";
   }
 };
 
-export const cpmToDiscription = (cpm: number) => {
-  if (cpm >= 600) {
+export const wpmToComment = (wpm: number) => {
+  if (wpm >= 6000) {
     return "全く、脱帽しました。あなたの手の指は何本あるのでしょう？10本より多くあるかもしれません。";
-  } else if (cpm >= 500) {
+  } else if (wpm >= 5000) {
     return "素晴らしい！あなたは世界レベルのタイピストです。いまこそ世界にその存在を知らしめるのです！";
-  } else if (cpm >= 430) {
+  } else if (wpm >= 4300) {
     return "なんということでしょう！あなたなら世界も狙えるはずです！";
-  } else if (cpm >= 375) {
+  } else if (wpm >= 3750) {
     return "「プロフェッショナル」といったいどれだけの人が呼ばれることができるでしょう？あなたはこの結果を今すぐに自慢するべきです！";
-  } else if (cpm >= 330) {
+  } else if (wpm >= 3300) {
     return "アマチュアとプロの違いは何でしょうか？その違いが分かればもっと上を目指せるかもしれません。";
-  } else if (cpm >= 285) {
+  } else if (wpm >= 2850) {
     return "学校や職場ではかなり速いほうでしょう。でも忘れてはいけません。上には上がいるのです！";
-  } else if (cpm >= 240) {
+  } else if (wpm >= 2400) {
     return "友達にタイピングの勝負でも挑みますか？気を引き締めて。厳しい戦いになるかもしれません。";
-  } else if (cpm >= 200) {
+  } else if (wpm >= 2000) {
     return "可もなく不可もなく。マイペースにいきましょう。";
-  } else if (cpm >= 150) {
+  } else if (wpm >= 1500) {
     return "もっと速くなりたい？楽しいことをおっしゃいますね。地道な努力を重ねることです。";
-  } else if (cpm >= 100) {
+  } else if (wpm >= 1000) {
     return "まずは両手のホームポジションを学びましょう。基礎を固めると成長が速くなるはずです。";
-  } else if (cpm >= 0) {
-    return "原始人ならば、、、仕方がないですね。まずは現代の文明に慣れることです。";
+  } else if (wpm >= 0) {
+    return "ヤムチャならば、、、仕方がないですね。まずは現代の文明に慣れることです。";
   } else {
     return "";
   }

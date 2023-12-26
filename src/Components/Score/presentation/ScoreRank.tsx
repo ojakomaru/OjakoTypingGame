@@ -9,25 +9,21 @@ const StyledRankArea = styled.div`
   font-weight: bold;
   position: relative;
 `;
-const StyledRankLabel = styled.div`
+const StyledRankBace = styled.div`
   position: absolute;
   left: 0px;
-  top: 258px;
   font-weight: bold;
   margin-left: 10px;
   width: 500px;
   padding: 0 5px;
 `;
-const StyledRank = styled.div`
-  position: absolute;
-  left: 0px;
-  top: 280px;
+const StyledRankLabel = styled(StyledRankBace)`
+  top: 180px;
+`;
+const StyledRank = styled(StyledRankBace)`
+  top: 200px;
   font-size: 24px;
   text-align: right;
-  font-weight: bold;
-  margin-left: 10px;
-  width: 500px;
-  padding: 0 5px;
 `;
 
 interface ScoreRankProps {
@@ -38,7 +34,7 @@ const ScoreRank = (props: ScoreRankProps) => {
   const { label, rank } = props;
   return (
     <StyledRankArea>
-      <StyledRankLabel>{label}</StyledRankLabel>
+      <StyledRankLabel>{`あなたの${label}のレベルは…`}</StyledRankLabel>
       <StyledRank>{`「 ${rank} 」です！`}</StyledRank>
     </StyledRankArea>
   );

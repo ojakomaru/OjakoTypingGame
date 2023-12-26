@@ -12,8 +12,8 @@ const StyledScore = styled.div<{ isBest: boolean }>`
   font-size: 42px;
   padding-bottom: 6px;
 `;
-const StyledScoreItem = styled.span<{ dataTitle: string }>`
-  text-align: ${({ dataTitle }) => (dataTitle === "dd" ? "right" : "left")};
+const StyledScoreItem = styled.span<{ align: string }>`
+  text-align: ${({ align }) => align};
   font-size: 42px;
   width: 230px;
   display: inline-block;
@@ -23,8 +23,8 @@ const StyledScoreItem = styled.span<{ dataTitle: string }>`
 const Score = ({ isBest, score }: { isBest: boolean; score: number }) => {
   return (
     <StyledScore isBest={isBest}>
-      <StyledScoreItem dataTitle={"dt"}>Score</StyledScoreItem>
-      <StyledScoreItem dataTitle={"dd"}>{score}</StyledScoreItem>
+      <StyledScoreItem align={"left"}>Score</StyledScoreItem>
+      <StyledScoreItem align={"right"}>{score}</StyledScoreItem>
     </StyledScore>
   );
 };
