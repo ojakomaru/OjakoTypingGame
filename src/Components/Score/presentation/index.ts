@@ -3,5 +3,15 @@ import Score from "./Score";
 import ScoreRank from "./ScoreRank";
 import ScoreComment from "./ScoreComment";
 import WeakKeys from "./WeakKeys";
+import DetailArea from "./DetailArea";
+import DetailItem from "./DetailItem";
 
-export { ResultScoreWrapper, WeakKeys, Score, ScoreRank, ScoreComment };
+export {
+  DetailArea,
+  DetailItem,
+  ResultScoreWrapper,
+  WeakKeys,
+  Score,
+  ScoreRank,
+  ScoreComment,
+};

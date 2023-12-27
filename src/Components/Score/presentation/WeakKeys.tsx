@@ -11,7 +11,16 @@ const StyledWeakKeys = styled.div`
   font-size: 16px;
 `;
 const WeakKeys = ({ weakKeys }: { weakKeys: string[] }) => {
-  return <StyledWeakKeys>WeakKeys</StyledWeakKeys>;
+  let comment = "";
+  const weakPoint = weakKeys.length;
+  if (weakPoint === 0) {
+    comment = "エレガント！！あなた正確無比なタイピングに弱点はありません！";
+  } else {
+    comment = `苦手キーの「${weakKeys
+      .join(" ")
+      .toUpperCase()}」を意識しましょう`;
+  }
+  return <StyledWeakKeys>{comment}</StyledWeakKeys>;
 };
 
 export default WeakKeys;
