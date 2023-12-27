@@ -1,14 +1,15 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
 import TypingItem from "./TypingItem";
-import { randomArray, useEffectOnce } from "../../Hooks";
+import { randomArray } from "../../Hooks";
 
-export default function TypingLists() {
-  const { typingdatas, setTypingDatas, setTypingData } =
+const TypingLists = () => {
+  const { typingdatas, setTypingData } =
     React.useContext(TypingDataContext);
+  const [randDatas, setRandData] = useState<TypingDataType[]>([]);
   const scrollTop = useScrollToTop();
 
   const selectedTypingToTop = useCallback(
@@ -20,26 +21,27 @@ export default function TypingLists() {
   );
 
   // 最大表示件数を制限
-  useEffectOnce(() => {
+  useEffect(() => {
     const datas: TypingDataType[] = [];
     if (!!typingdatas) {
       // Articleは一旦ランダム表示として実装
       let rand = randomArray(typingdatas.length, 9);
       for (let i = 0; i < rand.length; i++) {
-        datas.push(typingdatas[i]);
+        datas.push(typingdatas[rand[i]]);
       }
-      setTypingDatas(datas);
+      setRandData(datas);
     }
-  });
+  }, [typingdatas]);
 
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
       {typingdatas &&
-        typingdatas.map((post, index) => (
+        randDatas.map((post, index) => (
           <Grid item xs={2} sm={4} md={4} key={`typingdata${index}`}>
             <TypingItem post={post} selectedTypingToTop={selectedTypingToTop} />
           </Grid>
         ))}
     </Grid>
   );
-}
+};
+export default TypingLists;
