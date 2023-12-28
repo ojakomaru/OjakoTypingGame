@@ -95,17 +95,17 @@ export default function PlayingGame(props: PlayingGameProps) {
         setTimeout(function () {
           setMissFlg(false);
         }, 800);
-        // うち間違えた文字を追加
+        // 打ち間違えた文字を追加
         setTypo((typo) => [...typo, key]);
         romajiTyped.miss(romaLength);
         kanaTyped.miss(kanaLength);
-
         tmp = tmp.slice(0, -1);
         saveRefs();
       }
+
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
-      // "Escape"キーの処理（タイマー、タイプカウントのリセット）
+      // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
         setIsPlaying!(false);
         navigate("/");
