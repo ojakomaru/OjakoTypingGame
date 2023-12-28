@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledScoreComment = styled.div`
   border-top: 1px solid #333;
   position: relative;
-  left: 0px;
+  left: 10px;
   top: 238px;
   margin-left: 10px;
   width: 500px;

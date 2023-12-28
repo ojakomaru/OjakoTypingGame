@@ -10,7 +10,6 @@ const Wrapper = styled.div.attrs(() => ({
   display: flex;
   flex-direction: column;
   padding-top: 3.75rem;
-  min-height: 100vh;
   box-sizing: border-box;
 `;
 
@@ -21,6 +20,7 @@ const Main = styled.section`
   box-sizing: border-box;
   margin: 0.5rem auto;
   max-width: 990px;
+  min-height: calc(100vh - 130px);
 `;
 
 const FooterWrapper = styled.footer`

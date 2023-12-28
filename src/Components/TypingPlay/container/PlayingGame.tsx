@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Romanizer, useEffectOnce } from "../../../Hooks";
@@ -11,7 +11,7 @@ import {
   HiraganaText,
   RomajiText,
   QuestionText,
-  GameTimer
+  GameTimer,
 } from "../presentation";
 import ResultScore from "../../Score/container/ResultScore";
 
@@ -21,9 +21,8 @@ type PlayingGameProps = {
   keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
-  const [finished, setFinished] = useState(false);
-  const navigate = useNavigate();
   const { typingdata, setIsPlaying, keyboardInit } = props;
+  const [finished, setFinished] = useState(false);
   const { typeMode, showFurigana, romajiType, order } =
     React.useContext(SettingDataContext);
   const {
@@ -42,15 +41,15 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romaIdx = useRef(0); // 再レンダリング対策
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
-  // ミスした際のポップアップロジック
-  const [missFlg, setMissFlg] = useState<boolean>(false);
-  const romanizer = new Romanizer();
+  const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
+  const [missCount, setMissCount] = useState(0); // ミスした回数
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
-  const [missCount, setMissCount] = useState(0); // ミスした回数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
-
+  const navigate = useNavigate();
+  const romanizer = new Romanizer();
   const keyboard = keyboardInit();
+
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem(typeMode, romajiType, order);
@@ -60,6 +59,12 @@ export default function PlayingGame(props: PlayingGameProps) {
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText]);
+
+  // クリア後のリセット関数
+  const retry = useCallback(() => {
+    setIsPlaying!(false);
+    setFinished(false);
+  }, [finished]);
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -229,6 +234,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           missCount={missCount}
           typo={typo}
           timeOfTyping={timeOfTyping}
+          retry={retry}
         />
       ) : (
         <GameBoard miss={missFlg}>

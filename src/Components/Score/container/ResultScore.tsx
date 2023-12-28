@@ -3,22 +3,24 @@ import {
   Score,
   ScoreComment,
   ScoreRank,
-  ResultScoreWrapper,
   WeakKeys,
   DetailArea,
   DetailItem,
 } from "../presentation";
 import { timeFormatting, wpmToComment, wpmToRank } from "../../../Hooks";
 import { TypingDataContext } from "../../../Contexts";
+import ResultScoreLayout from "../../layout/ResultScoreLayout";
+import ResultActions from "./ResultActions";
 
 interface ResultScoreProps {
   totalType: number;
   missCount: number;
   typo: Array<string>;
   timeOfTyping: number;
+  retry: () => void;
 }
 const ResultScore = (props: ResultScoreProps) => {
-  const { totalType, missCount, typo, timeOfTyping } = props;
+  const { totalType, missCount, typo, timeOfTyping, retry } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const wpm = () => (totalType / timeOfTyping) * 60 * 1000;
   const accuracy = () => (1 - missCount / totalType) * 100;
@@ -35,35 +37,29 @@ const ResultScore = (props: ResultScoreProps) => {
     return sortedElements.slice(0, 5);
   };
 
-  return (
-    <ResultScoreWrapper>
-      <DetailArea absoluteX={"10px"} absoluteY={"80px"}>
+  const Scores = () => (
+    <React.Fragment>
+      <DetailArea absoluteX={"20px"} absoluteY={"80px"}>
         <DetailItem align={"left"}>打鍵/秒</DetailItem>
         <DetailItem align={"right"}>{wpm().toFixed(2)}</DetailItem>
       </DetailArea>
-      <DetailArea absoluteX={"10px"} absoluteY={"110px"}>
+      <DetailArea absoluteX={"20px"} absoluteY={"110px"}>
         <DetailItem align={"left"}>正打率</DetailItem>
-        <DetailItem align={"right"}>
-          {accuracy().toFixed(2)}
-        </DetailItem>
+        <DetailItem align={"right"}>{accuracy().toFixed(2)}</DetailItem>
       </DetailArea>
-      <DetailArea absoluteX={"10px"} absoluteY={"146px"}>
+      <DetailArea absoluteX={"20px"} absoluteY={"146px"}>
         <DetailItem align={"left"}>タイム</DetailItem>
-        <DetailItem align={"right"}>
-          {timeFormatting(timeOfTyping)}
-        </DetailItem>
+        <DetailItem align={"right"}>{timeFormatting(timeOfTyping)}</DetailItem>
       </DetailArea>
-      <DetailArea absoluteX={"260px"} absoluteY={"80px"}>
+      <DetailArea absoluteX={"270px"} absoluteY={"80px"}>
         <DetailItem align={"left"}>問題数</DetailItem>
-        <DetailItem align={"right"}>
-          {typingdata.problems.length}
-        </DetailItem>
+        <DetailItem align={"right"}>{typingdata.problems.length}</DetailItem>
       </DetailArea>
-      <DetailArea absoluteX={"260px"} absoluteY={"113px"}>
+      <DetailArea absoluteX={"270px"} absoluteY={"113px"}>
         <DetailItem align={"left"}>打鍵数</DetailItem>
         <DetailItem align={"right"}>{totalType}</DetailItem>
       </DetailArea>
-      <DetailArea absoluteX={"260px"} absoluteY={"146px"}>
+      <DetailArea absoluteX={"270px"} absoluteY={"146px"}>
         <DetailItem align={"left"}>ミスタイプ</DetailItem>
         <DetailItem align={"right"}>{missCount}</DetailItem>
       </DetailArea>
@@ -71,7 +67,14 @@ const ResultScore = (props: ResultScoreProps) => {
       <ScoreRank label={typingdata.title} rank={wpmToRank(score())} />
       <ScoreComment comment={wpmToComment(score())} />
       <WeakKeys weakKeys={weakKeys()} />
-    </ResultScoreWrapper>
+    </React.Fragment>
+  );
+
+  return (
+    <ResultScoreLayout
+      resultScore={<Scores />}
+      resultActions={<ResultActions retry={retry} />}
+    />
   );
 };
 

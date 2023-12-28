@@ -11,7 +11,7 @@ const StyledRankArea = styled.div`
 `;
 const StyledRankBace = styled.div`
   position: absolute;
-  left: 0px;
+  left: 10px;
   font-weight: bold;
   margin-left: 10px;
   width: 500px;

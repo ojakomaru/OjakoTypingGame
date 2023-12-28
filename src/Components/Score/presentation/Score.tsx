@@ -4,7 +4,7 @@ import DetailItem from "./DetailItem";
 
 const StyledScore = styled.div<{ $isBest: boolean }>`
   position: absolute;
-  left: 0px;
+  left: 10px;
   top: 180px;
   margin-left: 10px;
   border-bottom: 1px double #333;
