@@ -1,4 +1,4 @@
-import { TypingDataType } from "./TypingDataType";
+import { TypingDataType, ProblemType } from "./TypingDataType";
 import { TypingGameData } from "./TypingGameData";
 import { MainFeaturedPostProps } from "./MainFeaturedPostProps";
 import { DARK_THEME, LIGHT_THEME, type AppMode } from "./AppMode";
@@ -41,6 +41,7 @@ export {
 
 export type {
   TypingDataType,
+  ProblemType,
   TypingGameData,
   MainFeaturedPostProps,
   AppMode,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PlayModal from "../presentation/playModal";
 import PlayingGame from "../../TypingPlay/container/PlayingGame";
 import HomeDisplay from "../presentation/homeDisplay";
@@ -11,11 +11,19 @@ type MainFeaturedPostProps = {
   setIsHome?: (a: boolean) => void;
   isSetting?: boolean;
   keyboardInit?: any;
+  isPlaying?: boolean;
+  setIsPlaying?: (a: boolean) => void;
 };
 
 export const MainDisplay = (props: MainFeaturedPostProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const { ishome, setIsHome, isSetting, keyboardInit } = props;
+  const {
+    ishome,
+    setIsHome,
+    isSetting,
+    keyboardInit,
+    isPlaying,
+    setIsPlaying,
+  } = props;
   const { typingdata } = React.useContext(TypingDataContext);
 
   // 画面のモードによって内容を出し分ける
@@ -38,7 +46,7 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
   };
 
   return (
-    <MainDiaplayLayout isPlaying={isPlaying}>
+    <MainDiaplayLayout isPlaying={!!isPlaying}>
       {SwitchMode()}
     </MainDiaplayLayout>
   );

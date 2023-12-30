@@ -23,7 +23,7 @@ const SettingExample = ({ typingdata }: SettingExampleProps) => {
     reloadProblem(typeMode, romajiType, order);
   });
   const { romajiText, kanaText, questionText, reloadProblem } =
-    useReloadProblem(typingdata);
+    useReloadProblem(typingdata.problems);
   return (
     <GameBoard>
       <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />

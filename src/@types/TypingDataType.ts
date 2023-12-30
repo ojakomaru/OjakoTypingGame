@@ -39,3 +39,7 @@ export interface TypingDataType {
   }[];
 }
 
+export type ProblemType = Pick<
+  TypingDataType["problems"],
+  keyof TypingDataType["problems"]
+>;

@@ -18,9 +18,10 @@ interface ResultScoreProps {
   typo: Array<string>;
   timeOfTyping: number;
   retry: () => void;
+  missedRetry: () => void;
 }
 const ResultScore = (props: ResultScoreProps) => {
-  const { totalType, missCount, typo, timeOfTyping, retry } = props;
+  const { totalType, missCount, typo, timeOfTyping, retry, missedRetry} = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const wpm = () => (totalType / timeOfTyping) * 60 * 1000;
   const accuracy = () => (1 - missCount / totalType) * 100;
@@ -73,7 +74,7 @@ const ResultScore = (props: ResultScoreProps) => {
   return (
     <ResultScoreLayout
       resultScore={<Scores />}
-      resultActions={<ResultActions retry={retry} />}
+      resultActions={<ResultActions retry={retry} missedRetry={missedRetry} />}
     />
   );
 };

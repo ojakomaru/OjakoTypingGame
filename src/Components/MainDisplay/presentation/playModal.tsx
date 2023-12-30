@@ -4,6 +4,7 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import { rgbToHex } from "@mui/material";
 import { useStartGame } from "../container/useStartGame";
+import Paragraph from "../../ui/Paragraph";
 
 interface PlayModalProps {
   setIsPlaying?: (a: boolean) => void;
@@ -29,9 +30,12 @@ export default function PlayModal({ setIsPlaying }: PlayModalProps) {
         <Typography variant="h5" color="inherit" paragraph>
           Press "Space" or "Enter" key to start!!
         </Typography>
-        <Link variant="subtitle1" href="/" color={rgbToHex("#ffffff")}>
+        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
           ※ゲーム中はescキーでホーム画面に戻ります。
-        </Link>
+        </Paragraph>
+        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
+          ※ミスした場合「Miss」の文字が消えるまで入力を受け付けません。
+        </Paragraph>
       </Box>
     </Grid>
   );

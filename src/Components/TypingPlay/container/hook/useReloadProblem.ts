@@ -12,12 +12,13 @@ import {
   ORDER_TYPE,
   RANDOM,
   TypingDataType,
+  ProblemType,
 } from "../../../../@types";
 import { Romanizer, randomArray } from "../../../../Hooks";
 
-const useReloadProblem = (typingdata: TypingDataType) => {
+const useReloadProblem = (problemsProps: ProblemType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
-  const cpProblems = structuredClone(typingdata.problems);
+  const cpProblems = structuredClone(problemsProps);
   const [problems, setProblems] = useState(cpProblems);
   const [problemLength] = useState(problems.length);
   const [romajiText, setRomajiText] = useState<string>("");
@@ -25,7 +26,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   const [questionText, setQesutionText] = useState<string>("");
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
-  const [randProblems] = useState(() => {
+  const [randProblems, setRandProblems] = useState(() => {
     // 問題文の数の配列を生成しランダム値を設定
     let initAry = randomArray(problemLength);
     let randProblems = [];
@@ -77,10 +78,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
   ): boolean => {
     let isMore = false;
     let convRomaText: string | string[][];
-    let problem: Pick<
-      TypingDataType["problems"],
-      keyof TypingDataType["problems"]
-    > | null = null;
+    let problem: ProblemType;
     const romajiTypeSelect = <T extends typeof convRomaText>(romajiText: T) => {
       switch (romajiType) {
         case UPPER:
@@ -96,6 +94,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
 
     // 問題文が無くなったらfalse
     if (problems.length === 0) return isMore;
+    if (randProblems.length === 0) return isMore;
     // 設定モードにより分岐
     switch (typeMode) {
       case SHORT_TEXT: // 短文モードの場合
@@ -125,7 +124,7 @@ const useReloadProblem = (typingdata: TypingDataType) => {
     setKanaText(problem![0].kana as string);
     convRomaText = romajiTypeSelect(problem![0].typingWords as string[][]);
     setTypingWord(convRomaText as string[][]);
-    setProblems(problems);
+    order === RANDOM ? setProblems(problems) : setRandProblems(randProblems);
     return isMore;
   };
 

@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 interface ResultActionsProps {
   retry: () => void;
+  missedRetry: () => void;
 }
-const ResultActions = ({ retry }: ResultActionsProps) => {
+const ResultActions = ({ retry, missedRetry }: ResultActionsProps) => {
   const navigate = useNavigate();
   const backToHome = () => {
     retry();
@@ -16,7 +17,12 @@ const ResultActions = ({ retry }: ResultActionsProps) => {
       <Button onClick={retry} variant="contained" size="large" color="primary">
         もう一回
       </Button>
-      <Button onClick={retry} variant="contained" size="large" color="primary">
+      <Button
+        onClick={missedRetry}
+        variant="contained"
+        size="large"
+        color="primary"
+      >
         ミスだけもう一回
       </Button>
       <Button
