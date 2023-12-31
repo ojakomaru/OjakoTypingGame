@@ -11,7 +11,6 @@ import {
   TYPE_MODE,
   ORDER_TYPE,
   RANDOM,
-  TypingDataType,
   ProblemType,
 } from "../../../../@types";
 import { Romanizer, randomArray } from "../../../../Hooks";

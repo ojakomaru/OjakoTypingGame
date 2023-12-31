@@ -43,9 +43,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const [missCount, setMissCount] = useState(0); // ミスした回数
-  const [reloadCount, setReloadCount] = useState(0);
-  const [missedProblems, setMissedProblems] = useState(Array(0));
-  const [missedRetryFlg, setMissedRetry] = useState(false);
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
@@ -70,9 +67,13 @@ export default function PlayingGame(props: PlayingGameProps) {
   }, [finished]);
 
   const missedRetry = useCallback(() => {
-    retry();
-    setMissedRetry(!missedRetryFlg);
-  },[])
+    setFinished(false);
+    setTotalType(0);
+    setTimeOfTyping(new Date().getTime());
+    setTypo([]);
+    setMissCount(0);
+  }, []);
+
   /* タイピング入力処理 */
   useEffect(() => {
     if (finished) return;

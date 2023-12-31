@@ -1,10 +1,14 @@
-import React from "react";
-import PlayModal from "../presentation/playModal";
+import React, { useEffect, useState } from "react";
 import PlayingGame from "../../TypingPlay/container/PlayingGame";
-import HomeDisplay from "../presentation/homeDisplay";
 import MainDiaplayLayout from "../../layout/MainDiaplayLayout";
 import { TypingDataContext } from "../../../Contexts";
-import SettingExample from "../presentation/SettingExample";
+import {
+  HomeDisplay,
+  SettingExample,
+  PlayModal,
+  Countdown,
+} from "../presentation";
+import { useCountdown } from "../../../Hooks";
 
 type MainFeaturedPostProps = {
   ishome?: boolean;
@@ -25,13 +29,15 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     setIsPlaying,
   } = props;
   const { typingdata } = React.useContext(TypingDataContext);
-
+  const [count, setCountdown] = useState(3);
   // 画面のモードによって内容を出し分ける
   const SwitchMode = () => {
     if (ishome) {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
-      return (
+      return count > 0 ? (
+        <Countdown count={count} setCountdown={setCountdown}/>
+      ) : (
         <PlayingGame
           typingdata={typingdata}
           setIsPlaying={setIsPlaying}

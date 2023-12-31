@@ -59,8 +59,9 @@ const QuestionBox = ({ problems }: QuestionBoxProps) => {
         </KanaShowToggle>
       </StyledQuestionBoxTitle>
       <StyledQuestionBoxContent>
-        {problems.map((problem) => (
+        {problems.map((problem, index) => (
           <QuestionBoxItem
+            key={index}
             kana={`（${problem.kana}）`}
             text={problem.text}
             kanaHidden={kanaHidden}
