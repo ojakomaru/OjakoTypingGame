@@ -10,8 +10,9 @@ type RomajiTextProps = {
 const StyleRomajiText = styled(Paragraph)`
   width: 100%;
   font-size: 18px;
-  letter-spacing: 1px;
+  letter-spacing: 1.4px;
   overflow-wrap: break-word;
+  margin-top: 0.3rem;
   &.romajiLongMode {
     text-align: left;
   }

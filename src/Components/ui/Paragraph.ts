@@ -7,7 +7,7 @@ const Paragraph = styled.p.attrs((props) => ({
 }))`
   font-size: 1.2rem;
   color: #2d0303;
-  line-height: 1.3;
+  line-height: 1;
   letter-spacing: 0.5px;
   margin: 0.6rem 0 0;
 `;

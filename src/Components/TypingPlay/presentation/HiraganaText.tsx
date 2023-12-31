@@ -1,6 +1,6 @@
 import React, { Ref, RefObject, forwardRef } from "react";
 import Paragraph from "../../ui/Paragraph";
-import { HIDDEN, SHOW, SHOW_RADIO } from "../../../@types";
+import { HIDDEN, SHOW_RADIO } from "../../../@types";
 import styled, { css } from "styled-components";
 
 type HiraganaTextProps = {
@@ -11,6 +11,7 @@ type HiraganaTextProps = {
 };
 type StyledTextProps = Pick<HiraganaTextProps, "$showFurigana">;
 const StyleHiraganaText = styled(Paragraph)<StyledTextProps>`
+  font-size: 1rem;
   ${({ $showFurigana }) =>
     $showFurigana === HIDDEN &&
     css`

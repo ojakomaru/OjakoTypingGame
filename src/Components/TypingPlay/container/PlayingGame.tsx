@@ -90,6 +90,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
       let nFlag = false;
+      let key = e.key;
       function saveRefs() {
         romaPosIdx.current = romaPos;
         kanaPosIdx.current = kanaPos;
@@ -112,7 +113,10 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
 
       // スペースキーの挙動をキャンセル
-      if (e.code === "Space") e.preventDefault();
+      if (e.code === "Space") {
+        e.preventDefault();
+        key = "␣";
+      }
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
         setIsPlaying!(false);
@@ -122,7 +126,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       if (missFlg) return;
       tmp += e.key;
       // ローマ字正解打
-      if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+      if (key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
         romajiTyped.success(romaLength);
         romaLength++;
         romaPos++;
@@ -138,7 +142,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
         }
         // パターン変更後に再チェック
-        if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+        if (key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
           romaLength = romajiMod(kanaPos, pattern, romaPos);
           romajiTyped.refresh(romaLength);
           romaPos++;
@@ -150,7 +154,7 @@ export default function PlayingGame(props: PlayingGameProps) {
             typingWord[kanaPos].length === 3
           ) {
             for (let i = 0; i < typingWord[kanaPos + 1].length; i++) {
-              if (e.key === typingWord[kanaPos + 1][i][0]) {
+              if (key === typingWord[kanaPos + 1][i][0]) {
                 pattern[kanaPos] = 2;
                 pattern[kanaPos + 1] = i;
                 nFlag = true;
@@ -165,7 +169,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
           else {
-            if (e.key !== "Shift") {
+            if (key !== "Shift") {
               missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
               setMissCount((prev) => prev + 1);
             }

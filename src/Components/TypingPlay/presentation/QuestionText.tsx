@@ -22,7 +22,8 @@ const StyleQuestionText = styled(Paragraph)<StyledTextProps>(
       : {
           fontSize: "24px",
           lineHeight: "110%",
-          padding: "3px 5px",
+          padding: "0px 5px",
+          marginTop: "0.3rem",
         }),
   })
 );

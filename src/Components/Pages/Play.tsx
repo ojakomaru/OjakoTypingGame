@@ -18,7 +18,9 @@ const Play: React.FC = () => {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
       />
-      <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
+      {isPlaying && (
+        <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
+      )}
       {!isPlaying && <QuestionBox problems={typingdata.problems} />}
     </Layout>
   );

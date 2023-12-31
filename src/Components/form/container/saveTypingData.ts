@@ -23,6 +23,7 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       typingdata.problems[i].typingWords = romanizer.createRomajiWords(
         typingdata.problems[i].kana as string
       ); // タイピングワード変換
+      typingdata.problems[i].text = typingdata.problems[i].text.replace(/\s/g, '␣');
     }
     // 全角記号 〜！＠＃＄％＾＆＊（）＿＋｛｝：”｜？＞＜
     typingDataList.push(typingdata);
