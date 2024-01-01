@@ -44,6 +44,11 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const [missCount, setMissCount] = useState(0); // ミスした回数
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
+
+  const [typoPosition, setTypoPosition] = useState<Array<number>>(Array(0)); // タイプミス場所保管用
+  const [problemCount, setProblemCount] = useState(1); //問題数
+  const [missedProblems, setMissedProblems] = useState<Array<boolean>>([]); // タイプミス文章保管用
+
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
   const navigate = useNavigate();
@@ -90,7 +95,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
       let pattern = patternAry.current;
       let nFlag = false;
-      let key = e.key;
+
       function saveRefs() {
         romaPosIdx.current = romaPos;
         kanaPosIdx.current = kanaPos;
@@ -113,10 +118,8 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
 
       // スペースキーの挙動をキャンセル
-      if (e.code === "Space") {
-        e.preventDefault();
-        key = "␣";
-      }
+      if (e.code === "Space") e.preventDefault();
+
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
         setIsPlaying!(false);
@@ -126,7 +129,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       if (missFlg) return;
       tmp += e.key;
       // ローマ字正解打
-      if (key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+      if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
         romajiTyped.success(romaLength);
         romaLength++;
         romaPos++;
@@ -142,7 +145,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
         }
         // パターン変更後に再チェック
-        if (key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
+        if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
           romaLength = romajiMod(kanaPos, pattern, romaPos);
           romajiTyped.refresh(romaLength);
           romaPos++;
@@ -154,7 +157,7 @@ export default function PlayingGame(props: PlayingGameProps) {
             typingWord[kanaPos].length === 3
           ) {
             for (let i = 0; i < typingWord[kanaPos + 1].length; i++) {
-              if (key === typingWord[kanaPos + 1][i][0]) {
+              if (e.key === typingWord[kanaPos + 1][i][0]) {
                 pattern[kanaPos] = 2;
                 pattern[kanaPos + 1] = i;
                 nFlag = true;
@@ -169,7 +172,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
           else {
-            if (key !== "Shift") {
+            if (e.key !== "Shift") {
               missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
               setMissCount((prev) => prev + 1);
             }
@@ -193,7 +196,13 @@ export default function PlayingGame(props: PlayingGameProps) {
             romajiTyped.refresh(romaLength);
             kanaPos++;
             kanaLength++;
-            romaPos = 1;
+            // 正解打の次の文字が日本語ローマ字の場合
+            if (typingWord[kanaPos][pattern[kanaPos]].length > 1) {
+              romaPos = 1;
+            } else {
+              romaPos = 0;
+              kanaPos++;
+            }
             keyboard.selActive(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
             tmp = tmp.slice(1);
             saveRefs();
