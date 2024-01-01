@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Romanizer, useEffectOnce } from "../../../Hooks";
+import { Romanizer, useEffectOnce, usePrevious } from "../../../Hooks";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "./hook";
@@ -48,7 +48,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [typoPosition, setTypoPosition] = useState<Array<number>>(Array(0)); // タイプミス場所保管用
   const [problemCount, setProblemCount] = useState(1); //問題数
   const [missedProblems, setMissedProblems] = useState<Array<boolean>>([]); // タイプミス文章保管用
-
+  const { ref, prev } = usePrevious(missedProblems);
+  
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
   const navigate = useNavigate();
