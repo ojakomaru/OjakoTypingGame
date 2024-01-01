@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FormControl, styled, useFormControl } from "@mui/material";
+import { FormControl, styled } from "@mui/material";
 
 const StyledRadioForm = styled(FormControl)(() => ({
   fontWeight: "bold",

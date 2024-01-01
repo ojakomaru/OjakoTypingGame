@@ -31,6 +31,7 @@ export default function PlayingGame(props: PlayingGameProps) {
     questionText,
     typingWord,
     romajiMod,
+    setProblems,
     reloadProblem,
   } = useReloadProblem(typingdata.problems);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
@@ -45,11 +46,11 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [missCount, setMissCount] = useState(0); // ミスした回数
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
 
-  const [typoPosition, setTypoPosition] = useState<Array<number>>(Array(0)); // タイプミス場所保管用
-  const [problemCount, setProblemCount] = useState(1); //問題数
-  const [missedProblems, setMissedProblems] = useState<Array<boolean>>([]); // タイプミス文章保管用
-  const { ref, prev } = usePrevious(missedProblems);
-  
+  const [problemOfMissCount, setProblemOfMissCount] = useState(0); // 問題文毎のミス回数
+  const [problemCount, setProblemCount] = useState(0); //問題数
+  const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
+  const { ref, prev } = usePrevious(problemOfMissCount);
+
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
   const navigate = useNavigate();
@@ -78,6 +79,9 @@ export default function PlayingGame(props: PlayingGameProps) {
     setTimeOfTyping(new Date().getTime());
     setTypo([]);
     setMissCount(0);
+    setProblemOfMissCount(0);
+    setProblemCount(0);
+    setMissedProblems([])
   }, []);
 
   /* タイピング入力処理 */
@@ -235,6 +239,15 @@ export default function PlayingGame(props: PlayingGameProps) {
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
         setTotalType((prev) => prev + romajiText.length);
+
+        if (missCount > 0) {
+          setProblemOfMissCount(missCount);
+          if (missCount !== ref.current) {
+            setMissedProblems([...missedProblems, problemCount]);
+          }
+        }
+        setProblemCount((prev) => prev + 1);
+
         let isProblem = reloadProblem(typeMode, romajiType, order);
         if (!isProblem) {
           setTotalType((prev) => prev + missCount);
