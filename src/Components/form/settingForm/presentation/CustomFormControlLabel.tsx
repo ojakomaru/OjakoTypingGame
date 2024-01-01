@@ -4,8 +4,11 @@ import {
   useRadioGroup,
   styled,
 } from "@mui/material";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 
-interface StyledFormControlLabelProps extends FormControlLabelProps {
+type CustomFormControlLabelProps = ComponentPropsWithoutRef<"input"> &
+  FormControlLabelProps;
+interface StyledFormControlLabelProps extends CustomFormControlLabelProps {
   checked: boolean;
 }
 const StyledFormControlLabel = styled((props: StyledFormControlLabelProps) => (
@@ -16,13 +19,15 @@ const StyledFormControlLabel = styled((props: StyledFormControlLabelProps) => (
   },
 }));
 
-function CustomFormControlLabel(props: FormControlLabelProps) {
-  const radioGroup = useRadioGroup();
-  let checked = false;
-  if (radioGroup) {
-    checked = radioGroup.value === props.value;
+const CustomFormControlLabel = forwardRef(
+  (props: CustomFormControlLabelProps, ref) => {
+    const radioGroup = useRadioGroup();
+    let checked = false;
+    if (radioGroup) {
+      checked = radioGroup.value === props.value;
+    }
+    return <StyledFormControlLabel ref={ref} checked={checked} {...props} />;
   }
-  return <StyledFormControlLabel checked={checked} {...props} />;
-}
+);
 
-export {CustomFormControlLabel};
+export { CustomFormControlLabel };

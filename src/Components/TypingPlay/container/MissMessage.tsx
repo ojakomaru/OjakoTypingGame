@@ -22,7 +22,6 @@ const StyledMissModal = styled.div<MissMessageProps>`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
   background: url(${damageUrl}) right no-repeat;
   background-size: 35%;
   background-color: rgba(241, 13, 13, 0.3);
