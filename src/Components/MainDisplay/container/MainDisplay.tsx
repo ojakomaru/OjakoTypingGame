@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PlayingGame from "../../TypingPlay/container/PlayingGame";
 import MainDiaplayLayout from "../../layout/MainDiaplayLayout";
 import { TypingDataContext } from "../../../Contexts";
@@ -8,7 +8,6 @@ import {
   PlayModal,
   Countdown,
 } from "../presentation";
-import { useCountdown } from "../../../Hooks";
 
 type MainFeaturedPostProps = {
   ishome?: boolean;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   SHORT_TEXT,
   LONG_TEXT,
@@ -25,17 +25,20 @@ const useReloadProblem = (problemsProps: ProblemType) => {
   const [questionText, setQesutionText] = useState<string>("");
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
-  const [randProblems, setRandProblems] = useState(problems);
 
-  // 問題文の数の配列を生成しランダム値を設定
-  useEffect(() => {
+  const randomProblemCreate = useCallback(() => {
     let initAry = randomArray(problemLength);
-    let randProblems = [];
+    let randProblems: ProblemType = [];
     for (let i = 0; i < initAry.length; i++) {
       randProblems.push(cpProblems[initAry[i]]);
     }
-    setRandProblems(randProblems);
+    return randProblems;
   }, [problems]);
+  const [randProblems, setRandProblems] = useState(randomProblemCreate());
+  // 問題文の数の配列を生成しランダム値を設定
+  // useEffect(() => {
+  //   setRandProblems(randomProblemCreate());
+  // }, [problems]);
 
   const romajiMod = (
     kanaPos: number,

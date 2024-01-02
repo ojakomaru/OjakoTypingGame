@@ -16,14 +16,17 @@ const saveTypingData = (typingdata: TypingDataType): void => {
         .replace(/\s/g, " ")
         .replace(/\r?\n/g, "");
       let convertString = await Analyzer.getConvertString(word);
-      typingdata.problems[i].kana = convertString.hiragana; // かな変換
+      typingdata.problems[i].kana = convertString.hiragana.replace(/␣/g, " "); // かな変換
       typingdata.problems[i].romaji = romanizer
         .romanize(typingdata.problems[i].kana)
         .replace(/\s/g, "␣"); // ローマ字変換
       typingdata.problems[i].typingWords = romanizer.createRomajiWords(
         typingdata.problems[i].kana as string
       ); // タイピングワード変換
-      typingdata.problems[i].text = typingdata.problems[i].text.replace(/\s/g, '␣');
+      typingdata.problems[i].text = typingdata.problems[i].text.replace(
+        /\s/g,
+        "␣"
+      );
     }
     // 全角記号 〜！＠＃＄％＾＆＊（）＿＋｛｝：”｜？＞＜
     typingDataList.push(typingdata);
