@@ -23,7 +23,7 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, setIsPlaying, keyboardInit } = props;
   const [finished, setFinished] = useState(false);
-  const { typeMode, showFurigana, romajiType, order } =
+  const { typeMode, showFurigana, romajiType } =
     React.useContext(SettingDataContext);
   const {
     romajiText,
@@ -31,7 +31,8 @@ export default function PlayingGame(props: PlayingGameProps) {
     questionText,
     typingWord,
     romajiMod,
-    setProblems,
+    selectRetryProblem,
+    problemCount,
     reloadProblem,
   } = useReloadProblem(typingdata.problems);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
@@ -47,9 +48,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
 
   const [problemOfMissCount, setProblemOfMissCount] = useState(0); // 問題文毎のミス回数
-  const [problemCount, setProblemCount] = useState(0); //問題数
   const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
-  const { ref, prev } = usePrevious(problemOfMissCount);
+  const { ref } = usePrevious(problemOfMissCount);
 
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
@@ -59,7 +59,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // 問題文生成
   useEffectOnce(() => {
-    reloadProblem(typeMode, romajiType, order);
+    reloadProblem(typeMode, romajiType);
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   });
   // 問題文の更新時に最初のキーを色付けする
@@ -67,12 +67,13 @@ export default function PlayingGame(props: PlayingGameProps) {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText]);
 
-  // クリア後のリセット関数
+  // クリア後のもう一回リセット関数
   const retry = useCallback(() => {
     setIsPlaying!(false);
     setFinished(false);
   }, [finished]);
 
+  // クリア後のミスだけもう一回関数
   const missedRetry = useCallback(() => {
     setFinished(false);
     setTotalType(0);
@@ -80,7 +81,7 @@ export default function PlayingGame(props: PlayingGameProps) {
     setTypo([]);
     setMissCount(0);
     setProblemOfMissCount(0);
-    setProblemCount(0);
+    selectRetryProblem(missedProblems);
     setMissedProblems([])
   }, []);
 
@@ -246,9 +247,8 @@ export default function PlayingGame(props: PlayingGameProps) {
             setMissedProblems([...missedProblems, problemCount]);
           }
         }
-        setProblemCount((prev) => prev + 1);
 
-        let isProblem = reloadProblem(typeMode, romajiType, order);
+        let isProblem = reloadProblem(typeMode, romajiType);
         if (!isProblem) {
           setTotalType((prev) => prev + missCount);
           setTimeOfTyping((startTime) => new Date().getTime() - startTime);
