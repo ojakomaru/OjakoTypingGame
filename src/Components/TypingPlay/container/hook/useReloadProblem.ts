@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   SHORT_TEXT,
   LONG_TEXT,
@@ -13,7 +13,7 @@ import {
   ProblemType,
 } from "../../../../@types";
 import { SettingDataContext } from "../../../../Contexts";
-import { Romanizer, randomArray } from "../../../../Hooks";
+import { Romanizer, randomArray, useEffectOnce } from "../../../../Hooks";
 
 const useReloadProblem = (problemsProps: ProblemType) => {
   const { order } = React.useContext(SettingDataContext);
@@ -39,6 +39,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
   const [problems, setProblems] = useState(
     order === RANDOM ? randomProblemCreate() : cpProblems
   );
+  const problemRef = useRef<ProblemType>(structuredClone(problems));
   const [problemCount, setProblemCount] = useState(0); //出題数
   const [romajiText, setRomajiText] = useState<string>("");
   const [kanaText, setKanaText] = useState<string>("");
@@ -46,13 +47,16 @@ const useReloadProblem = (problemsProps: ProblemType) => {
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
 
-  const selectRetryProblem = (missedProblems: Array<number>) => {
-    let tmpProblems: ProblemType = [];
-    for (let i = 0; i < missedProblems.length; i++) {
-      tmpProblems.push(problems[missedProblems[i]]);
-    }
-    setProblems(tmpProblems);
-  };
+  const selectRetryProblem = useCallback(
+    (missedProblems: Array<number>) => {
+      let tmpProblems: ProblemType = [];
+      for (let i = 0; i < missedProblems.length; i++) {
+        tmpProblems.push(problemRef.current[missedProblems[i] - 1]);
+      }
+      return tmpProblems;
+    },
+    [problemRef]
+  );
 
   /**
    * 入力パターンを変更したときにその変更内容に表示用ローマ字テキストを書き換えます
@@ -98,11 +102,14 @@ const useReloadProblem = (problemsProps: ProblemType) => {
 
   const reloadProblem = (
     typeMode: TYPE_MODE,
-    romajiType: ROMAJI_TYPE
+    romajiType: ROMAJI_TYPE,
+    retryProblem?: ProblemType
   ): boolean => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
+    let reloadProblem = retryProblem ? retryProblem : problems;
+
     const romajiTypeSelect = <T extends typeof convRomaText>(romajiText: T) => {
       switch (romajiType) {
         case UPPER:
@@ -117,22 +124,22 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     };
 
     // 問題文が無くなったらfalse
-    if (problems.length === 0) return isMore;
+    if (reloadProblem.length === 0) return isMore;
 
     // 設定モードにより分岐
     switch (typeMode) {
       case SHORT_TEXT: // 短文モードの場合
-        problem = problems.splice(0, 1);
+        problem = reloadProblem.splice(0, 1);
         setQesutionText(problem![0].text);
         isMore = true;
         break;
       case LONG_TEXT: // 長文モードの場合
         let text: string = "";
-        for (let i = 0; i < problems.length; i++) {
-          text += `${problems[i].text}\n`;
+        for (let i = 0; i < reloadProblem.length; i++) {
+          text += `${reloadProblem[i].text}\n`;
         }
         setQesutionText(text);
-        problem = problems.splice(0, 1);
+        problem = reloadProblem.splice(0, 1);
         isMore = true;
         break;
       case REAL_TEXT:
@@ -143,7 +150,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     setKanaText(problem![0].kana as string);
     convRomaText = romajiTypeSelect(problem![0].typingWords as string[][]);
     setTypingWord(convRomaText as string[][]);
-    setProblems(problems);
+    setProblems(reloadProblem);
     setProblemCount((prev) => prev + 1);
     return isMore;
   };

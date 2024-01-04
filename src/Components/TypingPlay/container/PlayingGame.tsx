@@ -48,8 +48,8 @@ export default function PlayingGame(props: PlayingGameProps) {
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
 
   const [problemOfMissCount, setProblemOfMissCount] = useState(0); // 問題文毎のミス回数
+  const { ref } = usePrevious(problemOfMissCount); //ミス回数を前回のものと比較する
   const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
-  const { ref } = usePrevious(problemOfMissCount);
 
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
@@ -81,9 +81,11 @@ export default function PlayingGame(props: PlayingGameProps) {
     setTypo([]);
     setMissCount(0);
     setProblemOfMissCount(0);
-    selectRetryProblem(missedProblems);
-    setMissedProblems([])
-  }, []);
+    let retryProblem = selectRetryProblem(missedProblems);
+    retryProblem
+      ? reloadProblem(typeMode, romajiType, retryProblem)
+      : reloadProblem(typeMode, romajiType);
+  }, [finished]);
 
   /* タイピング入力処理 */
   useEffect(() => {
