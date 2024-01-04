@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { LONG_TEXT, SHOW, type TypingDataType } from "../../../@types";
+import React from "react";
+import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import useReloadProblem from "../../TypingPlay/container/hook/useReloadProblem";
 import {

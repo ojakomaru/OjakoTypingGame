@@ -35,7 +35,7 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
       return count > 0 ? (
-        <Countdown count={count} setCountdown={setCountdown}/>
+        <Countdown count={count} setCountdown={setCountdown} />
       ) : (
         <PlayingGame
           typingdata={typingdata}

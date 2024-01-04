@@ -272,7 +272,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           missedRetry={missedRetry}
         />
       ) : (
-        <GameBoard miss={missFlg} missCount={missCount}>
+        <GameBoard miss={missFlg}>
           <Box display="flex" justifyContent="flex-end">
             <Typography>ミスタイプ: {missCount}回</Typography>
             <GameTimer />
