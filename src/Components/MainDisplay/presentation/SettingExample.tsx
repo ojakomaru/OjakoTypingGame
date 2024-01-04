@@ -15,12 +15,12 @@ type SettingExampleProps = {
   typingdata: TypingDataType;
 };
 const SettingExample = ({ typingdata }: SettingExampleProps) => {
-  const { typeMode, romajiType, showFurigana } =
+  const { typeMode, showFurigana } =
     React.useContext(SettingDataContext);
 
   // 問題文生成
   useEffectOnce(() => {
-    reloadProblem(typeMode, romajiType);
+    reloadProblem();
   });
   const { romajiText, kanaText, questionText, reloadProblem } =
     useReloadProblem(typingdata.problems);

@@ -2,6 +2,7 @@ import { TypingDataType, ProblemType } from "./TypingDataType";
 import { TypingGameData } from "./TypingGameData";
 import { MainFeaturedPostProps } from "./MainFeaturedPostProps";
 import { DARK_THEME, LIGHT_THEME, type AppMode } from "./AppMode";
+import { ModeProblemsProps } from "./ModeProblemProps";
 import {
   Option,
   Options,
@@ -44,6 +45,7 @@ export type {
   ProblemType,
   TypingGameData,
   MainFeaturedPostProps,
+  ModeProblemsProps,
   AppMode,
   SettingTypes,
   Option,

@@ -5,15 +5,14 @@ import { Romanizer, useEffectOnce, usePrevious } from "../../../Hooks";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "./hook";
-import { Box, Divider, Typography } from "@mui/material";
 import {
   GameBoard,
-  HiraganaText,
-  RomajiText,
-  QuestionText,
   GameTimer,
+  LongModeProblems,
+  ShortModeProblems,
 } from "../presentation";
 import ResultScore from "../../Score/container/ResultScore";
+import { Box, Typography } from "@mui/material";
 
 type PlayingGameProps = {
   typingdata: TypingDataType;
@@ -23,8 +22,7 @@ type PlayingGameProps = {
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, setIsPlaying, keyboardInit } = props;
   const [finished, setFinished] = useState(false);
-  const { typeMode, showFurigana, romajiType } =
-    React.useContext(SettingDataContext);
+  const { typeMode, showFurigana } = React.useContext(SettingDataContext);
   const {
     romajiText,
     kanaText,
@@ -59,7 +57,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // 問題文生成
   useEffectOnce(() => {
-    reloadProblem(typeMode, romajiType);
+    reloadProblem();
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   });
   // 問題文の更新時に最初のキーを色付けする
@@ -82,9 +80,8 @@ export default function PlayingGame(props: PlayingGameProps) {
     setMissCount(0);
     setProblemOfMissCount(0);
     let retryProblem = selectRetryProblem(missedProblems);
-    retryProblem
-      ? reloadProblem(typeMode, romajiType, retryProblem)
-      : reloadProblem(typeMode, romajiType);
+    retryProblem ? reloadProblem(retryProblem) : setIsPlaying!(false);
+    setMissedProblems([]);
   }, [finished]);
 
   /* タイピング入力処理 */
@@ -250,7 +247,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           }
         }
 
-        let isProblem = reloadProblem(typeMode, romajiType);
+        let isProblem = reloadProblem();
         if (!isProblem) {
           setTotalType((prev) => prev + missCount);
           setTimeOfTyping((startTime) => new Date().getTime() - startTime);
@@ -275,47 +272,27 @@ export default function PlayingGame(props: PlayingGameProps) {
           missedRetry={missedRetry}
         />
       ) : (
-        <GameBoard miss={missFlg}>
+        <GameBoard miss={missFlg} missCount={missCount}>
           <Box display="flex" justifyContent="flex-end">
             <Typography>ミスタイプ: {missCount}回</Typography>
             <GameTimer />
           </Box>
           {typeMode === LONG_TEXT ? ( // 長文モード時
-            <>
-              <HiraganaText
-                ref={kanaRef}
-                kanaText={kanaText}
-                $showFurigana={showFurigana}
-                className="hiraganaLongMode"
-              />
-              <RomajiText
-                ref={romajiRef}
-                romaji={romajiText}
-                className="romajiLongMode"
-              />
-              <Divider
-                variant="middle"
-                sx={{
-                  borderColor: "primary.main",
-                  width: "100%",
-                  height: "3px",
-                }}
-              />
-              <QuestionText
-                questionText={questionText}
-                $longMode={typeMode === LONG_TEXT}
-              />
-            </>
+            <LongModeProblems
+              refs={[kanaRef, romajiRef]}
+              kanaText={kanaText}
+              showFurigana={showFurigana}
+              romajiText={romajiText}
+              questionText={questionText}
+            />
           ) : (
-            <>
-              <HiraganaText
-                ref={kanaRef}
-                kanaText={kanaText}
-                $showFurigana={showFurigana}
-              />
-              <QuestionText questionText={questionText} />
-              <RomajiText ref={romajiRef} romaji={romajiText} />
-            </>
+            <ShortModeProblems
+              refs={[kanaRef, romajiRef]}
+              kanaText={kanaText}
+              showFurigana={showFurigana}
+              romajiText={romajiText}
+              questionText={questionText}
+            />
           )}
         </GameBoard>
       )}

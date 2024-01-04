@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import styled from "styled-components";
 import MissMessage from "../container/MissMessage";
+import GameTimer from "./GameTimer";
 
 const StyleGameBoard = styled(Box)`
   position: relative;
@@ -24,12 +25,14 @@ const StyleGameBoard = styled(Box)`
 
 interface GameBoardProps {
   miss?: boolean;
+  missCount?: number;
   children: ReactNode;
 }
-export default function GameBoard({ miss, children }: GameBoardProps) {
+export default function GameBoard({ miss, missCount, children }: GameBoardProps) {
   return (
     <StyleGameBoard>
       <MissMessage $isMiss={!!miss} />
+
       {children}
     </StyleGameBoard>
   );

@@ -16,7 +16,7 @@ import { SettingDataContext } from "../../../../Contexts";
 import { Romanizer, randomArray, useEffectOnce } from "../../../../Hooks";
 
 const useReloadProblem = (problemsProps: ProblemType) => {
-  const { order } = React.useContext(SettingDataContext);
+  const { typeMode, romajiType, order } = React.useContext(SettingDataContext);
   // 問題をコピーしておく（破壊的な配列操作を行うため）
   const cpProblems = structuredClone(problemsProps);
 
@@ -47,13 +47,18 @@ const useReloadProblem = (problemsProps: ProblemType) => {
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
 
+  /**
+   * 最初に出題した問題文の中からミスした問題文のみを返す
+   * @param missedProblems ミスした問題の出題番号の配列 ※[2,4,5]など
+   * @returns tmpProblems ミスした出題番号から作成した新たな問題文
+   */
   const selectRetryProblem = useCallback(
     (missedProblems: Array<number>) => {
-      let tmpProblems: ProblemType = [];
+      let retryProblems: ProblemType = [];
       for (let i = 0; i < missedProblems.length; i++) {
-        tmpProblems.push(problemRef.current[missedProblems[i] - 1]);
+        retryProblems.push(problemRef.current[missedProblems[i] - 1]);
       }
-      return tmpProblems;
+      return retryProblems;
     },
     [problemRef]
   );
@@ -100,11 +105,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     return currentPosition;
   };
 
-  const reloadProblem = (
-    typeMode: TYPE_MODE,
-    romajiType: ROMAJI_TYPE,
-    retryProblem?: ProblemType
-  ): boolean => {
+  const reloadProblem = (retryProblem?: ProblemType): boolean => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
