@@ -12,9 +12,9 @@ type CustomFormControlLabelProps = ComponentPropsWithoutRef<"input"> &
 interface StyledFormControlLabelProps extends CustomFormControlLabelProps {
   checked: boolean;
 }
-const StyledFormControlLabel = styled((props: StyledFormControlLabelProps) => (
-  <FormControlLabel {...props} />
-))(({ theme, checked }) => ({
+const StyledFormControlLabel = styled(forwardRef((props: StyledFormControlLabelProps, ref) => (
+  <FormControlLabel ref={ref} {...props} />
+)))(({ theme, checked }) => ({
   ".MuiFormControlLabel-label": checked && {
     color: theme.palette.primary.main,
   },

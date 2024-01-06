@@ -5,6 +5,7 @@ import { useKeyboardTyping } from "../TypingPlay/container/hook";
 import { SettingDataContext, TypingDataContext } from "../../Contexts";
 import { Keyboard } from "../TypingPlay/presentation";
 import QuestionBox from "../QuestionBox/QuestionBox";
+import { REAL_TEXT } from "../../@types";
 
 const Play: React.FC = () => {
   const { showKeyboard } = React.useContext(SettingDataContext);
@@ -18,9 +19,7 @@ const Play: React.FC = () => {
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
       />
-      {isPlaying && (
-        <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
-      )}
+      {isPlaying && <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />}
       {!isPlaying && <QuestionBox problems={typingdata.problems} />}
     </Layout>
   );

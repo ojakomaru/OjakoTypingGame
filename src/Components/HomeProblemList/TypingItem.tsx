@@ -1,7 +1,14 @@
-import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { TypingDataType } from '../../@types';
+import React, { useCallback } from "react";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { TypingDataType } from "../../@types";
 
 interface TypingItemProps {
   post: TypingDataType;
@@ -9,6 +16,7 @@ interface TypingItemProps {
 }
 const TypingItem = (props: TypingItemProps) => {
   const { post, selectedTypingToTop } = props;
+  const navigate = useNavigate();
   return (
     <Card
       onClick={() => selectedTypingToTop(post)}
@@ -33,12 +41,12 @@ const TypingItem = (props: TypingItemProps) => {
         <Typography>{`${post.problems[0].text}...`}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">
-          <Link to={`/form/${post.id}`}>Edit</Link>
+        <Button onClick={() => navigate(`/form/${post.id}`)} variant="outlined">
+          Edit
         </Button>
       </CardActions>
     </Card>
   );
-}
+};
 
-export default TypingItem
+export default TypingItem;

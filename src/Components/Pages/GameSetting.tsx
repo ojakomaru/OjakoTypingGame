@@ -12,11 +12,12 @@ const GameSetting = (): JSX.Element => {
   const [isSetting, setIsSetting] = useState(true);
   return (
     <Layout>
-      <MainDisplay isSetting={isSetting} />
-      <Keyboard $showKeyboard={showKeyboard} />
       <FormWrapper isSetting>
         <SettingForm setIsSetting={setIsSetting} />
       </FormWrapper>
+      {/* MissMessageのマスクで操作不能になっていたので保留処置 */}
+      {/* <MainDisplay isSetting={isSetting} /> */}
+      {/* <Keyboard $showKeyboard={showKeyboard} /> */}
     </Layout>
   );
 };

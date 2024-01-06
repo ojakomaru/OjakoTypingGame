@@ -31,10 +31,13 @@ export default function PlayModal({ setIsPlaying }: PlayModalProps) {
           Press "Space" or "Enter" key to start!!
         </Typography>
         <Paragraph style={{ color: rgbToHex("#ffffff") }}>
-          ※ゲーム中はescキーでホーム画面に戻ります。
+          ※ゲーム中はescキーでホーム画面に戻ります
         </Paragraph>
         <Paragraph style={{ color: rgbToHex("#ffffff") }}>
-          ※ミスした場合「Miss」の文字が消えるまで入力を受け付けません。
+          ※ミスした場合「Miss」の文字が消えるまで入力を受け付けません
+        </Paragraph>
+        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
+          ※表示されているローマ字以外でも入力可能です（「し」→「shi」「ci」など）
         </Paragraph>
       </Box>
     </Grid>

@@ -24,6 +24,7 @@ const ResultScore = (props: ResultScoreProps) => {
   const { totalType, missCount, typo, timeOfTyping, retry, missedRetry} = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const wpm = () => (totalType / timeOfTyping) * 60 * 1000;
+  const wpm2 = () => wpm() / 60
   const accuracy = () => (1 - missCount / totalType) * 100;
   const score = () =>
     Math.floor(wpm() * (totalType / (totalType + missCount)) ** 3 * 10);
@@ -42,7 +43,7 @@ const ResultScore = (props: ResultScoreProps) => {
     <React.Fragment>
       <DetailArea absoluteX={"20px"} absoluteY={"80px"}>
         <DetailItem align={"left"}>打鍵/秒</DetailItem>
-        <DetailItem align={"right"}>{wpm().toFixed(2)}</DetailItem>
+        <DetailItem align={"right"}>{wpm2().toFixed(1)}</DetailItem>
       </DetailArea>
       <DetailArea absoluteX={"20px"} absoluteY={"110px"}>
         <DetailItem align={"left"}>正打率</DetailItem>
