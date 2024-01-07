@@ -21,7 +21,7 @@ export const useTypingGame = (setIsPlaying: (a: boolean) => void) => {
 
   // クリア後のもう一回リセット関数
   const retry = useCallback(() => {
-    setIsPlaying!(false);
+    setIsPlaying(false);
     setFinished(false);
   }, [setIsPlaying]);
 
@@ -38,7 +38,7 @@ export const useTypingGame = (setIsPlaying: (a: boolean) => void) => {
       setMissCount(0);
       setProblemOfMissCount(0);
       let retryProblem = selectRetryProblem(missedProblems);
-      retryProblem ? reloadProblem(retryProblem) : setIsPlaying!(false);
+      retryProblem ? reloadProblem(retryProblem) : setIsPlaying(false);
       setMissedProblems([]);
     },
     [missedProblems, setIsPlaying]

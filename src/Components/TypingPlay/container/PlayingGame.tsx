@@ -45,7 +45,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
-
   const {
     finished,
     missCount,
@@ -116,7 +115,6 @@ export default function PlayingGame(props: PlayingGameProps) {
 
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
-
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
         setIsPlaying!(false);
