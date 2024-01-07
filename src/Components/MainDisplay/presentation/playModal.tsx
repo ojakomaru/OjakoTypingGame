@@ -1,10 +1,6 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import { rgbToHex } from "@mui/material";
 import { useStartGame } from "../container/useStartGame";
 import Paragraph from "../../ui/Paragraph";
+import { Grid, Box, Typography, rgbToHex } from "@mui/material";
 
 interface PlayModalProps {
   setIsPlaying?: (a: boolean) => void;

@@ -1,10 +1,14 @@
-import React, { useCallback } from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Romanizer, useEffectOnce, usePrevious } from "../../../Hooks";
+import { Romanizer, useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
-import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "./hook";
+import {
+  useReloadProblem,
+  useRomajiTypedMove,
+  useKanaTypedMove,
+  useTypingGame,
+} from "./hook";
 import {
   GameBoard,
   GameTimer,
@@ -21,7 +25,6 @@ type PlayingGameProps = {
 };
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, setIsPlaying, keyboardInit } = props;
-  const [finished, setFinished] = useState(false);
   const { typeMode, showFurigana } = React.useContext(SettingDataContext);
   const {
     romajiText,
@@ -42,15 +45,20 @@ export default function PlayingGame(props: PlayingGameProps) {
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
-  const [missCount, setMissCount] = useState(0); // ミスした回数
-  const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
 
-  const [problemOfMissCount, setProblemOfMissCount] = useState(0); // 問題文毎のミス回数
-  const { ref } = usePrevious(problemOfMissCount); //ミス回数を前回のものと比較する
-  const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
+  const {
+    finished,
+    missCount,
+    typo,
+    totalType,
+    timeOfTyping,
+    missRecode,
+    retry,
+    missedOnlyRetry,
+    typingConplate,
+    gameClear,
+  } = useTypingGame(setIsPlaying as (a: boolean) => void);
 
-  const [totalType, setTotalType] = useState(0); // トータルタイピング数
-  const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
   const navigate = useNavigate();
   const romanizer = new Romanizer();
   const keyboard = keyboardInit();
@@ -58,31 +66,16 @@ export default function PlayingGame(props: PlayingGameProps) {
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem();
-    if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   });
   // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
-  }, [questionText]);
-
-  // クリア後のもう一回リセット関数
-  const retry = useCallback(() => {
-    setIsPlaying!(false);
-    setFinished(false);
-  }, [finished]);
+  }, [questionText, romajiText]);
 
   // クリア後のミスだけもう一回関数
   const missedRetry = useCallback(() => {
-    setFinished(false);
-    setTotalType(0);
-    setTimeOfTyping(new Date().getTime());
-    setTypo([]);
-    setMissCount(0);
-    setProblemOfMissCount(0);
-    let retryProblem = selectRetryProblem(missedProblems);
-    retryProblem ? reloadProblem(retryProblem) : setIsPlaying!(false);
-    setMissedProblems([]);
-  }, [finished]);
+    missedOnlyRetry(selectRetryProblem, reloadProblem);
+  }, [missedOnlyRetry, selectRetryProblem, reloadProblem]);
 
   /* タイピング入力処理 */
   useEffect(() => {
@@ -114,8 +107,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         setTimeout(function () {
           setMissFlg(false);
         }, 800);
-        // 打ち間違えた文字を追加
-        setTypo((typo) => [...typo, key]);
+        missRecode(key);
         romajiTyped.miss(romaLength);
         kanaTyped.miss(kanaLength);
         tmp = tmp.slice(0, -1);
@@ -172,14 +164,12 @@ export default function PlayingGame(props: PlayingGameProps) {
             // 「ん」の次の文字を打ち間違えた時
             if (!nFlag) {
               missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
-              setMissCount((prev) => prev + 1);
             }
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
           else {
             if (e.key !== "Shift") {
               missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
-              setMissCount((prev) => prev + 1);
             }
           }
         }
@@ -238,21 +228,9 @@ export default function PlayingGame(props: PlayingGameProps) {
         kanaIdx.current = 0;
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
-        setTotalType((prev) => prev + romajiText.length);
-
-        if (missCount > 0) {
-          setProblemOfMissCount(missCount);
-          if (missCount !== ref.current) {
-            setMissedProblems([...missedProblems, problemCount]);
-          }
-        }
-
+        typingConplate(romajiText.length, problemCount);
         let isProblem = reloadProblem();
-        if (!isProblem) {
-          setTotalType((prev) => prev + missCount);
-          setTimeOfTyping((startTime) => new Date().getTime() - startTime);
-          setFinished(true);
-        }
+        if (!isProblem) gameClear();
       }
     };
     return () => {

@@ -5,15 +5,13 @@ import {
   REAL_TEXT,
   UPPER,
   LOWER,
-  ROMAJI_TYPE,
   WORD_INITIAL,
   NONE,
-  TYPE_MODE,
   RANDOM,
   ProblemType,
 } from "../../../../@types";
 import { SettingDataContext } from "../../../../Contexts";
-import { Romanizer, randomArray, useEffectOnce } from "../../../../Hooks";
+import { Romanizer, randomArray } from "../../../../Hooks";
 
 const useReloadProblem = (problemsProps: ProblemType) => {
   const { typeMode, romajiType, order } = React.useContext(SettingDataContext);
