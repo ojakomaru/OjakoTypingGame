@@ -16,6 +16,7 @@ type MainFeaturedPostProps = {
   keyboardInit?: any;
   isPlaying?: boolean;
   setIsPlaying?: (a: boolean) => void;
+  isRealPlay?: boolean;
 };
 
 export const MainDisplay = (props: MainFeaturedPostProps) => {
@@ -26,6 +27,7 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     keyboardInit,
     isPlaying,
     setIsPlaying,
+    isRealPlay,
   } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const [count, setCountdown] = useState(3);
@@ -34,15 +36,25 @@ export const MainDisplay = (props: MainFeaturedPostProps) => {
     if (ishome) {
       return <HomeDisplay displayData={typingdata} setIsHome={setIsHome} />;
     } else if (isPlaying) {
-      return count > 0 ? (
-        <Countdown count={count} setCountdown={setCountdown} />
-      ) : (
-        <PlayingGame
-          typingdata={typingdata}
-          setIsPlaying={setIsPlaying}
-          keyboardInit={keyboardInit}
-        />
-      );
+      if (count > 0) {
+        return <Countdown count={count} setCountdown={setCountdown} />;
+      } else if (isRealPlay) {
+        return (
+          <PlayingGame
+            typingdata={typingdata}
+            setIsPlaying={setIsPlaying}
+            keyboardInit={keyboardInit}
+          />
+        );
+      } else {
+       return (
+         <PlayingGame
+           typingdata={typingdata}
+           setIsPlaying={setIsPlaying}
+           keyboardInit={keyboardInit}
+         />
+       );
+      }
     } else if (isSetting) {
       return <SettingExample typingdata={typingdata} />;
     } else {

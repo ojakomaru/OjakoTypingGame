@@ -142,6 +142,9 @@ const useReloadProblem = (problemsProps: ProblemType) => {
         isMore = true;
         break;
       case REAL_TEXT:
+        problem = reloadProblem.splice(0, 1);
+        setQesutionText(problem![0].text);
+        isMore = true;
         break;
     }
     convRomaText = romajiTypeSelect(problem![0].romaji as string);
