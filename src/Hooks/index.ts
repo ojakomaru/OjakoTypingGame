@@ -9,8 +9,10 @@ import Romanizer from "./Romanizer";
 import randomArray from "./randomArray";
 import { showConfirmDialog } from "./showConfirmDialog";
 import { timeFormatting, wpmToComment, wpmToRank } from "./scoreCalc";
+import strTo3Leader from "./strTo3Leader";
 
 export {
+  strTo3Leader,
   timeFormatting,
   wpmToComment,
   wpmToRank,

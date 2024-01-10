@@ -156,6 +156,9 @@ export default function PlayingGame(props: PlayingGameProps) {
                 pattern[kanaPos] = 2;
                 pattern[kanaPos + 1] = i;
                 nFlag = true;
+                // 「ん」を省略して記号を入力し文章を終えたとき
+                if (romaLength + 1 === romajiText.length - 1)
+                  romaLength = romaLength + 2;
                 break;
               }
             }
@@ -174,7 +177,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
 
       // まだ入力していない文字があるとき
-      if (romaLength <= romajiText.length - 1) {
+      if (romaLength !== romajiText.length) {
         romajiTyped.next(romaLength - 1);
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {

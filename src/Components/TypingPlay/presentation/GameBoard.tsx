@@ -29,7 +29,7 @@ interface GameBoardProps {
 export default function GameBoard({ miss, children }: GameBoardProps) {
   return (
     <StyleGameBoard>
-      <MissMessage $isMiss={!!miss} />
+      {miss !== undefined && <MissMessage $isMiss={!!miss} />}
       {children}
     </StyleGameBoard>
   );

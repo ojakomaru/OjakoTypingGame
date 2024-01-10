@@ -5,14 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../../@types";
 import { TypingDataContext } from "../../../Contexts";
 import { TitleInput } from "../../form/presentation";
+import MainDisplayLayout from "../../layout/MainDisplayLayout";
+import { MainDisplay } from "../../MainDisplay/container/MainDisplay";
+import RealTypingDisplay from "../../MainDisplay/container/RealTypingDisplay";
 
-const RealTypingGame = () => {
-  const { typingdatas, setTypingDatas } = React.useContext(TypingDataContext);
+interface RealTypingGameProps {
+  isPlaying: boolean;
+  setIsPlaying: (a: boolean) => void;
+}
+const RealTypingGame = (props: RealTypingGameProps) => {
+  const { isPlaying, setIsPlaying } = props;
+  const { typingdata } = React.useContext(TypingDataContext);
   const navigate = useNavigate();
   const defaultValue = {
     problem: "",
   };
-  const methods = useForm<TypingDataType>({
+  const methods = useForm<typeof defaultValue>({
     mode: "onChange",
     reValidateMode: "onBlur",
     defaultValues: defaultValue,
@@ -22,11 +30,16 @@ const RealTypingGame = () => {
     methods.reset(defaultValue);
   }, [methods, defaultValue]);
 
-  const onSubmit: SubmitHandler<TypingDataType> = (
-    typingdata: TypingDataType
+  const onSubmit: SubmitHandler<typeof defaultValue> = (
+    inputData: typeof defaultValue
   ) => {};
   return (
     <FormProvider {...methods}>
+      <RealTypingDisplay
+        typingdata={typingdata}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+      />
       <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
         <TitleInput />
       </Box>

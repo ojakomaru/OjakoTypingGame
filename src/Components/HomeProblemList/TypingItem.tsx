@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../@types";
+import { strTo3Leader } from "../../Hooks";
 
 interface TypingItemProps {
   post: TypingDataType;
@@ -38,7 +39,7 @@ const TypingItem = (props: TypingItemProps) => {
         <Typography gutterBottom variant="h5" component="h2">
           {post.title}
         </Typography>
-        <Typography>{`${post.problems[0].text}...`}</Typography>
+        <Typography>{strTo3Leader(post.problems[0].text, 30)}</Typography>
       </CardContent>
       <CardActions>
         <Button onClick={() => navigate(`/form/${post.id}`)} variant="outlined">

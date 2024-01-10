@@ -1,11 +1,11 @@
 import { Container, Paper, Box } from "@mui/material";
 import React, { ReactNode } from "react";
 
-type DiaplayLayoutProps = {
+type DisplayLayoutProps = {
   children: ReactNode;
-  isPlaying: boolean;
+  isPlaying?: boolean;
 };
-export default function MainDiaplayLayout({ children, isPlaying }: DiaplayLayoutProps) {
+export default function MainDisplayLayout({ children, isPlaying }: DisplayLayoutProps) {
   const unsplashURL = "https://source.unsplash.com/random?wallpapers";
   return (
     <Container maxWidth="md">

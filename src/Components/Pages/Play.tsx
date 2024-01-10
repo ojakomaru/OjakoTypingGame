@@ -6,8 +6,8 @@ import { SettingDataContext, TypingDataContext } from "../../Contexts";
 import { Keyboard } from "../TypingPlay/presentation";
 import QuestionBox from "../QuestionBox/QuestionBox";
 import { REAL_TEXT } from "../../@types";
-import RealTextInput from "../TypingPlay/RealTyping/RealTextInput";
 import RealTypingGame from "../TypingPlay/RealTyping/RealTypingGame";
+import PlayingGame from "../TypingPlay/container/PlayingGame";
 
 const Play: React.FC = () => {
   const { typeMode, showKeyboard } = React.useContext(SettingDataContext);
@@ -18,19 +18,24 @@ const Play: React.FC = () => {
   return (
     <Layout>
       {!isRealPlay ? (
-        <>
+        <React.Fragment>
           <MainDisplay
-            keyboardInit={keyboardInit}
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
-          />
+          >
+            <PlayingGame
+              typingdata={typingdata}
+              setIsPlaying={setIsPlaying}
+              keyboardInit={keyboardInit}
+            />
+          </MainDisplay>
           {isPlaying && (
             <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
-          )}{" "}
+          )}
           {!isPlaying && <QuestionBox problems={typingdata.problems} />}
-        </>
+        </React.Fragment>
       ) : (
-        <RealTypingGame />
+        <RealTypingGame isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
       )}
     </Layout>
   );

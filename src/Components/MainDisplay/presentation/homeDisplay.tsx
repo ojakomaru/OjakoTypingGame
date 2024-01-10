@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { type TypingDataType } from "../../../@types";
+import { strTo3Leader } from "../../../Hooks";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;
-  setIsHome?: (a: boolean) => void;
 };
 
-const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
+const HomeDisplay = ({ displayData }: HomeDisplayProps) => {
   const { title, problems } = displayData;
   const navigate = useNavigate();
-  const gameStart = () => {
-    setIsHome!(false);
+  const gameStart = useCallback(() => {
     navigate("/play", { state: displayData });
-  };
-  const settingShow = () => {
-    setIsHome!(false);
+  }, [displayData]);
+  const settingShow = useCallback(() => {
     navigate("/settings", { state: displayData });
-  };
+  }, [displayData]);
 
   return (
     <Grid
@@ -49,7 +47,7 @@ const HomeDisplay = ({ displayData, setIsHome }: HomeDisplayProps) => {
           {title}
         </Typography>
         <Typography variant="h5" color="inherit" paragraph>
-          {problems[0].text}
+          {strTo3Leader(problems[0].text, 50)}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
