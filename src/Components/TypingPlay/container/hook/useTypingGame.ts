@@ -38,7 +38,9 @@ export const useTypingGame = (setIsPlaying: (a: boolean) => void) => {
       setMissCount(0);
       setProblemOfMissCount(0);
       let retryProblem = selectRetryProblem(missedProblems);
-      retryProblem ? reloadProblem(retryProblem) : setIsPlaying(false);
+      retryProblem.length !== 0
+        ? reloadProblem(retryProblem)
+        : setIsPlaying(false);
       setMissedProblems([]);
     },
     [missedProblems, setIsPlaying]

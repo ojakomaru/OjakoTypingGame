@@ -56,6 +56,8 @@ const useReloadProblem = (problemsProps: ProblemType) => {
       for (let i = 0; i < missedProblems.length; i++) {
         retryProblems.push(problemRef.current[missedProblems[i] - 1]);
       }
+      // problemRef.current = retryProblems;
+      setProblemCount(0);
       return retryProblems;
     },
     [problemRef]
