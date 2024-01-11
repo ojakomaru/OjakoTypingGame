@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import {
   Card,
   CardMedia,
@@ -7,7 +7,7 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../@types";
 import { strTo3Leader } from "../../Hooks";
 

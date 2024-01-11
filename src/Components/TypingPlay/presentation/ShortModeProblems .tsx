@@ -5,7 +5,8 @@ import { QuestionText } from "./QuestionText";
 import { RomajiText } from "./RomajiText";
 
 const ShortModeProblems = (props: ModeProblemsProps) => {
-  const { refs, kanaText, showFurigana, romajiText, questionText } = props;
+  const { refs, isRealMode, kanaText, showFurigana, romajiText, questionText } =
+    props;
   return (
     <React.Fragment>
       <HiraganaText
@@ -14,7 +15,7 @@ const ShortModeProblems = (props: ModeProblemsProps) => {
         $showFurigana={showFurigana}
       />
       <QuestionText questionText={questionText} />
-      <RomajiText ref={refs[1]} romaji={romajiText} />
+      <RomajiText ref={refs[1]} romaji={romajiText} $isRealMode={isRealMode} />
     </React.Fragment>
   );
 };

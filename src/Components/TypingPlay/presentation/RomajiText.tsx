@@ -1,13 +1,14 @@
 import React, { Ref, forwardRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Paragraph from "../../ui/Paragraph";
 
 type RomajiTextProps = {
   romaji: string;
+  $isRealMode?: boolean;
   className?: string;
 };
-
-const StyleRomajiText = styled(Paragraph)`
+type StyledTextProps = Pick<RomajiTextProps, "$isRealMode">;
+const StyleRomajiText = styled(Paragraph)<StyledTextProps>`
   width: 100%;
   font-size: 18px;
   letter-spacing: 1.4px;
@@ -18,10 +19,14 @@ const StyleRomajiText = styled(Paragraph)`
   }
   .current-letter {
     font-size: 19px;
-    font-weight: bold;
-    text-decoration: underline;
-    text-decoration-skip-ink: none;
-    animation: blink 1s linear infinite;
+    ${({ $isRealMode }) =>
+      $isRealMode &&
+      css`
+        font-weight: bold;
+        text-decoration: underline;
+        text-decoration-skip-ink: none;
+        animation: blink 1s linear infinite;
+      `}
   }
   @keyframes blink {
     100% {
@@ -43,9 +48,14 @@ function RomajiTextCore(
   props: RomajiTextProps,
   ref: Ref<HTMLParagraphElement>
 ) {
-  const { romaji, className } = props;
+  const { romaji, $isRealMode, className } = props;
   return (
-    <StyleRomajiText ref={ref} id="checkText" className={className}>
+    <StyleRomajiText
+      ref={ref}
+      id="checkText"
+      className={className}
+      $isRealMode={$isRealMode}
+    >
       <span className="current-letter">{romaji[0]}</span>
       {romaji
         .split("")

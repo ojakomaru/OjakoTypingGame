@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Romanizer, useEffectOnce } from "../../../Hooks";
-import { LONG_TEXT, type TypingDataType } from "../../../@types";
+import { LONG_TEXT, REAL_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
 import {
   useReloadProblem,
@@ -267,6 +267,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           ) : (
             <ShortModeProblems
               refs={[kanaRef, romajiRef]}
+              isRealMode={typeMode !== REAL_TEXT}
               kanaText={kanaText}
               showFurigana={showFurigana}
               romajiText={romajiText}

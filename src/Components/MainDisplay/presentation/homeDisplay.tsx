@@ -16,10 +16,10 @@ const HomeDisplay = ({ displayData }: HomeDisplayProps) => {
   const navigate = useNavigate();
   const gameStart = useCallback(() => {
     navigate("/play", { state: displayData });
-  }, [displayData]);
+  }, [displayData, navigate]);
   const settingShow = useCallback(() => {
     navigate("/settings", { state: displayData });
-  }, [displayData]);
+  }, [displayData, navigate]);
 
   return (
     <Grid
