@@ -25,6 +25,7 @@ const ProblemList = (): JSX.Element => {
                 variant="standard"
                 size="small"
                 label="問題文"
+                autoFocus
                 multiline
                 {...register(`problems[${index}].text` as "problems", {
                   required: "空の問題文は登録できません。",

@@ -1,16 +1,24 @@
 import { Box, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { TypingDataType } from "../../../@types";
 import { SettingDataContext, TypingDataContext } from "../../../Contexts";
 import { useEffectOnce } from "../../../Hooks";
-import { TitleInput } from "../../form/presentation";
-
 import { MainDisplay } from "../../MainDisplay/container/MainDisplay";
+import { useReloadProblem } from "../container/hook";
+import {
+  GameBoard,
+  GameTimer,
+  HiraganaText,
+  QuestionText,
+  RomajiText,
+} from "../presentation";
+import RealTextInput from "./RealTextInput";
+import RealTextWatcher from "./RealTextWatcher";
 
-import { useReloadProblem, useRomajiTypedMove, useKanaTypedMove } from "../container/hook";
-import { GameBoard, GameTimer, ShortModeProblems } from "../presentation";
+export interface InputValues {
+  answer: string;
+}
 
 interface RealTypingGameProps {
   isPlaying: boolean;
@@ -24,39 +32,39 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     romajiText,
     kanaText,
     questionText,
-    typingWord,
-    romajiMod,
     selectRetryProblem,
     problemCount,
     reloadProblem,
   } = useReloadProblem(typingdata.problems);
-  const { romajiRef, romajiInit } = useRomajiTypedMove();
-  const { kanaRef, kanaInit } = useKanaTypedMove();
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const [missCount, setMissCount] = useState(0); // ミスした回数
   const navigate = useNavigate();
-  
+
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem();
   });
 
-  const defaultValue = {
-    problem: "",
-  };
-  const methods = useForm<typeof defaultValue>({
+  const methods = useForm<InputValues>({
     mode: "onChange",
     reValidateMode: "onBlur",
-    defaultValues: defaultValue,
+    defaultValues: {
+      answer: "",
+    },
   });
+  /* 文章判定処理 */
+  const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {
+    let typedLength = inputData.answer.length;
+    let checkText = questionText.substring(0, typedLength);
+    // 入力箇所が一致した場合の処理
+    if (inputData.answer === checkText) {
+      console.log(inputData);
+      console.log(checkText);
+    } else {
+      console.log("不正解");
+    }
+  };
 
-  const resetFunc = useCallback(() => {
-    methods.reset(defaultValue);
-  }, [methods, defaultValue]);
-
-  const onSubmit: SubmitHandler<typeof defaultValue> = (
-    inputData: typeof defaultValue
-  ) => {};
   return (
     <FormProvider {...methods}>
       <MainDisplay isPlaying={isPlaying} setIsPlaying={setIsPlaying}>
@@ -65,17 +73,14 @@ const RealTypingGame = (props: RealTypingGameProps) => {
             <Typography>ミスタイプ: {missCount}回</Typography>
             <GameTimer />
           </Box>
-          <ShortModeProblems
-            refs={[kanaRef, romajiRef]}
-            kanaText={kanaText}
-            showFurigana={showFurigana}
-            romajiText={romajiText}
-            questionText={questionText}
-          />
+          <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />
+          <QuestionText questionText={questionText} />
+          <RomajiText romaji={romajiText} $isRealMode={true} />
         </GameBoard>
       </MainDisplay>
       <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-        <TitleInput />
+        <RealTextWatcher control={methods.control} />
+        <RealTextInput questionText={questionText} />
       </Box>
     </FormProvider>
   );

@@ -1,5 +1,5 @@
 import Countdown from "./Countdown";
-import HomeDisplay from "./HomeDisplay";
+import HomeDisplay from "./homeDisplay";
 import PlayModal from "./PlayModal";
 import SettingExample from "./SettingExample";
 
