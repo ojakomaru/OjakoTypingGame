@@ -2,19 +2,19 @@ import { Box, Typography } from "@mui/material";
 import React, { Fragment, useCallback, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { SettingDataContext, TypingDataContext } from "../../../Contexts";
-import { useEffectOnce } from "../../../Hooks";
-import { MainDisplay } from "../../MainDisplay/container/MainDisplay";
-import QuestionBox from "../../QuestionBox/QuestionBox";
-import ResultScore from "../../Score/container/ResultScore";
-import { useReloadProblem, useTypingGame } from "../container/hook";
+import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
+import { useEffectOnce } from "../../../../Hooks";
+import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
+import QuestionBox from "../../../QuestionBox/QuestionBox";
+import ResultScore from "../../../Score/container/ResultScore";
+import { useReloadProblem, useTypingGame } from "../../container/hook";
 import {
   GameBoard,
   GameTimer,
   HiraganaText,
   RomajiText,
-} from "../presentation";
-import RealTextInput from "./RealTextInput";
+} from "../../presentation";
+import RealTextInput from "../presentation/RealTextInput";
 import RealTextWatcher from "./RealTextWatcher";
 
 export interface InputValues {

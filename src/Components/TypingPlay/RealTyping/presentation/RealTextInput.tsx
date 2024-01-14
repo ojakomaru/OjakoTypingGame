@@ -1,7 +1,7 @@
 import React from "react";
 import { Control } from "react-hook-form";
-import Input from "../../ui/Input";
-import { InputValues } from "./RealTypingGame";
+import Input from "../../../ui/Input";
+import { InputValues } from "../container/RealTypingGame";
 
 interface RealTextInputProps {
   control: Control<InputValues, any>;
