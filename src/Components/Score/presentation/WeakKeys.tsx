@@ -16,6 +16,8 @@ const WeakKeys = ({ weakKeys }: { weakKeys: string[] }) => {
   const weakPoint = weakKeys.length;
   if (weakPoint === 0) {
     comment = "エレガント！！あなた正確無比なタイピングに弱点はありません！";
+  } else if (weakKeys[0] === " ") {
+    comment = "";
   } else {
     comment = `苦手キーの「${weakKeys
       .join(" ")

@@ -6,15 +6,13 @@ import { InputValues } from "./RealTypingGame";
 interface RealTextInputProps {
   control: Control<InputValues, any>;
 }
-const RealTextInput = ({control}: RealTextInputProps) => {
-
+const RealTextInput = ({ control }: RealTextInputProps) => {
   return (
     <Input
       name="answer"
       control={control}
       rules={{
         required: "答えを入力してください。",
-        // onBlur: (e) => console.log(e),
       }}
       textFieldProps={{
         fullWidth: true,
