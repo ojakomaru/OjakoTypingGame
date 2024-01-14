@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { Fragment, useCallback, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
@@ -58,19 +58,33 @@ const RealTypingGame = (props: RealTypingGameProps) => {
   const missedRetry = useCallback(() => {
     missedOnlyRetry(selectRetryProblem, reloadProblem);
   }, [missedOnlyRetry, selectRetryProblem, reloadProblem]);
-
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const navigate = useNavigate();
+  const { reset, control, handleSubmit, setFocus } = useForm<InputValues>({
+    mode: "onChange",
+    reValidateMode: "onBlur",
+    defaultValues: defaultValue,
+  });
 
   // 問題文生成
   useEffectOnce(() => {
     reloadProblem();
   });
 
-  const { reset, control, handleSubmit } = useForm<InputValues>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
-    defaultValues: defaultValue,
+  useEffect(() => {
+    document.onkeydown = function (e) {
+      setFocus("answer");
+      // スペースキーの挙動をキャンセル
+      if (e.code === "Space") e.preventDefault();
+      // "Escape"キーでPlay画面を抜ける
+      if (e.key === "Escape") {
+        setIsPlaying!(false);
+        navigate("/");
+      }
+    };
+    return () => {
+      window.document.onkeydown = null;
+    };
   });
   /* 文章判定処理 */
   const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {

@@ -15,8 +15,6 @@ import { Romanizer, randomArray } from "../../../../Hooks";
 
 const useReloadProblem = (problemsProps: ProblemType) => {
   const { typeMode, romajiType, order } = React.useContext(SettingDataContext);
-  // 問題をコピーしておく（破壊的な配列操作を行うため）
-  const cpProblems = structuredClone(problemsProps);
 
   /**
    * 問題文の配列をランダムに入れ替える
@@ -24,20 +22,22 @@ const useReloadProblem = (problemsProps: ProblemType) => {
    * @returns 順番を入れ替えた問題文を返す
    */
   const randomProblemCreate = useCallback(
-    (problemLength: number = cpProblems.length) => {
+    (problemLength: number = problemsProps.length) => {
       let initAry = randomArray(problemLength);
       let randProblems: ProblemType = [];
       for (let i = 0; i < initAry.length; i++) {
-        randProblems.push(cpProblems[initAry[i]]);
+        randProblems.push(problemsProps[initAry[i]]);
       }
       return randProblems;
     },
-    [cpProblems]
+    [problemsProps]
   );
   const [problems, setProblems] = useState(
-    order === RANDOM ? randomProblemCreate() : cpProblems
+    order === RANDOM ? randomProblemCreate() : problemsProps
   );
-  const problemRef = useRef<ProblemType>(structuredClone(problems));
+  // 問題をコピーしておく（破壊的な配列操作を行うため）
+  const cpProblems = structuredClone(problems);
+  const problemRef = useRef<ProblemType>(cpProblems);
   const [problemCount, setProblemCount] = useState(0); //出題数
   const [romajiText, setRomajiText] = useState<string>("");
   const [kanaText, setKanaText] = useState<string>("");
@@ -114,7 +114,15 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
-    let reloadProblem = retryProblem ? retryProblem : problems;
+    let reloadProblem = retryProblem
+      ? retryProblem
+      : structuredClone(problemRef.current);
+
+    // 問題文が無くなったらfalse
+    if (reloadProblem.length === 0) {
+      setProblems(cpProblems);
+      return isMore;
+    }
 
     const romajiTypeSelect = <T extends typeof convRomaText>(romajiText: T) => {
       switch (romajiType) {
@@ -128,9 +136,6 @@ const useReloadProblem = (problemsProps: ProblemType) => {
           return romajiText;
       }
     };
-
-    // 問題文が無くなったらfalse
-    if (reloadProblem.length === 0) return isMore;
 
     // 設定モードにより分岐
     switch (typeMode) {
