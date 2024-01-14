@@ -20,7 +20,7 @@ const StyleRomajiText = styled(Paragraph)<StyledTextProps>`
   .current-letter {
     font-size: 19px;
     ${({ $isRealMode }) =>
-      $isRealMode &&
+      !$isRealMode &&
       css`
         font-weight: bold;
         text-decoration: underline;

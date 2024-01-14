@@ -63,6 +63,11 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     [problemRef]
   );
 
+  const questionMod = (currentTyped: number) => {
+    const modText = questionText.substring(currentTyped);
+    setQesutionText(modText);
+  };
+
   /**
    * 入力パターンを変更したときにその変更内容に表示用ローマ字テキストを書き換えます
    * @param kanaPos ひらがなのポジション
@@ -164,6 +169,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     kanaText,
     questionText,
     typingWord,
+    questionMod,
     romajiMod,
     selectRetryProblem,
     problemCount,

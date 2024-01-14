@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ProblemType } from "../../@types";
 import styled from "styled-components";
-import Paragraph from "../ui/Paragraph";
 import StarsIcon from "@mui/icons-material/Stars";
 import { Button } from "@mui/material";
 import { styled as MuiStyled } from "@mui/material";

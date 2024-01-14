@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import React from "react";
+import { Control } from "react-hook-form";
 import Input from "../../ui/Input";
 import { InputValues } from "./RealTypingGame";
 
 interface RealTextInputProps {
-  questionText: string;
+  control: Control<InputValues, any>;
 }
-const RealTextInput = (props: RealTextInputProps) => {
-  const { control, setFocus } = useFormContext<InputValues>();
-  // const [isFocus, setIsFocus] = useState(true);
-  // useEffect(() => {
-  //   if (!isFocus) {
-  //     setFocus("answer");
-  //   }
-  // }, [isFocus]);
+const RealTextInput = ({control}: RealTextInputProps) => {
 
   return (
     <Input

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SettingDataContext, TypingDataContext } from "../../../Contexts";
@@ -10,7 +10,6 @@ import {
   GameBoard,
   GameTimer,
   HiraganaText,
-  QuestionText,
   RomajiText,
 } from "../presentation";
 import RealTextInput from "./RealTextInput";
@@ -19,6 +18,9 @@ import RealTextWatcher from "./RealTextWatcher";
 export interface InputValues {
   answer: string;
 }
+const defaultValue = {
+  answer: "",
+};
 
 interface RealTypingGameProps {
   isPlaying: boolean;
@@ -32,6 +34,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     romajiText,
     kanaText,
     questionText,
+    questionMod,
     selectRetryProblem,
     problemCount,
     reloadProblem,
@@ -45,44 +48,56 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     reloadProblem();
   });
 
-  const methods = useForm<InputValues>({
+  const { reset, control, handleSubmit } = useForm<InputValues>({
     mode: "onChange",
     reValidateMode: "onBlur",
-    defaultValues: {
-      answer: "",
-    },
+    defaultValues: defaultValue,
   });
   /* 文章判定処理 */
   const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {
-    let typedLength = inputData.answer.length;
-    let checkText = questionText.substring(0, typedLength);
+    let typed = inputData.answer.length;
+    let checkText = questionText.substring(0, typed);
+    console.log(inputData.answer.replace(/\s/g, "␣"));
+    console.log(checkText);
     // 入力箇所が一致した場合の処理
-    if (inputData.answer === checkText) {
-      console.log(inputData);
-      console.log(checkText);
+    if (inputData.answer.replace(/\s/g, "␣") === checkText) {
+      console.log("正解です。");
+      questionMod(typed);
+      reset(defaultValue);
+      // 1問の問題文が完了したとき
+      if (typed === questionText.length) {
+        let isProblem = reloadProblem();
+        if (!isProblem) console.log("ゲームクリア！");
+      }
     } else {
       console.log("不正解");
+      setMissFlg(true);
+      setTimeout(function () {
+        setMissFlg(false);
+      }, 100);
     }
   };
 
   return (
-    <FormProvider {...methods}>
+    <React.Fragment>
       <MainDisplay isPlaying={isPlaying} setIsPlaying={setIsPlaying}>
         <GameBoard miss={missFlg}>
           <Box display="flex" justifyContent="flex-end">
-            <Typography>ミスタイプ: {missCount}回</Typography>
+            <Typography>ミス問題: {missCount}問</Typography>
             <GameTimer />
           </Box>
           <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />
-          <QuestionText questionText={questionText} />
+          <RealTextWatcher
+            control={control}
+            questionText={questionText}
+          />
           <RomajiText romaji={romajiText} $isRealMode={true} />
         </GameBoard>
       </MainDisplay>
-      <Box component="form" onSubmit={methods.handleSubmit(onSubmit)}>
-        <RealTextWatcher control={methods.control} />
-        <RealTextInput questionText={questionText} />
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <RealTextInput control={control} />
       </Box>
-    </FormProvider>
+    </React.Fragment>
   );
 };
 
