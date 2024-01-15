@@ -14,6 +14,8 @@ import { SettingDataContext } from "../../../../Contexts";
 import { Romanizer, randomArray } from "../../../../Hooks";
 
 const useReloadProblem = (problemsProps: ProblemType) => {
+  // 問題をコピーしておく（破壊的な配列操作を行うため）
+  const cpProblems = structuredClone(problemsProps);
   const { typeMode, romajiType, order } = React.useContext(SettingDataContext);
 
   /**
@@ -33,11 +35,9 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     [problemsProps]
   );
   const [problems, setProblems] = useState(
-    order === RANDOM ? randomProblemCreate() : problemsProps
+    order === RANDOM ? randomProblemCreate() : cpProblems
   );
-  // 問題をコピーしておく（破壊的な配列操作を行うため）
-  const cpProblems = structuredClone(problems);
-  const problemRef = useRef<ProblemType>(cpProblems);
+  const problemRef = useRef<ProblemType>(structuredClone(problems));
   const [problemCount, setProblemCount] = useState(0); //出題数
   const [romajiText, setRomajiText] = useState<string>("");
   const [kanaText, setKanaText] = useState<string>("");
@@ -114,9 +114,9 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
-    let reloadProblem = retryProblem
-      ? retryProblem
-      : structuredClone(problemRef.current);
+    let reloadProblem = retryProblem ? retryProblem : problems;
+    // : structuredClone(problemRef.current);
+    // isRetry ?? reloadProblem = problems;
 
     // 問題文が無くなったらfalse
     if (reloadProblem.length === 0) {
@@ -138,27 +138,19 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     };
 
     // 設定モードにより分岐
-    switch (typeMode) {
-      case SHORT_TEXT: // 短文モードの場合
-        problem = reloadProblem.splice(0, 1);
-        setQesutionText(problem![0].text);
-        isMore = true;
-        break;
-      case LONG_TEXT: // 長文モードの場合
-        let text: string = "";
-        for (let i = 0; i < reloadProblem.length; i++) {
-          text += `${reloadProblem[i].text}\n`;
-        }
-        setQesutionText(text);
-        problem = reloadProblem.splice(0, 1);
-        isMore = true;
-        break;
-      case REAL_TEXT:
-        problem = reloadProblem.splice(0, 1);
-        setQesutionText(problem![0].text);
-        isMore = true;
-        break;
+    if (typeMode === LONG_TEXT) {
+      let text: string = "";
+      for (let i = 0; i < reloadProblem.length; i++) {
+        text += `${reloadProblem[i].text}\n`;
+      }
+      setQesutionText(text);
+      problem = reloadProblem.splice(0, 1);
+    } else if (typeMode === SHORT_TEXT || typeMode === REAL_TEXT) {
+      problem = reloadProblem.splice(0, 1);
+      setQesutionText(problem![0].text);
     }
+
+    isMore = true;
     convRomaText = romajiTypeSelect(problem![0].romaji as string);
     setRomajiText(convRomaText as string);
     setKanaText(problem![0].kana as string);

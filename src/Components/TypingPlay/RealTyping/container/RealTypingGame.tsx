@@ -15,6 +15,7 @@ import {
   RomajiText,
 } from "../../presentation";
 import RealTextInput from "../presentation/RealTextInput";
+import useGameManager from "./hook/useGameManager";
 import RealTextWatcher from "./RealTextWatcher";
 
 export interface InputValues {
@@ -32,6 +33,10 @@ const RealTypingGame = (props: RealTypingGameProps) => {
   const { isPlaying, setIsPlaying } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const { showFurigana } = React.useContext(SettingDataContext);
+  const { gameInit } = useGameManager(
+    setIsPlaying as (a: boolean) => void,
+    typingdata.problems
+  );
   const {
     romajiText,
     kanaText,
