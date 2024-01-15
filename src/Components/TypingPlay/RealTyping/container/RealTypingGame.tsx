@@ -33,20 +33,9 @@ const RealTypingGame = (props: RealTypingGameProps) => {
   const { isPlaying, setIsPlaying } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const { showFurigana } = React.useContext(SettingDataContext);
-  const { gameInit } = useGameManager(
-    setIsPlaying as (a: boolean) => void,
-    typingdata.problems
-  );
-  const {
-    romajiText,
-    kanaText,
-    questionText,
-    questionMod,
-    selectRetryProblem,
-    problemCount,
-    reloadProblem,
-  } = useReloadProblem(typingdata.problems);
-  const {
+  const  {
+    gameInit,
+    missFlg,
     finished,
     missCount,
     typo,
@@ -56,14 +45,16 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     retry,
     missedOnlyRetry,
     typingConplate,
-    gameClear,
-  } = useTypingGame(setIsPlaying as (a: boolean) => void);
+    romajiText,
+    kanaText,
+    questionText,
+    questionMod,
+    problemCount,
+  } = useGameManager(
+    setIsPlaying as (a: boolean) => void,
+    typingdata.problems
+  );
 
-  // クリア後のミスだけもう一回関数
-  const missedRetry = useCallback(() => {
-    missedOnlyRetry(selectRetryProblem, reloadProblem);
-  }, [missedOnlyRetry, selectRetryProblem, reloadProblem]);
-  const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const navigate = useNavigate();
   const { reset, control, handleSubmit, setFocus } = useForm<InputValues>({
     mode: "onChange",
@@ -73,12 +64,12 @@ const RealTypingGame = (props: RealTypingGameProps) => {
 
   // 問題文生成
   useEffectOnce(() => {
-    reloadProblem();
+    gameInit();
   });
 
   useEffect(() => {
     document.onkeydown = function (e) {
-      setFocus("answer");
+      // setFocus("answer");
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーでPlay画面を抜ける
@@ -103,14 +94,8 @@ const RealTypingGame = (props: RealTypingGameProps) => {
       // 1問の問題文が完了したとき
       if (typed === questionText.length) {
         typingConplate(romajiText.length, problemCount);
-        let isProblem = reloadProblem();
-        if (!isProblem) gameClear();
       }
     } else {
-      setMissFlg(true);
-      setTimeout(function () {
-        setMissFlg(false);
-      }, 100);
       missRecode(" ");
     }
   };
@@ -124,7 +109,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
           typo={typo}
           timeOfTyping={timeOfTyping}
           retry={retry}
-          missedRetry={missedRetry}
+          missedRetry={missedOnlyRetry}
         />
       ) : (
         <Fragment>

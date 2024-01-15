@@ -29,6 +29,17 @@ const useGameManager = (
     reloadProblem,
   } = useReloadProblem(problemsProps);
 
+  const resetState = () => {
+    setMissFlg(false);
+    setTotalType(0);
+    setTimeOfTyping(new Date().getTime());
+    setTypo([]);
+    setMissCount(0);
+    setProblemOfMissCount(0);
+    setFinished(false);
+    setIsPlaying(false);
+  };
+
   const gameInit = useCallback(() => {
     reloadProblem();
   }, []);
@@ -51,31 +62,20 @@ const useGameManager = (
 
   // クリア後のもう一回リセット関数
   const retry = useCallback(() => {
-    setIsPlaying(false);
-    setFinished(false);
+    resetState();
     reloadProblem();
   }, [setIsPlaying]);
 
   // クリア後のミスだけもう一回関数
-  const missedOnlyRetry = useCallback(
-    (
-      selectRetryProblem: (missedProblems: number[]) => ProblemType,
-      reloadProblem: (retryProblem?: ProblemType | undefined) => boolean
-    ) => {
-      setFinished(false);
-      setTotalType(0);
-      setTimeOfTyping(new Date().getTime());
-      setTypo([]);
-      setMissCount(0);
-      setProblemOfMissCount(0);
+  const missedOnlyRetry = useCallback(() =>
+    // selectRetryProblem: (missedProblems: number[]) => ProblemType,
+    // reloadProblem: (retryProblem?: ProblemType | undefined) => boolean
+    {
+      resetState();
       let retryProblem = selectRetryProblem(missedProblems);
-      retryProblem.length !== 0
-        ? reloadProblem(retryProblem)
-        : setIsPlaying(false);
+      retryProblem.length !== 0 ? reloadProblem(retryProblem) : reloadProblem();
       setMissedProblems([]);
-    },
-    [missedProblems, setIsPlaying]
-  );
+    }, [missedProblems, setIsPlaying]);
 
   // 文章を入力完了時の処理
   const typingConplate = (romajiTextLength: number, problemCount: number) => {
@@ -86,6 +86,8 @@ const useGameManager = (
         setMissedProblems([...missedProblems, problemCount]);
       }
     }
+    let isProblem = reloadProblem();
+    if (!isProblem) gameClear();
   };
 
   // ゲームクリア時の処理
@@ -97,17 +99,21 @@ const useGameManager = (
 
   return {
     gameInit,
+    missFlg,
     finished,
     missCount,
     typo,
-    missedProblems,
     totalType,
     timeOfTyping,
     missRecode,
     retry,
     missedOnlyRetry,
     typingConplate,
-    gameClear,
+    romajiText,
+    kanaText,
+    questionText,
+    questionMod,
+    problemCount
   };
 };
 export default useGameManager;
