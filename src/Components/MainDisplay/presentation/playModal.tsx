@@ -3,11 +3,11 @@ import Paragraph from "../../ui/Paragraph";
 import { Grid, Box, Typography, rgbToHex } from "@mui/material";
 
 interface PlayModalProps {
-  setIsPlaying?: (a: boolean) => void;
+  setIsStandby: (a: boolean) => void;
 }
-export default function PlayModal({ setIsPlaying }: PlayModalProps) {
+export default function PlayModal({ setIsStandby }: PlayModalProps) {
   // ゲームをスタートする処理
-  useStartGame(setIsPlaying!, []);
+  useStartGame(setIsStandby, []);
 
   return (
     <Grid container justifyContent="center">

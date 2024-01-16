@@ -3,8 +3,9 @@ import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
-import { useEffectOnce } from "../../../../Hooks";
+import { useCountdown, useEffectOnce } from "../../../../Hooks";
 import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
+import { Countdown } from "../../../MainDisplay/presentation";
 import QuestionBox from "../../../QuestionBox/QuestionBox";
 import ResultScore from "../../../Score/container/ResultScore";
 import { useReloadProblem, useTypingGame } from "../../container/hook";
@@ -33,7 +34,10 @@ const RealTypingGame = (props: RealTypingGameProps) => {
   const { isPlaying, setIsPlaying } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const { showFurigana } = React.useContext(SettingDataContext);
-  const  {
+  const [isStandby, setIsStandby] = useState(true);
+  const { count } = useCountdown(isStandby, setIsPlaying);
+
+  const {
     gameInit,
     missFlg,
     finished,
@@ -50,10 +54,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     questionText,
     questionMod,
     problemCount,
-  } = useGameManager(
-    setIsPlaying as (a: boolean) => void,
-    typingdata.problems
-  );
+  } = useGameManager(setIsPlaying as (a: boolean) => void, typingdata.problems);
 
   const navigate = useNavigate();
   const { reset, control, handleSubmit, setFocus } = useForm<InputValues>({
@@ -63,9 +64,9 @@ const RealTypingGame = (props: RealTypingGameProps) => {
   });
 
   // 問題文生成
-  useEffectOnce(() => {
-    gameInit();
-  });
+  useEffect(() => {
+    if (!isStandby) gameInit();
+  }, [isStandby]);
 
   useEffect(() => {
     document.onkeydown = function (e) {
@@ -74,7 +75,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
       if (e.code === "Space") e.preventDefault();
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
-        setIsPlaying!(false);
+        setIsPlaying(false);
         navigate("/");
       }
     };
@@ -113,16 +114,26 @@ const RealTypingGame = (props: RealTypingGameProps) => {
         />
       ) : (
         <Fragment>
-          <MainDisplay isPlaying={isPlaying} setIsPlaying={setIsPlaying}>
-            <GameBoard miss={missFlg}>
-              <Box display="flex" justifyContent="flex-end">
-                <Typography>ミス問題: {missCount}問</Typography>
-                <GameTimer />
-              </Box>
-              <HiraganaText kanaText={kanaText} $showFurigana={showFurigana} />
-              <RealTextWatcher control={control} questionText={questionText} />
-              <RomajiText romaji={romajiText} $isRealMode={true} />
-            </GameBoard>
+          <MainDisplay isStandby={isStandby} setIsStandby={setIsStandby}>
+            {!isPlaying ? (
+              <Countdown count={count} />
+            ) : (
+              <GameBoard miss={missFlg}>
+                <Box display="flex" justifyContent="flex-end">
+                  <Typography>ミス問題: {missCount}問</Typography>
+                  <GameTimer />
+                </Box>
+                <HiraganaText
+                  kanaText={kanaText}
+                  $showFurigana={showFurigana}
+                />
+                <RealTextWatcher
+                  control={control}
+                  questionText={questionText}
+                />
+                <RomajiText romaji={romajiText} $isRealMode={true} />
+              </GameBoard>
+            )}
           </MainDisplay>
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             {!isPlaying ? (

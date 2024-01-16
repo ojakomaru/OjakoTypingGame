@@ -7,14 +7,14 @@ import { useWindowEvent } from "../../../Hooks/useWindowEvent";
  * @param deps 実行依存ステートの配列 空でも可
  */
 export const useStartGame = (
-  setIsPlaying: (a: boolean) => void,
+  setIsStandby: (a: boolean) => void,
   deps: DependencyList
 ) => {
   const handler = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        setIsPlaying!(true);
+        setIsStandby(false);
       }
     },
     [deps]

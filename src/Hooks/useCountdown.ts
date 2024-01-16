@@ -1,22 +1,25 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const useCountdown = (
-  countTime: number | null,
-  setCountTime: (arg0: number) => void
+  isStandby: boolean,
+  setIsPlaying: (a: boolean) => void
 ) => {
+  const [count, setCountdown] = useState(3);
   useEffect(() => {
     const countDownInterval = setInterval(() => {
-      if (countTime === 0) {
-        clearInterval(countDownInterval);
-      }
-      if (countTime && countTime > 0) {
-        setCountTime(countTime - 1);
+      if (!isStandby) {
+        if (count === 0) {
+          setIsPlaying(true);
+          clearInterval(countDownInterval);
+        }
+        if (count && count > 0) {
+          setCountdown(count - 1);
+        }
       }
     }, 1000);
-    return () => {
-      clearInterval(countDownInterval);
-    };
-  }, [countTime]);
+    return () => clearInterval(countDownInterval);
+  }, [count, isStandby]);
+  return { count };
 };
 
 export { useCountdown };

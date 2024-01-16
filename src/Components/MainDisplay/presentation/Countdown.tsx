@@ -1,5 +1,4 @@
 import React from "react";
-import { useCountdown } from "../../../Hooks";
 import { GameBoard } from "../../TypingPlay/presentation";
 import { styled } from "@mui/material";
 
@@ -15,10 +14,8 @@ const StyledCountNumber = styled("div")(({ theme }) => ({
 
 interface CountdownProps {
   count: number;
-  setCountdown: (a: number) => void;
 }
-const Countdown = ({ count, setCountdown }: CountdownProps) => {
-  useCountdown(count, setCountdown);
+const Countdown = ({ count }: CountdownProps) => {
   return (
     <GameBoard>
       <StyledCountNumber>{count}</StyledCountNumber>

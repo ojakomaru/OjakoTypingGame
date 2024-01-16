@@ -120,7 +120,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
 
     // 問題文が無くなったらfalse
     if (reloadProblem.length === 0) {
-      setProblems(cpProblems);
+      setProblems(structuredClone(problemRef.current));
       return isMore;
     }
 

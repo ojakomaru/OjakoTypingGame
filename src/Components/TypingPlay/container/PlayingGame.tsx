@@ -20,11 +20,12 @@ import { Box, Typography } from "@mui/material";
 
 type PlayingGameProps = {
   typingdata: TypingDataType;
+  isPlaying: boolean;
   setIsPlaying?: (a: boolean) => void;
   keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
-  const { typingdata, setIsPlaying, keyboardInit } = props;
+  const { typingdata, isPlaying, setIsPlaying, keyboardInit } = props;
   const { typeMode, showFurigana } = React.useContext(SettingDataContext);
   const {
     romajiText,

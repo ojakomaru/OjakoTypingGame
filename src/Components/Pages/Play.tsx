@@ -13,14 +13,16 @@ const Play: React.FC = () => {
   const { typeMode, showKeyboard } = React.useContext(SettingDataContext);
   const { keyboardRef, keyboardInit } = useKeyboardTyping();
   const { typingdata } = React.useContext(TypingDataContext);
+  const [isStandby, setIsStandby] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRealPlay] = useState(typeMode === REAL_TEXT);
   return (
     <Layout>
       {!isRealPlay ? (
         <React.Fragment>
-          <MainDisplay isPlaying={isPlaying} setIsPlaying={setIsPlaying}>
+          <MainDisplay isStandby={isStandby} setIsStandby={setIsStandby}>
             <PlayingGame
+              isPlaying={isPlaying}
               typingdata={typingdata}
               setIsPlaying={setIsPlaying}
               keyboardInit={keyboardInit}
