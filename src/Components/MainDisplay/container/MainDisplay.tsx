@@ -1,6 +1,6 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import MainDisplayLayout from "../../layout/MainDisplayLayout";
-import { PlayModal, Countdown } from "../presentation";
+import { PlayModal } from "../presentation";
 
 type MainFeaturedPostProps = {
   isStandby: boolean;
@@ -8,19 +8,7 @@ type MainFeaturedPostProps = {
   children: ReactNode;
 };
 export const MainDisplay = (props: MainFeaturedPostProps) => {
-  const { isStandby, setIsStandby,children } = props;
-  // const [count, setCountdown] = useState(3);
-  // const SwitchMode = (children: ReactNode) => {
-  //   if (isPlaying) {
-  //     // if (count > 0) {
-  //     //   return <Countdown count={count} setCountdown={setCountdown} />;
-  //     // } else {
-  //     return children;
-  //     // }
-  //   } else {
-  //     return <PlayModal setIsPlaying={setIsPlaying} />;
-  //   }
-  // };
+  const { isStandby, setIsStandby, children } = props;
 
   return (
     <MainDisplayLayout isPlaying={true}>

@@ -9,7 +9,7 @@ const StyledCountNumber = styled("div")(({ theme }) => ({
   borderRadius: "50%",
   width: "100px",
   height: "100px",
-  fontSize: '3.6rem',
+  fontSize: "3.6rem",
 }));
 
 interface CountdownProps {

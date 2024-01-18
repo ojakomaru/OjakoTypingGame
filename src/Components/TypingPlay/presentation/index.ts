@@ -6,8 +6,10 @@ import ShortModeProblems from "./ShortModeProblems ";
 import { Keyboard } from "../container/Keyboard";
 import GameBoard from "../presentation/GameBoard";
 import GameTimer from "./GameTimer";
+import Countdown from "../../MainDisplay/presentation/Countdown";
 
 export {
+  Countdown,
   GameBoard,
   GameTimer,
   Keyboard,

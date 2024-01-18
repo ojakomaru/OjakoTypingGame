@@ -2,11 +2,12 @@ import React from "react";
 import { useCallback, useState } from "react";
 import { ProblemType, REAL_TEXT } from "../../../../../@types";
 import { SettingDataContext } from "../../../../../Contexts";
-import { useCountdown, usePrevious } from "../../../../../Hooks";
+import { usePrevious } from "../../../../../Hooks";
 import { useReloadProblem } from "../../../container/hook";
 
 const useGameManager = (
   setIsPlaying: (a: boolean) => void,
+  setIsStandby: (a: boolean) => void,
   problemsProps: ProblemType
 ) => {
   const [finished, setFinished] = useState(false);
@@ -30,7 +31,8 @@ const useGameManager = (
     reloadProblem,
   } = useReloadProblem(problemsProps);
 
-  const resetState = () => {
+  const resetState = useCallback(() => {
+    setIsStandby(true);
     setMissFlg(false);
     setTotalType(0);
     setTimeOfTyping(new Date().getTime());
@@ -39,11 +41,11 @@ const useGameManager = (
     setProblemOfMissCount(0);
     setFinished(false);
     setIsPlaying(false);
-  };
+  }, [setIsPlaying, setIsStandby]);
 
   const gameInit = useCallback(() => {
     reloadProblem();
-  }, [  reloadProblem]);
+  }, [reloadProblem]);
 
   // ミス内容を記録する関数
   const missRecode = (key: string) => {
@@ -65,7 +67,7 @@ const useGameManager = (
   const retry = useCallback(() => {
     resetState();
     reloadProblem();
-  }, [reloadProblem]);
+  }, [reloadProblem, resetState]);
 
   // クリア後のミスだけもう一回関数
   const missedOnlyRetry = useCallback(() => {
@@ -73,7 +75,7 @@ const useGameManager = (
     let retryProblem = selectRetryProblem(missedProblems);
     retryProblem.length !== 0 ? reloadProblem(retryProblem) : reloadProblem();
     setMissedProblems([]);
-  }, [missedProblems, reloadProblem]);
+  }, [missedProblems, reloadProblem, resetState]);
 
   // 文章を入力完了時の処理
   const typingConplate = (romajiTextLength: number, problemCount: number) => {

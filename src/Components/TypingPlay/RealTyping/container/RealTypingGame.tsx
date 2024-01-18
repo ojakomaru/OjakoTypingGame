@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
 import { useCountdown } from "../../../../Hooks";
 import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
@@ -55,9 +54,8 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     questionText,
     questionMod,
     problemCount,
-  } = useGameManager(setIsPlaying as (a: boolean) => void, typingdata.problems);
+  } = useGameManager(setIsPlaying, setIsStandby, typingdata.problems);
 
-  const navigate = useNavigate();
   const { reset, control, handleSubmit, setFocus } = useForm<InputValues>({
     mode: "onChange",
     reValidateMode: "onBlur",
@@ -66,6 +64,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
 
   // 問題文生成
   useEffect(() => {
+    setFocus("answer");
     if (!isStandby) gameInit();
   }, [isStandby]);
 
