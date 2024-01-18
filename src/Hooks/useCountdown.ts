@@ -8,7 +8,7 @@ const useCountdown = (
   useEffect(() => {
     const countDownInterval = setInterval(() => {
       if (!isStandby) {
-        if (count === 0) {
+        if (count === 1) {
           setIsPlaying(true);
           clearInterval(countDownInterval);
         }

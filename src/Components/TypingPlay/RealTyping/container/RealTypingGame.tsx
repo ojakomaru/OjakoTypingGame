@@ -1,14 +1,15 @@
 import { Box, Typography } from "@mui/material";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
-import { useCountdown, useEffectOnce } from "../../../../Hooks";
+import { useCountdown } from "../../../../Hooks";
 import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
 import { Countdown } from "../../../MainDisplay/presentation";
 import QuestionBox from "../../../QuestionBox/QuestionBox";
 import ResultScore from "../../../Score/container/ResultScore";
-import { useReloadProblem, useTypingGame } from "../../container/hook";
+import { useEscapeWithHome } from "./hook/useEscapeWithHome";
+
 import {
   GameBoard,
   GameTimer,
@@ -68,21 +69,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     if (!isStandby) gameInit();
   }, [isStandby]);
 
-  useEffect(() => {
-    document.onkeydown = function (e) {
-      // setFocus("answer");
-      // スペースキーの挙動をキャンセル
-      if (e.code === "Space") e.preventDefault();
-      // "Escape"キーでPlay画面を抜ける
-      if (e.key === "Escape") {
-        setIsPlaying(false);
-        navigate("/");
-      }
-    };
-    return () => {
-      window.document.onkeydown = null;
-    };
-  });
+  useEscapeWithHome(setIsPlaying);
   /* 文章判定処理 */
   const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {
     let typed = inputData.answer.length;
