@@ -7,7 +7,7 @@ interface PlayModalProps {
 }
 export default function PlayModal({ setIsStandby }: PlayModalProps) {
   // ゲームをスタートする処理
-  useStartGame(setIsStandby, []);
+  useStartGame(setIsStandby);
 
   return (
     <Grid container justifyContent="center">
