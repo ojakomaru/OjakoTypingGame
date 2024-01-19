@@ -3,10 +3,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 interface ResultActionsProps {
+  isRealPlay: boolean;
   retry: () => void;
   missedRetry: () => void;
 }
-const ResultActions = ({ retry, missedRetry }: ResultActionsProps) => {
+const ResultActions = ({
+  isRealPlay,
+  retry,
+  missedRetry,
+}: ResultActionsProps) => {
   const navigate = useNavigate();
   const backToHome = () => {
     retry();
@@ -18,6 +23,7 @@ const ResultActions = ({ retry, missedRetry }: ResultActionsProps) => {
         もう一回
       </Button>
       <Button
+        disabled={isRealPlay}
         onClick={missedRetry}
         variant="contained"
         size="large"

@@ -34,7 +34,11 @@ const Play: React.FC = () => {
           {!isPlaying && <QuestionBox problems={typingdata.problems} />}
         </React.Fragment>
       ) : (
-        <RealTypingGame isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+        <RealTypingGame
+          isRealPlay={true}
+          isStandby={isStandby}
+          setIsStandby={setIsStandby}
+        />
       )}
     </Layout>
   );

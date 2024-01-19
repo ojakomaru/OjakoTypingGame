@@ -1,8 +1,7 @@
 import { Box, Typography } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
-import { useCountdown } from "../../../../Hooks";
 import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
 import { Countdown } from "../../../MainDisplay/presentation";
 import QuestionBox from "../../../QuestionBox/QuestionBox";
@@ -27,17 +26,17 @@ const defaultValue = {
 };
 
 interface RealTypingGameProps {
-  isPlaying: boolean;
-  setIsPlaying: (a: boolean) => void;
+  isRealPlay: boolean;
+  isStandby: boolean;
+  setIsStandby: (a: boolean) => void;
 }
 const RealTypingGame = (props: RealTypingGameProps) => {
-  const { isPlaying, setIsPlaying } = props;
+  const { isRealPlay, isStandby, setIsStandby } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const { showFurigana } = React.useContext(SettingDataContext);
-  const [isStandby, setIsStandby] = useState(true);
-  const { count } = useCountdown(isStandby, setIsPlaying);
 
   const {
+    count,
     gameInit,
     missFlg,
     finished,
@@ -54,7 +53,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     questionText,
     questionMod,
     problemCount,
-  } = useGameManager(setIsPlaying, setIsStandby, typingdata.problems);
+  } = useGameManager(isRealPlay, isStandby, setIsStandby, typingdata.problems);
 
   const { reset, control, handleSubmit, setFocus } = useForm<InputValues>({
     mode: "onChange",
@@ -68,7 +67,8 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     if (!isStandby) gameInit();
   }, [isStandby]);
 
-  useEscapeWithHome(setIsPlaying);
+  useEscapeWithHome(setIsStandby);
+
   /* 文章判定処理 */
   const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {
     let typed = inputData.answer.length;
@@ -91,6 +91,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     <React.Fragment>
       {finished ? (
         <ResultScore
+          isRealPlay={isRealPlay}
           totalType={totalType}
           missCount={missCount}
           typo={typo}
@@ -101,7 +102,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
       ) : (
         <Fragment>
           <MainDisplay isStandby={isStandby} setIsStandby={setIsStandby}>
-            {!isPlaying ? (
+            {count !== 0 ? (
               <Countdown count={count} />
             ) : (
               <GameBoard miss={missFlg}>
@@ -122,7 +123,7 @@ const RealTypingGame = (props: RealTypingGameProps) => {
             )}
           </MainDisplay>
           <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            {!isPlaying ? (
+            {isStandby ? (
               <QuestionBox problems={typingdata.problems} />
             ) : (
               <RealTextInput control={control} />

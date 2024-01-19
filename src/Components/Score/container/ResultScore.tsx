@@ -13,6 +13,7 @@ import ResultScoreLayout from "../../layout/ResultScoreLayout";
 import ResultActions from "./ResultActions";
 
 interface ResultScoreProps {
+  isRealPlay: boolean;
   totalType: number;
   missCount: number;
   typo: Array<string>;
@@ -21,10 +22,18 @@ interface ResultScoreProps {
   missedRetry: () => void;
 }
 const ResultScore = (props: ResultScoreProps) => {
-  const { totalType, missCount, typo, timeOfTyping, retry, missedRetry} = props;
+  const {
+    isRealPlay,
+    totalType,
+    missCount,
+    typo,
+    timeOfTyping,
+    retry,
+    missedRetry,
+  } = props;
   const { typingdata } = React.useContext(TypingDataContext);
   const wpm = () => (totalType / timeOfTyping) * 60 * 1000;
-  const wpm2 = () => wpm() / 60
+  const wpm2 = () => wpm() / 60;
   const accuracy = () => (1 - missCount / totalType) * 100;
   const score = () =>
     Math.floor(wpm() * (totalType / (totalType + missCount)) ** 3 * 10);
@@ -47,7 +56,9 @@ const ResultScore = (props: ResultScoreProps) => {
       </DetailArea>
       <DetailArea absoluteX={"20px"} absoluteY={"110px"}>
         <DetailItem align={"left"}>正打率</DetailItem>
-        <DetailItem align={"right"}>{accuracy().toFixed(2)}</DetailItem>
+        <DetailItem align={"right"}>
+          {isRealPlay ? "-" : accuracy().toFixed(2)}
+        </DetailItem>
       </DetailArea>
       <DetailArea absoluteX={"20px"} absoluteY={"146px"}>
         <DetailItem align={"left"}>タイム</DetailItem>
@@ -63,7 +74,7 @@ const ResultScore = (props: ResultScoreProps) => {
       </DetailArea>
       <DetailArea absoluteX={"270px"} absoluteY={"146px"}>
         <DetailItem align={"left"}>ミスタイプ</DetailItem>
-        <DetailItem align={"right"}>{missCount}</DetailItem>
+        <DetailItem align={"right"}>{isRealPlay ? "-" : missCount}</DetailItem>
       </DetailArea>
       <Score isBest={false} score={score()} />
       <ScoreRank label={typingdata.title} rank={wpmToRank(score())} />
@@ -75,7 +86,9 @@ const ResultScore = (props: ResultScoreProps) => {
   return (
     <ResultScoreLayout
       resultScore={<Scores />}
-      resultActions={<ResultActions retry={retry} missedRetry={missedRetry} />}
+      resultActions={
+        <ResultActions isRealPlay retry={retry} missedRetry={missedRetry} />
+      }
     />
   );
 };

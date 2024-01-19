@@ -2,17 +2,17 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWindowEvent } from "../../../../../Hooks";
 
-export const useEscapeWithHome = (setIsPlaying: (a: boolean) => void) => {
+export const useEscapeWithHome = (setIsStandby: (a: boolean) => void) => {
   const navigate = useNavigate();
   const handler = useCallback(
     (e: KeyboardEvent) => {
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
-        setIsPlaying(false);
+        setIsStandby(true);
         navigate("/");
       }
     },
-    [setIsPlaying, navigate]
+    [setIsStandby, navigate]
   );
   useWindowEvent("keydown", handler);
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useCallback, useState } from "react";
 import { ProblemType, REAL_TEXT } from "../../../../../@types";
 import { SettingDataContext } from "../../../../../Contexts";
@@ -6,7 +6,8 @@ import { usePrevious } from "../../../../../Hooks";
 import { useReloadProblem } from "../../../container/hook";
 
 const useGameManager = (
-  setIsPlaying: (a: boolean) => void,
+  isRealPlay: boolean,
+  isStandby: boolean,
   setIsStandby: (a: boolean) => void,
   problemsProps: ProblemType
 ) => {
@@ -19,7 +20,7 @@ const useGameManager = (
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
   const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
-  const { typeMode } = React.useContext(SettingDataContext);
+  const [count, setCountdown] = useState(3);
 
   const {
     romajiText,
@@ -32,6 +33,7 @@ const useGameManager = (
   } = useReloadProblem(problemsProps);
 
   const resetState = useCallback(() => {
+    setCountdown(3);
     setIsStandby(true);
     setMissFlg(false);
     setTotalType(0);
@@ -40,8 +42,17 @@ const useGameManager = (
     setMissCount(0);
     setProblemOfMissCount(0);
     setFinished(false);
-    setIsPlaying(false);
-  }, [setIsPlaying, setIsStandby]);
+  }, [setIsStandby]);
+
+  useEffect(() => {
+    const countDownInterval = setInterval(() => {
+      if (count === 0) {
+        clearInterval(countDownInterval);
+      }
+      if (!isStandby && count > 0) setCountdown(count - 1);
+    }, 1000);
+    return () => clearInterval(countDownInterval);
+  }, [count, isStandby]);
 
   const gameInit = useCallback(() => {
     reloadProblem();
@@ -50,7 +61,7 @@ const useGameManager = (
   // ミス内容を記録する関数
   const missRecode = (key: string) => {
     let time: number = 800;
-    if (typeMode === REAL_TEXT) {
+    if (isRealPlay) {
       key = " ";
       time = 100;
     }
@@ -98,6 +109,7 @@ const useGameManager = (
   };
 
   return {
+    count,
     gameInit,
     missFlg,
     finished,
