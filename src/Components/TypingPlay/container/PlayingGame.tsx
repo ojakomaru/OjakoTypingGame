@@ -65,6 +65,7 @@ export default function PlayingGame(props: PlayingGameProps) {
     if (!isStandby) gameInit();
   }, [isStandby]);
 
+  // Escapeキーでホームに戻る
   useEscapeWithHome(setIsStandby);
 
   // 問題文の更新時に最初のキーを色付けする
@@ -72,9 +73,10 @@ export default function PlayingGame(props: PlayingGameProps) {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText, romajiText]);
 
+
   /* タイピング入力処理 */
   useEffect(() => {
-    if (finished && count !== 0) return;
+    if (finished) return;
     const romajiTyped = romajiInit();
     const kanaTyped = kanaInit();
     let romaPos = romaPosIdx.current,
@@ -82,7 +84,6 @@ export default function PlayingGame(props: PlayingGameProps) {
       romaLength = romaIdx.current,
       kanaLength = kanaIdx.current;
     let tmp = tmpRef.current;
-
     document.onkeydown = function (e) {
       /* typingWordがstateの為特別に以下で定義 */
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
@@ -99,8 +100,8 @@ export default function PlayingGame(props: PlayingGameProps) {
       }
       function missTyped(key: string) {
         missRecode(key);
-        romajiTyped.miss(romaLength);
-        kanaTyped.miss(kanaLength);
+        romajiTyped!.miss(romaLength);
+        kanaTyped!.miss(kanaLength);
         tmp = tmp.slice(0, -1);
         saveRefs();
       }
@@ -113,7 +114,7 @@ export default function PlayingGame(props: PlayingGameProps) {
       tmp += e.key;
       // ローマ字正解打
       if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
-        romajiTyped.success(romaLength);
+        romajiTyped!.success(romaLength);
         romaLength++;
         romaPos++;
       } else {
@@ -130,7 +131,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         // パターン変更後に再チェック
         if (e.key === typingWord[kanaPos][pattern[kanaPos]][romaPos]) {
           romaLength = romajiMod(kanaPos, pattern, romaPos);
-          romajiTyped.refresh(romaLength);
+          romajiTyped!.refresh(romaLength);
           romaPos++;
           saveRefs();
         } else {
@@ -166,18 +167,18 @@ export default function PlayingGame(props: PlayingGameProps) {
 
       // まだ入力していない文字があるとき
       if (romaLength !== romajiText.length) {
-        romajiTyped.next(romaLength - 1);
+        romajiTyped!.next(romaLength - 1);
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
           let kanaStr = romanizer.romaToHira(
             typingWord[kanaPos][pattern[kanaPos]]
           );
-          kanaTyped.success(kanaLength);
+          kanaTyped!.success(kanaLength);
           // 「ん」を省略しつつ次の文字が正解打の場合
           if (nFlag) {
             romaLength = romajiMod(kanaPos, pattern, 0);
             romaLength++;
-            romajiTyped.refresh(romaLength);
+            romajiTyped!.refresh(romaLength);
             kanaPos++;
             kanaLength++;
             // 正解打の次の文字が日本語ローマ字の場合
@@ -196,7 +197,7 @@ export default function PlayingGame(props: PlayingGameProps) {
               kanaStr.includes("っ")
             ) {
               kanaLength++;
-              kanaTyped.success(kanaLength);
+              kanaTyped!.success(kanaLength);
             }
             kanaPos++;
             kanaLength++;
@@ -209,8 +210,8 @@ export default function PlayingGame(props: PlayingGameProps) {
         }
         // すべての文字を入力したとき
       } else {
-        romajiTyped.reset();
-        kanaTyped.reset();
+        romajiTyped!.reset();
+        kanaTyped!.reset();
         romaPosIdx.current = 0;
         kanaPosIdx.current = 0;
         romaIdx.current = 0;
