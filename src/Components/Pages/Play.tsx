@@ -14,7 +14,6 @@ const Play: React.FC = () => {
   const { keyboardRef, keyboardInit } = useKeyboardTyping();
   const { typingdata } = React.useContext(TypingDataContext);
   const [isStandby, setIsStandby] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isRealPlay] = useState(typeMode === REAL_TEXT);
   return (
     <Layout>
@@ -22,20 +21,20 @@ const Play: React.FC = () => {
         <React.Fragment>
           <MainDisplay isStandby={isStandby} setIsStandby={setIsStandby}>
             <PlayingGame
-              isPlaying={isPlaying}
+              isStandby={isStandby}
+              setIsStandby={setIsStandby}
               typingdata={typingdata}
-              setIsPlaying={setIsPlaying}
               keyboardInit={keyboardInit}
             />
           </MainDisplay>
-          {isPlaying && (
+          {!isStandby && (
             <Keyboard ref={keyboardRef} $showKeyboard={showKeyboard} />
           )}
-          {!isPlaying && <QuestionBox problems={typingdata.problems} />}
+          {isStandby && <QuestionBox problems={typingdata.problems} />}
         </React.Fragment>
       ) : (
         <RealTypingGame
-          isRealPlay={true}
+          isRealPlay
           isStandby={isStandby}
           setIsStandby={setIsStandby}
         />

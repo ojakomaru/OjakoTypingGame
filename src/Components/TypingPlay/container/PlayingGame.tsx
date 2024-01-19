@@ -1,14 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import { Romanizer, useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, REAL_TEXT, type TypingDataType } from "../../../@types";
 import { SettingDataContext } from "../../../Contexts";
-import {
-  useReloadProblem,
-  useRomajiTypedMove,
-  useKanaTypedMove,
-  useTypingGame,
-} from "./hook";
+import { useRomajiTypedMove, useKanaTypedMove } from "./hook";
 import {
   GameBoard,
   GameTimer,
@@ -17,26 +11,19 @@ import {
 } from "../presentation";
 import ResultScore from "../../Score/container/ResultScore";
 import { Box, Typography } from "@mui/material";
+import { useEscapeWithHome } from "../RealTyping/container/hook/useEscapeWithHome";
+import useGameManager from "../RealTyping/container/hook/useGameManager";
+import { Countdown } from "../RealTyping/presentation";
 
 type PlayingGameProps = {
+  isStandby: boolean;
+  setIsStandby: (a: boolean) => void;
   typingdata: TypingDataType;
-  isPlaying: boolean;
-  setIsPlaying?: (a: boolean) => void;
   keyboardInit?: any;
 };
 export default function PlayingGame(props: PlayingGameProps) {
-  const { typingdata, isPlaying, setIsPlaying, keyboardInit } = props;
+  const { typingdata, isStandby, setIsStandby, keyboardInit } = props;
   const { typeMode, showFurigana } = React.useContext(SettingDataContext);
-  const {
-    romajiText,
-    kanaText,
-    questionText,
-    typingWord,
-    romajiMod,
-    selectRetryProblem,
-    problemCount,
-    reloadProblem,
-  } = useReloadProblem(typingdata.problems);
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const { kanaRef, kanaInit } = useKanaTypedMove();
   const tmpRef = useRef(""); // 再レンダリング対策
@@ -45,8 +32,10 @@ export default function PlayingGame(props: PlayingGameProps) {
   const romaIdx = useRef(0); // 再レンダリング対策
   const kanaIdx = useRef(0); // 再レンダリング対策
   const patternAry = useRef<number[]>(new Array(100).fill(0)); // 再レンダリング対策
-  const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
   const {
+    count,
+    gameInit,
+    missFlg,
     finished,
     missCount,
     typo,
@@ -56,30 +45,36 @@ export default function PlayingGame(props: PlayingGameProps) {
     retry,
     missedOnlyRetry,
     typingConplate,
-    gameClear,
-  } = useTypingGame(setIsPlaying as (a: boolean) => void);
-
-  const navigate = useNavigate();
+    romajiText,
+    kanaText,
+    questionText,
+    typingWord,
+    romajiMod,
+    problemCount,
+  } = useGameManager(
+    typeMode === REAL_TEXT,
+    isStandby,
+    setIsStandby,
+    typingdata.problems
+  );
   const romanizer = new Romanizer();
   const keyboard = keyboardInit();
 
   // 問題文生成
-  useEffectOnce(() => {
-    reloadProblem();
-  });
+  useEffect(() => {
+    if (!isStandby) gameInit();
+  }, [isStandby]);
+
+  useEscapeWithHome(setIsStandby);
+
   // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText, romajiText]);
 
-  // クリア後のミスだけもう一回関数
-  const missedRetry = useCallback(() => {
-    missedOnlyRetry(selectRetryProblem, reloadProblem);
-  }, [missedOnlyRetry, selectRetryProblem, reloadProblem]);
-
   /* タイピング入力処理 */
   useEffect(() => {
-    if (finished) return;
+    if (finished && count !== 0) return;
     const romajiTyped = romajiInit();
     const kanaTyped = kanaInit();
     let romaPos = romaPosIdx.current,
@@ -103,10 +98,6 @@ export default function PlayingGame(props: PlayingGameProps) {
         tmpRef.current = tmp;
       }
       function missTyped(key: string) {
-        setMissFlg(true);
-        setTimeout(function () {
-          setMissFlg(false);
-        }, 800);
         missRecode(key);
         romajiTyped.miss(romaLength);
         kanaTyped.miss(kanaLength);
@@ -116,11 +107,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
       // スペースキーの挙動をキャンセル
       if (e.code === "Space") e.preventDefault();
-      // "Escape"キーでPlay画面を抜ける
-      if (e.key === "Escape") {
-        setIsPlaying!(false);
-        navigate("/");
-      }
+
       if (e.key.length > 1) return;
       if (missFlg) return;
       tmp += e.key;
@@ -231,8 +218,6 @@ export default function PlayingGame(props: PlayingGameProps) {
         patternAry.current = new Array(100).fill(0);
         tmpRef.current = "";
         typingConplate(romajiText.length, problemCount);
-        let isProblem = reloadProblem();
-        if (!isProblem) gameClear();
       }
     };
     return () => {
@@ -250,8 +235,10 @@ export default function PlayingGame(props: PlayingGameProps) {
           typo={typo}
           timeOfTyping={timeOfTyping}
           retry={retry}
-          missedRetry={missedRetry}
+          missedRetry={missedOnlyRetry}
         />
+      ) : count !== 0 ? (
+        <Countdown count={count} />
       ) : (
         <GameBoard miss={missFlg}>
           <Box display="flex" justifyContent="flex-end">

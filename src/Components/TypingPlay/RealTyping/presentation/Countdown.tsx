@@ -1,5 +1,5 @@
 import React from "react";
-import { GameBoard } from "../../TypingPlay/presentation";
+import { GameBoard } from "../../presentation";
 import { styled } from "@mui/material";
 
 const StyledCountNumber = styled("div")(({ theme }) => ({

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useCallback, useState } from "react";
-import { ProblemType, REAL_TEXT } from "../../../../../@types";
-import { SettingDataContext } from "../../../../../Contexts";
+import { ProblemType } from "../../../../../@types";
 import { usePrevious } from "../../../../../Hooks";
 import { useReloadProblem } from "../../../container/hook";
 
@@ -26,7 +25,9 @@ const useGameManager = (
     romajiText,
     kanaText,
     questionText,
+    typingWord,
     questionMod,
+    romajiMod,
     selectRetryProblem,
     problemCount,
     reloadProblem,
@@ -124,6 +125,8 @@ const useGameManager = (
     romajiText,
     kanaText,
     questionText,
+    typingWord,
+    romajiMod,
     questionMod,
     problemCount,
   };
