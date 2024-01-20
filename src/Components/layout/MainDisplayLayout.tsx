@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Container, Paper, Box, CircularProgress } from "@mui/material";
-import { useFetchPhotos } from "../../Hooks";
+import { randomArray, useFetchPhotos } from "../../Hooks";
 
 type DisplayLayoutProps = {
   children: ReactNode;
@@ -10,7 +10,9 @@ export default function MainDisplayLayout({
   children,
   isPlaying,
 }: DisplayLayoutProps) {
-  const { photo, isLoading } = useFetchPhotos();
+  const { photo, isLoading } = useFetchPhotos("dog");
+  let randPhoto: Array<number> = [];
+  if (!isLoading) randPhoto = randomArray(photo.results.length);
 
   return (
     <Container maxWidth="md">
@@ -28,15 +30,14 @@ export default function MainDisplayLayout({
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            backgroundImage: `url(${photo.results[0].urls.regular})`,
+            backgroundImage: `url(${photo.results[randPhoto[0]].urls.regular})`,
           }}
         >
           <img
             style={{ display: "none" }}
-            src={photo.results[0].urls.regular}
-            alt={photo.results[0].alt_description}
+            src={photo.results[randPhoto[0]].urls.regular}
+            alt={photo.results[randPhoto[0]].alt_description}
           />
-
           <Box
             sx={{
               position: "absolute",

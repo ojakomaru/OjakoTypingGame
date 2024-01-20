@@ -10,7 +10,9 @@ const TypingLists = () => {
   const { typingdatas, setTypingData } = React.useContext(TypingDataContext);
   const [randDatas, setRandData] = useState<TypingDataType[]>([]);
   const scrollTop = useScrollToTop();
-  const { photo, isLoading } = useFetchPhotos();
+  const { photo, isLoading } = useFetchPhotos("cat");
+  let randPhoto: Array<number> = [];
+  if (!isLoading) randPhoto = randomArray(photo.results.length);
 
   const selectedTypingToTop = useCallback(
     (post: TypingDataType): void => {
@@ -41,7 +43,7 @@ const TypingLists = () => {
         randDatas.map((post, i) => (
           <Grid item xs={2} sm={4} md={4} key={`typingdata${i}`}>
             <TypingItem
-              image={photo.results[i].urls.regular}
+              image={photo.results[randPhoto[i]].urls.regular}
               post={post}
               selectedTypingToTop={selectedTypingToTop}
             />
