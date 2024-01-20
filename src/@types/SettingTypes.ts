@@ -15,7 +15,6 @@ type SHOW_RADIO = typeof SHOW | typeof HIDDEN;
 const UPPER = "upper";
 const LOWER = "lower";
 const WORD_INITIAL = "wordInitial";
-const SENTENCE_INITIAL = "sentenceInitial";
 const NONE = "shift";
 type ROMAJI_TYPE =
   | typeof UPPER

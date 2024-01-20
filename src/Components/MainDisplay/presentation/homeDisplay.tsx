@@ -3,6 +3,7 @@ import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { type TypingDataType } from "../../../@types";
 import { strTo3Leader } from "../../../Hooks";
+import { TypeAnimation } from "react-type-animation";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;
@@ -44,7 +45,7 @@ const HomeDisplay = ({ displayData }: HomeDisplayProps) => {
           {title}
         </Typography>
         <Typography variant="h5" color="inherit" paragraph>
-          {strTo3Leader(problems[0].text, 50)}
+          {strTo3Leader(problems[0].text, 40)}
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

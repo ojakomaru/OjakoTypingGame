@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../@types";
 import { strTo3Leader } from "../../Hooks";
-
+import { TypeAnimation } from "react-type-animation";
 interface TypingItemProps {
   image: string;
   post: TypingDataType;
@@ -40,7 +40,14 @@ const TypingItem = (props: TypingItemProps) => {
         <Typography gutterBottom variant="h5" component="h2">
           {post.title}
         </Typography>
-        <Typography>{strTo3Leader(post.problems[0].text, 30)}</Typography>
+        <Typography>
+          <TypeAnimation
+            sequence={[strTo3Leader(post.problems[0].text, 30), 800, ""]}
+            speed={10}
+            deletionSpeed={10}
+            repeat={Infinity}
+          />
+        </Typography>
       </CardContent>
       <CardActions>
         <Button onClick={() => navigate(`/form/${post.id}`)} variant="outlined">
