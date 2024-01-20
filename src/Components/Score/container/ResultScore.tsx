@@ -87,7 +87,11 @@ const ResultScore = (props: ResultScoreProps) => {
     <ResultScoreLayout
       resultScore={<Scores />}
       resultActions={
-        <ResultActions isRealPlay retry={retry} missedRetry={missedRetry} />
+        <ResultActions
+          isRealPlay={isRealPlay}
+          retry={retry}
+          missedRetry={missedRetry}
+        />
       }
     />
   );

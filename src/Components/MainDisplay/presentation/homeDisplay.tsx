@@ -1,8 +1,5 @@
 import React, { useCallback } from "react";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
+import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { type TypingDataType } from "../../../@types";
 import { strTo3Leader } from "../../../Hooks";

@@ -9,8 +9,10 @@ import randomArray from "./randomArray";
 import { showConfirmDialog } from "./showConfirmDialog";
 import { timeFormatting, wpmToComment, wpmToRank } from "./scoreCalc";
 import strTo3Leader from "./strTo3Leader";
+import useFetchPhotos from "./useFetchPhotos";
 
 export {
+  useFetchPhotos,
   strTo3Leader,
   timeFormatting,
   wpmToComment,

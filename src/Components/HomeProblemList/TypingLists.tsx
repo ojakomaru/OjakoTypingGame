@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
 import TypingItem from "./TypingItem";
-import { randomArray } from "../../Hooks";
+import { randomArray, useFetchPhotos } from "../../Hooks";
 
 const TypingLists = () => {
-  const { typingdatas, setTypingData } =
-    React.useContext(TypingDataContext);
+  const { typingdatas, setTypingData } = React.useContext(TypingDataContext);
   const [randDatas, setRandData] = useState<TypingDataType[]>([]);
   const scrollTop = useScrollToTop();
+  const { photo, isLoading } = useFetchPhotos();
 
   const selectedTypingToTop = useCallback(
     (post: TypingDataType): void => {
@@ -35,12 +35,19 @@ const TypingLists = () => {
 
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
-      {typingdatas &&
-        randDatas.map((post, index) => (
-          <Grid item xs={2} sm={4} md={4} key={`typingdata${index}`}>
-            <TypingItem post={post} selectedTypingToTop={selectedTypingToTop} />
+      {isLoading ? (
+        <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+      ) : (
+        randDatas.map((post, i) => (
+          <Grid item xs={2} sm={4} md={4} key={`typingdata${i}`}>
+            <TypingItem
+              image={photo.results[i].urls.regular}
+              post={post}
+              selectedTypingToTop={selectedTypingToTop}
+            />
           </Grid>
-        ))}
+        ))
+      )}
     </Grid>
   );
 };

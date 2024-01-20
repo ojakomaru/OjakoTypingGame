@@ -12,11 +12,12 @@ import { TypingDataType } from "../../@types";
 import { strTo3Leader } from "../../Hooks";
 
 interface TypingItemProps {
+  image: string;
   post: TypingDataType;
   selectedTypingToTop: (post: TypingDataType) => void;
 }
 const TypingItem = (props: TypingItemProps) => {
-  const { post, selectedTypingToTop } = props;
+  const { image, post, selectedTypingToTop } = props;
   const navigate = useNavigate();
   return (
     <Card
@@ -33,7 +34,7 @@ const TypingItem = (props: TypingItemProps) => {
         sx={{
           pt: "56.25%",
         }}
-        image="https://source.unsplash.com/random?wallpapers"
+        image={image}
       />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h5" component="h2">
