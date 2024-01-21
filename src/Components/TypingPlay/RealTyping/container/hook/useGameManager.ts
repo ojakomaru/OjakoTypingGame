@@ -18,7 +18,8 @@ const useGameManager = (
   const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
   const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
-  const [missFlg, setMissFlg] = useState(false); // ミスした際のポップアップロジック
+  const [missFlg, setMissFlg] = useState(false); // ミスした際のフラグ
+  const [tryagain, setIsTryagain] = useState(false); // やり直し中フラグ
   const [count, setCountdown] = useState(3);
 
   const {
@@ -35,7 +36,6 @@ const useGameManager = (
 
   const resetState = useCallback(() => {
     setCountdown(3);
-    setIsStandby(true);
     setMissFlg(false);
     setTotalType(0);
     setTimeOfTyping(new Date().getTime());
@@ -56,7 +56,7 @@ const useGameManager = (
   }, [count, isStandby]);
 
   const gameInit = useCallback(() => {
-    reloadProblem();
+    if(!tryagain) reloadProblem();
   }, [reloadProblem]);
 
   // ミス内容を記録する関数
@@ -78,12 +78,14 @@ const useGameManager = (
   // クリア後のもう一回リセット関数
   const retry = useCallback(() => {
     resetState();
+    setIsTryagain(false);
     reloadProblem();
   }, [reloadProblem, resetState]);
 
   // クリア後のミスだけもう一回関数
   const missedOnlyRetry = useCallback(() => {
     resetState();
+    setIsTryagain(true);
     let retryProblem = selectRetryProblem(missedProblems);
     retryProblem.length !== 0 ? reloadProblem(retryProblem) : reloadProblem();
     setMissedProblems([]);

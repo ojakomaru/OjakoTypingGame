@@ -115,8 +115,6 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     let convRomaText: string | string[][];
     let problem: ProblemType;
     let reloadProblem = retryProblem ? retryProblem : problems;
-    // : structuredClone(problemRef.current);
-    // isRetry ?? reloadProblem = problems;
 
     // 問題文が無くなったらfalse
     if (reloadProblem.length === 0) {

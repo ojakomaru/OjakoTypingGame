@@ -61,9 +61,9 @@ export default function PlayingGame(props: PlayingGameProps) {
   const keyboard = keyboardInit();
 
   // 問題文生成
-  useEffect(() => {
-    if (!isStandby) gameInit();
-  }, [isStandby]);
+  useEffectOnce(() => {
+    gameInit();
+  });
 
   // Escapeキーでホームに戻る
   useEscapeWithHome(setIsStandby);
@@ -72,7 +72,6 @@ export default function PlayingGame(props: PlayingGameProps) {
   useEffect(() => {
     if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText, romajiText]);
-
 
   /* タイピング入力処理 */
   useEffect(() => {
