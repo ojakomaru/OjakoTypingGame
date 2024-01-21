@@ -91,6 +91,8 @@ const RealTypingGame = (props: RealTypingGameProps) => {
     <React.Fragment>
       {finished ? (
         <ResultScore
+          typingTitle={typingdata.title}
+          problemCount={problemCount}
           isRealPlay={isRealPlay}
           totalType={totalType}
           missCount={missCount}

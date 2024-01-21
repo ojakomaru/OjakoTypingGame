@@ -229,6 +229,8 @@ export default function PlayingGame(props: PlayingGameProps) {
     <React.Fragment>
       {finished ? (
         <ResultScore
+          typingTitle={typingdata.title}
+          problemCount={problemCount}
           isRealPlay={typeMode === REAL_TEXT}
           totalType={totalType}
           missCount={missCount}

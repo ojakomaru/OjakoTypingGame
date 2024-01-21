@@ -56,7 +56,7 @@ const useGameManager = (
   }, [count, isStandby]);
 
   const gameInit = useCallback(() => {
-    if(!tryagain) reloadProblem();
+    if (!tryagain) reloadProblem();
   }, [reloadProblem]);
 
   // ミス内容を記録する関数
@@ -107,7 +107,7 @@ const useGameManager = (
   // ゲームクリア時の処理
   const gameClear = () => {
     setTotalType((prev) => prev + missCount);
-    setTimeOfTyping((startTime) => new Date().getTime() - startTime);
+    setTimeOfTyping((startTime) => new Date().getTime() - startTime - 3000);
     setFinished(true);
   };
 

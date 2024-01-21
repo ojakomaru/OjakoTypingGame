@@ -13,6 +13,8 @@ import ResultScoreLayout from "../../layout/ResultScoreLayout";
 import ResultActions from "./ResultActions";
 
 interface ResultScoreProps {
+  typingTitle: string;
+  problemCount: number;
   isRealPlay: boolean;
   totalType: number;
   missCount: number;
@@ -23,6 +25,8 @@ interface ResultScoreProps {
 }
 const ResultScore = (props: ResultScoreProps) => {
   const {
+    typingTitle,
+    problemCount,
     isRealPlay,
     totalType,
     missCount,
@@ -31,7 +35,6 @@ const ResultScore = (props: ResultScoreProps) => {
     retry,
     missedRetry,
   } = props;
-  const { typingdata } = React.useContext(TypingDataContext);
   const wpm = () => (totalType / timeOfTyping) * 60 * 1000;
   const wpm2 = () => wpm() / 60;
   const accuracy = () => (1 - missCount / totalType) * 100;
@@ -66,7 +69,7 @@ const ResultScore = (props: ResultScoreProps) => {
       </DetailArea>
       <DetailArea absoluteX={"270px"} absoluteY={"80px"}>
         <DetailItem align={"left"}>問題数</DetailItem>
-        <DetailItem align={"right"}>{typingdata.problems.length}</DetailItem>
+        <DetailItem align={"right"}>{problemCount}</DetailItem>
       </DetailArea>
       <DetailArea absoluteX={"270px"} absoluteY={"113px"}>
         <DetailItem align={"left"}>打鍵数</DetailItem>
@@ -77,7 +80,7 @@ const ResultScore = (props: ResultScoreProps) => {
         <DetailItem align={"right"}>{isRealPlay ? "-" : missCount}</DetailItem>
       </DetailArea>
       <Score isBest={false} score={score()} />
-      <ScoreRank label={typingdata.title} rank={wpmToRank(score())} />
+      <ScoreRank label={typingTitle} rank={wpmToRank(score())} />
       <ScoreComment comment={wpmToComment(score())} />
       <WeakKeys weakKeys={weakKeys()} />
     </React.Fragment>
