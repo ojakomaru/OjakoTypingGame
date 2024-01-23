@@ -1,6 +1,8 @@
 import React, { ReactNode, createContext, useState } from "react";
 import { useEffectOnce } from "../Hooks";
 import { TypingDataType, TypingGameData } from "../@types";
+import { db } from "../Config";
+import { doc, setDoc } from "firebase/firestore";
 
 let initialData: TypingDataType = {
   id: "1",
@@ -36,6 +38,34 @@ export const TypingDataProvider: React.FC<{ children: ReactNode }> = ({
   );
   // メイン画面にタイピングデータを渡す
   useEffectOnce(() => {
+    const obj = JSON.stringify({
+      id: "1",
+      title: "test",
+      problems: [
+        {
+          text: "テスト問題",
+          kana: "てすともんだい",
+          romaji: "tesutomondai",
+          typingWords: [
+            ["te"],
+            ["su"],
+            ["to"],
+            ["mo"],
+            ["n", "xn", "nn"],
+            ["da"],
+            ["i", "yi"],
+          ],
+        },
+        {
+          text: "田中健太",
+          romaji: "tanakakenta",
+          kana: "タナカケンタ",
+          typingword: [["ta"], ["na"], ["ka", "ca"]],
+        },
+      ],
+    });
+    const cityRef = doc(db, "typingdatas", "ojakoAddDataTest");
+    setDoc(cityRef, { typingdata: obj });
     if (typingdatas) {
       const rnd = Math.floor(Math.random() * typingdatas.length);
       setTypingData(typingdatas[rnd]);
