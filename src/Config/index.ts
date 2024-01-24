@@ -6,8 +6,7 @@ import {
   defaultSetting,
 } from "./Setting";
 import routes from "./routes";
-import { db } from "./firestore";
-import { app, auth, githubProvider, googleProvider } from "./firebase";
+import { app, db, auth, githubProvider, googleProvider } from "./firebase";
 
 export {
   app,
