@@ -41,7 +41,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     );
     setTypingDatas([...typingdatas, typingdata]);
     methods.reset();
-    navigate("/");
+    navigate("/home");
   };
   return (
     <FormProvider {...methods}>

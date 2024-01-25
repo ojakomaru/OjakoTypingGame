@@ -8,6 +8,7 @@ import {
   AddCircleOutlineSharp,
   SportsScoreSharp,
   ModeEdit,
+  AccountCircle,
 } from "@mui/icons-material";
 
 import {
@@ -18,14 +19,25 @@ import {
   GameSetting,
 } from "../Components/Pages";
 import { Route } from "../@types/Route";
+import Auth from "../Components/Auth/Auth";
 
 const routes: Array<Route> = [
+  {
+    key: "router-auth",
+    title: "Auth",
+    description: "Auth",
+    component: Auth,
+    path: "/",
+    isEnabled: false,
+    icon: AccountCircle,
+    appendDivider: false,
+  },
   {
     key: "router-home",
     title: "Home",
     description: "Home",
     component: Home,
-    path: "/",
+    path: "/home",
     isEnabled: true,
     icon: HomeIcon,
     appendDivider: true,

@@ -15,9 +15,9 @@ const CancelButton = ({isDirty}: CancelButtonProps) => {
         true
       );
       if (!confirmed) return;
-      navigate("/");
+      navigate("/home");
     } else {
-      navigate("/");
+      navigate("/home");
     }
   };
   return (

@@ -35,7 +35,7 @@ const AddTypingForm = () => {
       ? setTypingDatas([...typingdatas, typingdata])
       : setTypingDatas([typingdata]);
     methods.reset();
-    navigate("/");
+    navigate("/home");
   };
   return (
     <FormProvider {...methods}>

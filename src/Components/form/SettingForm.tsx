@@ -29,7 +29,7 @@ function SettingForm(props: SettingFormProps) {
   const navigate = useNavigate();
   const backToHome = () => {
     props.setIsSetting!(false);
-    navigate("/");
+    navigate("/home");
   };
   const {
     typeMode,

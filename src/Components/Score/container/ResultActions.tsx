@@ -15,7 +15,7 @@ const ResultActions = ({
   const navigate = useNavigate();
   const backToHome = () => {
     retry();
-    navigate("/");
+    navigate("/home");
   };
   return (
     <React.Fragment>

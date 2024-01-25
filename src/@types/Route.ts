@@ -59,8 +59,6 @@ export type Route = {
    * @type {boolean}
    * @memberof Route
    * @required
-   * @example
-   * true
    * @default
    * true
    */
@@ -91,8 +89,6 @@ export type Route = {
    * @type {boolean}
    * @memberof Route
    * @optional
-   * @example
-   * true
    * @default
    * false
    */
@@ -103,8 +99,6 @@ export type Route = {
    * @type {boolean}
    * @memberof Route
    * @optional
-   * @example
-   * true
    * @default
    * false
    */

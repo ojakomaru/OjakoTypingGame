@@ -28,7 +28,7 @@ const DeleteButton = ({ deleteID }: DeleteButtonProps) => {
     localStorage.setItem("typingData", JSON.stringify(storageData));
     setTypingDatas(storageData);
     setTypingData(storageData[0]);
-    navigate("/");
+    navigate("/home");
   };
   return (
     <Button variant="outlined" onClick={deleteConfirmDialog}>

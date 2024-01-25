@@ -9,7 +9,7 @@ export const useEscapeWithHome = (setIsStandby: (a: boolean) => void) => {
       // "Escape"キーでPlay画面を抜ける
       if (e.key === "Escape") {
         setIsStandby(true);
-        navigate("/");
+        navigate("/home");
       }
     },
     [setIsStandby, navigate]

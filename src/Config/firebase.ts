@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GithubAuthProvider, GoogleAuthProvider } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,8 +16,9 @@ const firebaseConfig = {
 
 // Firebaseの初期化
 const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
-export { app, db, auth, githubProvider, googleProvider };
+export { app, db, storage, auth, githubProvider, googleProvider };
