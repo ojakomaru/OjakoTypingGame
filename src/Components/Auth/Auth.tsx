@@ -1,13 +1,12 @@
-import { Avatar, Button, Container, Typography } from "@mui/material";
+import { Avatar, Button, Container, Typography, Box } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Box } from "@mui/system";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../Config";
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { EmailInput, PasswordInput } from "../form/presentation";
 
-export type FormValues = {
+export type AuthFormValues = {
   email: string;
   password: string;
 };
@@ -19,23 +18,27 @@ const Auth = () => {
     email: "",
     password: "",
   };
-  const methods = useForm<FormValues>({
+
+  const methods = useForm<AuthFormValues>({
     mode: "onChange",
     reValidateMode: "onBlur",
     defaultValues: defaultValue,
   });
 
-  const registerUser: SubmitHandler<FormValues> = (data: FormValues) => {
+  const registerUser: SubmitHandler<AuthFormValues> = (
+    data: AuthFormValues
+  ) => {
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         console.log(userCredential);
-        navigate("/home"); // 登録成功後のリダイレクトページを設定してください。
+        navigate("/home"); // 登録成功後にリダイレク
       })
       .catch((error) => {
         alert(error.message);
         console.error(error);
       });
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -50,22 +53,28 @@ const Auth = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log in
+          ユーザー登録
         </Typography>
         <FormProvider {...methods}>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
-            {/* Input for email */}
-
-            {/* Input for password */}
-
-            {/* Submit button */}
+          <Box
+            component="form"
+            noValidate
+            sx={{
+              mt: 1,
+              display: "flex",
+              flexDirection: "column",
+              width: "90%",
+            }}
+          >
+            <EmailInput />
+            <PasswordInput />
             <Button
               onClick={methods.handleSubmit(registerUser)}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              SIGN IN
+              SIGN UP
             </Button>
           </Box>
         </FormProvider>
