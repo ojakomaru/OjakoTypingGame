@@ -9,8 +9,6 @@ import {
 import React, { useEffect, useState } from "react";
 import { db } from "../../../Config";
 
-type Props = {};
-
 const useObserveUserDoc = (user: User | null) => {
   const [userDocData, setUserDocData] = useState<DocumentData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

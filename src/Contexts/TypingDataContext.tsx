@@ -1,7 +1,6 @@
 import React, { ReactNode, createContext, useState, useEffect } from "react";
 import { useEffectOnce } from "../Hooks";
 import { TypingDataType, TypingGameData } from "../@types";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { db } from "../Config";
 import { doc, setDoc, collection, getDocs } from "firebase/firestore";
 
