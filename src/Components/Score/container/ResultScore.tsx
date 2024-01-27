@@ -7,10 +7,9 @@ import {
   DetailArea,
   DetailItem,
 } from "../presentation";
-import { timeFormatting, wpmToComment, wpmToRank } from "../../../Hooks";
-import { TypingDataContext } from "../../../Contexts";
 import ResultScoreLayout from "../../layout/ResultScoreLayout";
 import ResultActions from "./ResultActions";
+import { timeFormatting, wpmToRank, wpmToComment } from "../../../Util";
 
 interface ResultScoreProps {
   typingTitle: string;

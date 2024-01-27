@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Grid, Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { type TypingDataType } from "../../../@types";
-import { strTo3Leader } from "../../../Hooks";
+import { strTo3Leader } from "../../../Util";
 
 type HomeDisplayProps = {
   displayData: TypingDataType;

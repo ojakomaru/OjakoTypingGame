@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { Romanizer, useEffectOnce } from "../../../Hooks";
+import { useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, REAL_TEXT, type TypingDataType } from "../../../@types";
-import { SettingDataContext } from "../../../Contexts";
+import { useSettingDataContext } from "../../../Contexts";
 import { useRomajiTypedMove, useKanaTypedMove } from "./hook";
 import {
   GameBoard,
@@ -14,6 +14,7 @@ import { Box, Typography } from "@mui/material";
 import { useEscapeWithHome } from "../RealTyping/container/hook/useEscapeWithHome";
 import useGameManager from "../RealTyping/container/hook/useGameManager";
 import { Countdown } from "../RealTyping/presentation";
+import { Romanizer } from "../../../Util";
 
 type PlayingGameProps = {
   isStandby: boolean;
@@ -23,7 +24,7 @@ type PlayingGameProps = {
 };
 export default function PlayingGame(props: PlayingGameProps) {
   const { typingdata, isStandby, setIsStandby, keyboardInit } = props;
-  const { typeMode, showFurigana } = React.useContext(SettingDataContext);
+  const { typeMode, showFurigana } = useSettingDataContext();
   const { romajiRef, romajiInit } = useRomajiTypedMove();
   const { kanaRef, kanaInit } = useKanaTypedMove();
   const tmpRef = useRef(""); // 再レンダリング対策

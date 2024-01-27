@@ -4,7 +4,8 @@ import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
 import TypingItem from "./TypingItem";
-import { randomArray, useFetchPhotos } from "../../Hooks";
+import { useFetchPhotos } from "../../Hooks";
+import { randomArray } from "../../Util";
 
 const TypingLists = () => {
   const { typingdatas, setTypingData } = React.useContext(TypingDataContext);

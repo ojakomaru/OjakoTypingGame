@@ -10,13 +10,14 @@ import {
   RANDOM,
   ProblemType,
 } from "../../../../@types";
-import { SettingDataContext } from "../../../../Contexts";
-import { Romanizer, randomArray } from "../../../../Hooks";
+import { useSettingDataContext } from "../../../../Contexts";
+import { randomArray, Romanizer } from "../../../../Util";
+
 
 const useReloadProblem = (problemsProps: ProblemType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
   const cpProblems = structuredClone(problemsProps);
-  const { typeMode, romajiType, order } = React.useContext(SettingDataContext);
+  const { typeMode, romajiType, order } = useSettingDataContext();
 
   /**
    * 問題文の配列をランダムに入れ替える

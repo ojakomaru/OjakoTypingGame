@@ -9,8 +9,8 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../@types";
-import { strTo3Leader } from "../../Hooks";
 import { TypeAnimation } from "react-type-animation";
+import { strTo3Leader } from "../../Util";
 interface TypingItemProps {
   image: string;
   post: TypingDataType;

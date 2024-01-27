@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React from "react";
-import { showConfirmDialog } from "../../../Hooks";
+import { showConfirmDialog } from "../../../Util";
 import { useNavigate } from "react-router-dom";
 import { TypingDataType } from "../../../@types";
 import { TypingDataContext } from "../../../Contexts";

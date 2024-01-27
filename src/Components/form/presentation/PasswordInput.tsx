@@ -19,7 +19,6 @@ const PasswordInput = (props: Props) => {
         type: "password",
         label: "Password",
         autoComplete: "password",
-        autoFocus: true,
         margin: "normal",
         fullWidth: true,
       }}

@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React, { Fragment, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { SettingDataContext, TypingDataContext } from "../../../../Contexts";
+import { useSettingDataContext, TypingDataContext } from "../../../../Contexts";
 import { MainDisplay } from "../../../MainDisplay/container/MainDisplay";
 import { Countdown } from "../../../MainDisplay/presentation";
 import QuestionBox from "../../../QuestionBox/QuestionBox";
@@ -33,7 +33,7 @@ interface RealTypingGameProps {
 const RealTypingGame = (props: RealTypingGameProps) => {
   const { isRealPlay, isStandby, setIsStandby } = props;
   const { typingdata } = React.useContext(TypingDataContext);
-  const { showFurigana } = React.useContext(SettingDataContext);
+  const { showFurigana } = useSettingDataContext();
 
   const {
     count,

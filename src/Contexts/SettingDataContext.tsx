@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext } from "react";
+import React, { ReactNode, createContext, useContext } from "react";
 import { defaultSetting } from "../Config";
 import {
   ORDER_TYPE,
@@ -62,3 +62,5 @@ export const SettingDataProvider: React.FC<{ children: ReactNode }> = ({
     </SettingDataContext.Provider>
   );
 };
+
+export const useSettingDataContext = () => useContext(SettingDataContext);

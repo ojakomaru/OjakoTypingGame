@@ -2,7 +2,7 @@ import { Timer } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { useEffectOnce } from "../../../Hooks";
-import { timeFormatting } from "../../../Hooks/scoreCalc";
+import { timeFormatting } from "../../../Util/scoreCalc";
 
 const GameTimer = () => {
   const timer = useRef<number>(0); // タイマーのID保管用
@@ -12,7 +12,7 @@ const GameTimer = () => {
     timer.current = window.setInterval(() => {
       setTimeOfTyping(new Date().getTime() - startTime);
     }, 10);
-  })
+  });
 
   return (
     <React.Fragment>

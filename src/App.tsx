@@ -9,6 +9,7 @@ import {
   TypingDataProvider,
   ThemeModeContext,
   SettingDataProvider,
+  AuthProvider,
 } from "./Contexts";
 import { getAppTheme } from "./styles/defaultTheme";
 import { DARK_THEME, LIGHT_THEME, AppMode } from "./@types";
@@ -41,24 +42,26 @@ const App: FC = () => {
   );
 
   return (
-    <TypingDataProvider>
-      <SettingDataProvider>
-        <ThemeModeContext.Provider value={themeMode}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline enableColorScheme />
-            <BrowserRouter>
-              <Routes>
-                {routes.map((route: AppRoute) =>
-                  route.subRoutes
-                    ? route.subRoutes.map((item: AppRoute) => addRoute(item))
-                    : addRoute(route)
-                )}
-              </Routes>
-            </BrowserRouter>
-          </ThemeProvider>
-        </ThemeModeContext.Provider>
-      </SettingDataProvider>
-    </TypingDataProvider>
+    <AuthProvider>
+      <TypingDataProvider>
+        <SettingDataProvider>
+          <ThemeModeContext.Provider value={themeMode}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline enableColorScheme />
+              <BrowserRouter>
+                <Routes>
+                  {routes.map((route: AppRoute) =>
+                    route.subRoutes
+                      ? route.subRoutes.map((item: AppRoute) => addRoute(item))
+                      : addRoute(route)
+                  )}
+                </Routes>
+              </BrowserRouter>
+            </ThemeProvider>
+          </ThemeModeContext.Provider>
+        </SettingDataProvider>
+      </TypingDataProvider>
+    </AuthProvider>
   );
 };
 export default App;

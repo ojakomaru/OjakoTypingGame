@@ -1,6 +1,6 @@
 import React from "react";
 import { LONG_TEXT, type TypingDataType } from "../../../@types";
-import { SettingDataContext } from "../../../Contexts";
+import { useSettingDataContext } from "../../../Contexts";
 import useReloadProblem from "../../TypingPlay/container/hook/useReloadProblem";
 import {
   GameBoard,
@@ -15,8 +15,8 @@ type SettingExampleProps = {
   typingdata: TypingDataType;
 };
 const SettingExample = ({ typingdata }: SettingExampleProps) => {
-  const { typeMode, showFurigana } =
-    React.useContext(SettingDataContext);
+  const { typeMode, showFurigana } = useSettingDataContext();
+
 
   // 問題文生成
   useEffectOnce(() => {

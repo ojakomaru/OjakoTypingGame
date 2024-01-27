@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Container, Paper, Box, CircularProgress } from "@mui/material";
-import { randomArray, useFetchPhotos } from "../../Hooks";
+import { useFetchPhotos } from "../../Hooks";
+import { randomArray } from "../../Util";
 
 type DisplayLayoutProps = {
   children: ReactNode;

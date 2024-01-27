@@ -17,7 +17,7 @@ import {
   defaultSetting,
 } from "../../Config";
 import { RadioForm } from "./settingForm/presentation";
-import { SettingDataContext } from "../../Contexts";
+import { useSettingDataContext } from "../../Contexts";
 import { ResetButton } from "./presentation";
 
 interface SettingFormProps {
@@ -42,7 +42,7 @@ function SettingForm(props: SettingFormProps) {
     setOrder,
     showKeyboard,
     setShowKeyboard,
-  } = React.useContext(SettingDataContext);
+  } = useSettingDataContext();
   const methods = useForm<SettingTypes>({
     defaultValues: {
       typeMode: typeMode,
