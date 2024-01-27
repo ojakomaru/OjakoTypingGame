@@ -1,26 +1,25 @@
-import React from 'react'
-import { Button } from '@mui/material';
-import { UseFormReturn } from 'react-hook-form';
-import { TypingDataType } from '../../../@types';
+import React from "react";
+import { Button, type ButtonProps } from "@mui/material";
 
-interface SubmitButtonProps {
+interface SubmitButtonProps extends ButtonProps {
   possible: string;
   unable: string;
-  methods: UseFormReturn<TypingDataType, any, undefined>;
+  status: { isDirty: boolean; isValid: boolean };
 }
 
 const SubmitButton = (props: SubmitButtonProps) => {
-  const {possible, unable, methods} = props;
+  const { possible, unable, status, ...ButtonProps } = props;
   return (
     <Button
       variant="contained"
       type="submit"
       sx={{ mx: 1 }}
-      disabled={!methods.formState.isDirty || !methods.formState.isValid}
+      disabled={!status.isDirty || !status.isValid}
+      {...ButtonProps}
     >
-      {methods.formState.isValid ? possible : unable}
+      {status.isValid ? possible : unable}
     </Button>
   );
-}
+};
 
-export default SubmitButton
+export default SubmitButton;

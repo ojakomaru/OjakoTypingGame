@@ -53,7 +53,10 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
           <SubmitButton
             possible={"更新する"}
             unable={"変更はありません"}
-            methods={methods}
+            status={{
+              isDirty: methods.formState.isDirty,
+              isValid: methods.formState.isValid,
+            }}
           />
           <CancelButton isDirty={methods.formState.isDirty} />
         </Box>

@@ -20,7 +20,6 @@ const PasswordInput = (props: Props) => {
         label: "Password",
         autoComplete: "password",
         margin: "normal",
-        fullWidth: true,
       }}
     />
   );

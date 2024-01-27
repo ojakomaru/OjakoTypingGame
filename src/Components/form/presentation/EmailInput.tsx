@@ -25,8 +25,7 @@ const EmailInput: React.FC = () => {
         type: "email",
         label: "Email Address",
         autoComplete: "email",
-        autoFocus: true,
-        fullWidth: true,
+        margin: "normal",
       }}
     />
   );
