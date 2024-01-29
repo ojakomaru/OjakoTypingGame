@@ -1,5 +1,18 @@
-import React from 'react'
+import {  User } from 'firebase/auth'
+import { AuthFormValues } from '../Components/Auth/Auth'
+import { insertData } from './insertData';
 
-export default function saveUserData() {
-  
-}
+const saveUserData = async (data: AuthFormValues, user: User) => {
+  const userData = {
+    name: data["name"],
+    email: user.email,
+    photoURL: user.photoURL,
+    phoneNumber: user.phoneNumber,
+    emailVerified: user.emailVerified,
+    uid: user.uid,
+  };
+
+  await insertData("Users", userData);
+};
+
+export default saveUserData

@@ -6,7 +6,7 @@ import {
   FirestoreError,
   onSnapshot,
 } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../../Config";
 
 const useObserveUserDoc = (user: User | null) => {
@@ -39,7 +39,7 @@ const useObserveUserDoc = (user: User | null) => {
     setIsLoading(true);
     if (user) {
       const unsubscribed = onSnapshot(
-        doc(db, "User", user.uid),
+        doc(db, "Users", user.uid),
         handleDoc,
         handleError
       );

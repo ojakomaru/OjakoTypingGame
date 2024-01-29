@@ -1,12 +1,18 @@
 import { Avatar, Container, Typography, Box } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { auth } from "../../Config";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { EmailInput, PasswordInput, SubmitButton } from "../form/presentation";
 import Input from "../ui/Input";
-
+import {
+  createUserWithEmailAndPassword,
+  getRedirectResult,
+  GoogleAuthProvider,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../Config";
+import { useNavigate } from "react-router-dom";
+import saveUserData from "../../Util/saveUserData";
+import { useAuthContext } from "../../Contexts";
 export type AuthFormValues = {
   name: string;
   email: string;
@@ -14,6 +20,7 @@ export type AuthFormValues = {
 };
 
 const Auth = () => {
+  const { user, isAuthLoading } = useAuthContext();
   const navigate = useNavigate();
 
   const defaultValue = {
@@ -28,19 +35,18 @@ const Auth = () => {
     defaultValues: defaultValue,
   });
 
-  const registerUser: SubmitHandler<AuthFormValues> = (
+  const registerUser: SubmitHandler<AuthFormValues> = async (
     data: AuthFormValues
   ) => {
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then((userCredential) => {
-        console.log(userCredential);
-        // saveUserData(userCredential.user);
-        navigate("/home"); // 登録成功後にリダイレク
-      })
-      .catch((error) => {
-        alert(error.message);
-        console.error(error);
-      });
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      data.email,
+      data.password
+    );
+    await sendEmailVerification(userCredential.user);
+    saveUserData(data, userCredential.user);
+    methods.reset(defaultValue);
+    if(!isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
   };
 
   return (

@@ -5,10 +5,8 @@ import { useScrollToTop } from "./useScrollToTop";
 import { useWindowEvent } from "./useWindowEvent";
 import { useLocalStorage } from "./useLocalStorage";
 import useFetchPhotos from "./useFetchPhotos";
-import { useInsertData } from "./useInsertData";
 
 export {
-  useInsertData,
   useFetchPhotos,
   useLocalStorage,
   useEffectOnce,

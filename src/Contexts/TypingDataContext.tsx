@@ -60,7 +60,7 @@ export const TypingDataProvider: React.FC<{ children: ReactNode }> = ({
       setTypingData(typingdatas[rnd]);
     }
   });
-  console.log(typing_datas);
+  // console.log(typing_datas);
   return (
     <TypingDataContext.Provider
       value={{ typingdata, setTypingData, typingdatas, setTypingDatas }}

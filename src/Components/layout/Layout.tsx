@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Footer from "../ui/Footer";
 import Header from "../ui/Header";
 import { Navigation } from "../ui/Navigation/Navigation";
+import { AuthGuard } from "./AuthGuard";
 
 const Wrapper = styled.div.attrs(() => ({
   id: "root",
@@ -36,14 +37,16 @@ const Layout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(false);
   const toggleNavigation = () => setOpen((status) => !status);
   return (
-    <Wrapper>
-      <Header toggleNavigation={toggleNavigation} />
-      <Navigation open={open} handleClose={toggleNavigation} />
-      <Main>{children}</Main>
-      <FooterWrapper>
-        <Footer description="Ojako Typing App var.1.0.0" />
-      </FooterWrapper>
-    </Wrapper>
+    <AuthGuard>
+      <Wrapper>
+        <Header toggleNavigation={toggleNavigation} />
+        <Navigation open={open} handleClose={toggleNavigation} />
+        <Main>{children}</Main>
+        <FooterWrapper>
+          <Footer description="Ojako Typing App var.1.0.0" />
+        </FooterWrapper>
+      </Wrapper>
+    </AuthGuard>
   );
 };
 

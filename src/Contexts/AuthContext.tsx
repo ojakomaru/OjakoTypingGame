@@ -1,27 +1,42 @@
 import { FC, ReactNode, createContext, useContext } from "react";
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
-import { useInitUser } from "../Components/Auth/hook";
+import {
+  useInitUser,
+  useObserveUser,
+  useObserveUserDoc,
+} from "../Components/Auth/hook";
 
-const AuthContext = createContext<{
+interface AuthContextProps {
   user: User | null;
-  userDocData: DocumentData | null;
+  isAuthLoading: boolean;
   authError: any;
-}>({
-  user: null,
-  userDocData: null,
-  authError: null,
-});
+  userDocData: DocumentData | null;
+  isDocLoading: boolean;
+  docError: any;
+}
+const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const { user, userDocData, authError } = useInitUser();
+
+  // Authenticationのユーザーを監視する
+  const { user, isLoading: isAuthLoading, error: authError } = useObserveUser();
+  // ユーザーのドキュメントを監視する
+  const {
+    userDocData,
+    isLoading: isDocLoading,
+    error: docError,
+  } = useObserveUserDoc(user);
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        userDocData,
+        isAuthLoading,
         authError,
+        userDocData,
+        isDocLoading,
+        docError,
       }}
     >
       {children}
