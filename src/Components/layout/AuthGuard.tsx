@@ -6,11 +6,11 @@ type Props = {
   children: ReactNode;
 };
 export const AuthGuard = ({ children }: Props) => {
-  const { user, isAuthLoading } = useAuthContext();
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user && isAuthLoading) {
+    if (!user) {
       navigate("/");
     }
   }, [user]);

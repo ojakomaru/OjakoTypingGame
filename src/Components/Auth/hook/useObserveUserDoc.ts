@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { db } from "../../../Config";
 
-const useObserveUserDoc = (user: User | null) => {
+const useObserveUserDoc = (user: User | null | undefined) => {
   const [userDocData, setUserDocData] = useState<DocumentData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | string | null>(null);

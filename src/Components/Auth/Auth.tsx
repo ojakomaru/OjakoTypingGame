@@ -8,11 +8,16 @@ import {
   getRedirectResult,
   GoogleAuthProvider,
   sendEmailVerification,
+  signInWithEmailAndPassword,
+  updateProfile,
+  User,
 } from "firebase/auth";
 import { auth } from "../../Config";
 import { useNavigate } from "react-router-dom";
 import saveUserData from "../../Util/saveUserData";
 import { useAuthContext } from "../../Contexts";
+
+import { useEffect, useState } from "react";
 export type AuthFormValues = {
   name: string;
   email: string;
@@ -21,6 +26,7 @@ export type AuthFormValues = {
 
 const Auth = () => {
   const { user, isAuthLoading } = useAuthContext();
+  const [isLogin, setIsLogin] = useState(true);
   const navigate = useNavigate();
 
   const defaultValue = {
@@ -35,19 +41,33 @@ const Auth = () => {
     defaultValues: defaultValue,
   });
 
-  const registerUser: SubmitHandler<AuthFormValues> = async (
+  const authenticationAction: SubmitHandler<AuthFormValues> = async (
     data: AuthFormValues
   ) => {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      data.email,
-      data.password
-    );
-    await sendEmailVerification(userCredential.user);
-    saveUserData(data, userCredential.user);
+    try {
+      if (isLogin) {
+        await signInWithEmailAndPassword(auth, data.email, data.password);
+      } else {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          data.email,
+          data.password
+        );
+        await sendEmailVerification(userCredential.user);
+        updateProfile(auth.currentUser as User, {
+          displayName: data.name,
+        });
+        saveUserData(data, userCredential.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     methods.reset(defaultValue);
-    if(!isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
   };
+
+  useEffect(() => {
+    if (!!user && !isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
+  }, [user, isLogin]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -63,12 +83,12 @@ const Auth = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          ユーザー登録
+          {isLogin ? "ログイン" : "ユーザー登録"}
         </Typography>
         <FormProvider {...methods}>
           <Box
             component="form"
-            onSubmit={methods.handleSubmit(registerUser)}
+            onSubmit={methods.handleSubmit(authenticationAction)}
             noValidate
             sx={{
               mt: 1,
@@ -77,21 +97,23 @@ const Auth = () => {
               width: "90%",
             }}
           >
-            <Input
-              name="name"
-              control={methods.control}
-              rules={{
-                required: "名前を入力してください。",
-              }}
-              textFieldProps={{
-                label: "ニックネーム",
-                autoFocus: true,
-              }}
-            />
+            {!isLogin && (
+              <Input
+                name="name"
+                control={methods.control}
+                rules={{
+                  required: "名前を入力してください。",
+                }}
+                textFieldProps={{
+                  label: "ニックネーム",
+                  autoFocus: true,
+                }}
+              />
+            )}
             <EmailInput />
             <PasswordInput />
             <SubmitButton
-              possible={"SIGN UP"}
+              possible={isLogin ? "SIGN IN" : "SIGN UP"}
               unable={"項目の入力をお願いします"}
               status={{
                 isDirty: methods.formState.isDirty,
@@ -102,6 +124,11 @@ const Auth = () => {
             />
           </Box>
         </FormProvider>
+
+        <p>{`アカウントをお持ちで${isLogin ? "ない" : ""}ですか？`}</p>
+        <button onClick={() => setIsLogin(!isLogin)}>
+          {!isLogin ? "ログイン" : "新規登録"}はコチラ
+        </button>
       </Box>
     </Container>
   );

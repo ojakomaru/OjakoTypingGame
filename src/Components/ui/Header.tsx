@@ -1,21 +1,24 @@
-import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import { Search } from './Search/Search';
-import { AppTitle } from './AppTitle';
-import { AppBar, Box } from '@mui/material';
-import { Hamburger } from './Hamburger/Hamburger';
-import { ThemeSwitcher } from './ThemeSwitcher';
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import { Search } from "./Search/Search";
+import { AppTitle } from "./AppTitle";
+import { AppBar, Box } from "@mui/material";
+import { Hamburger } from "./Hamburger/Hamburger";
+import { ThemeSwitcher } from "./ThemeSwitcher";
+import { signOut } from "firebase/auth";
+import { auth } from "../../Config";
 
 interface HeaderProps {
   toggleNavigation?: () => void;
 }
 
 export default function Header({ toggleNavigation }: HeaderProps) {
-
   const navigate = useNavigate();
   const AddTyping = () => navigate("/form");
+  const logout = async () => await signOut(auth);
+
   return (
     <AppBar
       position="fixed"
@@ -28,6 +31,9 @@ export default function Header({ toggleNavigation }: HeaderProps) {
         <Box sx={{ flexGrow: 1 }} />
         <Button onClick={AddTyping} variant="contained" color="secondary">
           新規タイピング追加
+        </Button>
+        <Button onClick={logout} variant="contained" color="secondary">
+          ログアウトする
         </Button>
         <Box sx={{ display: { xs: "none", md: "flex", alignItems: "center" } }}>
           <ThemeSwitcher />

@@ -6,7 +6,6 @@ import {
   DocumentReference,
   setDoc,
 } from "firebase/firestore";
-import { useState } from "react";
 import { db } from "../Config";
 
 export const insertData = async (
