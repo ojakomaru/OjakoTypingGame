@@ -18,11 +18,8 @@ import saveUserData from "../../Util/saveUserData";
 import { useAuthContext } from "../../Contexts";
 
 import { useEffect, useState } from "react";
-export type AuthFormValues = {
-  name: string;
-  email: string;
-  password: string;
-};
+import SocialLogin from "./SocialLogin";
+import { AuthFormValues } from "../../@types";
 
 const Auth = () => {
   const { user, isAuthLoading } = useAuthContext();
@@ -129,6 +126,7 @@ const Auth = () => {
         <button onClick={() => setIsLogin(!isLogin)}>
           {!isLogin ? "ログイン" : "新規登録"}はコチラ
         </button>
+        <SocialLogin />
       </Box>
     </Container>
   );

@@ -3,6 +3,7 @@ import { TypingGameData } from "./TypingGameData";
 import { MainFeaturedPostProps } from "./MainFeaturedPostProps";
 import { DARK_THEME, LIGHT_THEME, type AppMode } from "./AppMode";
 import { ModeProblemsProps } from "./ModeProblemProps";
+import { AuthFormValues } from "./AuthFormValues";
 import {
   Option,
   Options,
@@ -41,6 +42,7 @@ export {
 };
 
 export type {
+  AuthFormValues,
   TypingDataType,
   ProblemType,
   TypingGameData,

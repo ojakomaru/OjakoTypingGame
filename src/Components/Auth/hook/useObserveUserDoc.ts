@@ -37,7 +37,7 @@ const useObserveUserDoc = (user: User | null | undefined) => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (user) {
+    if (!!user) {
       const unsubscribed = onSnapshot(
         doc(db, "Users", user.uid),
         handleDoc,
