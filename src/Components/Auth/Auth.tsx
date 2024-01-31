@@ -1,12 +1,10 @@
-import { Avatar, Container, Typography, Box } from "@mui/material";
+import { Avatar, Container, Typography, Box, Link } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
 import { EmailInput, PasswordInput, SubmitButton } from "../form/presentation";
 import Input from "../ui/Input";
 import {
   createUserWithEmailAndPassword,
-  getRedirectResult,
-  GoogleAuthProvider,
   sendEmailVerification,
   signInWithEmailAndPassword,
   updateProfile,
@@ -66,6 +64,10 @@ const Auth = () => {
     if (!!user && !isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
   }, [user, isLogin]);
 
+  const handleClose = async () => {
+    await navigate("/");
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -121,11 +123,18 @@ const Auth = () => {
             />
           </Box>
         </FormProvider>
-
-        <p>{`アカウントをお持ちで${isLogin ? "ない" : ""}ですか？`}</p>
-        <button onClick={() => setIsLogin(!isLogin)}>
-          {!isLogin ? "ログイン" : "新規登録"}はコチラ
-        </button>
+        <Typography
+          sx={{ mt: 0, fontSize: (theme) => theme.typography.fontSize - 1 }}
+        >
+          {`アカウントをお持ちで${isLogin ? "ない" : ""}ですか？`}
+          <Link
+            underline="none"
+            sx={{ cursor: "pointer" }}
+            onClick={() => setIsLogin(!isLogin)}
+          >
+            {!isLogin ? "ログイン" : "新規登録"}はコチラ
+          </Link>
+        </Typography>
         <SocialLogin />
       </Box>
     </Container>

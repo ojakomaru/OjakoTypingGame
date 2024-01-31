@@ -1,5 +1,5 @@
 import {  User } from 'firebase/auth'
-import { AuthFormValues } from '../Components/Auth/Auth'
+import { AuthFormValues } from '../@types';
 import { insertData } from './insertData';
 
 const saveUserData = async (data: AuthFormValues, user: User) => {

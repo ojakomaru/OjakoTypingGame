@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { AuthFormValues } from "../../Auth/Auth";
+import { AuthFormValues } from "../../../@types";
 import Input from "../../ui/Input";
 
 const EmailInput: React.FC = () => {
