@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import { auth, githubProvider, googleProvider } from "../../Config";
 import GithubButton from "./GithubButton";
 import GoogleButton from "./GoogleButton";
+import { useCookei } from "./hook";
 
-const OWNER = "ojakomaru";
-const REPO = "OjakoTypingGame";
+// const OWNER = "ojakomaru";
+// const REPO = "OjakoTypingGame";
 
 function SocialLogin() {
-  const [token, setToken] = useState<string | null>(null);
+  const { handleLogin } = useCookei("githubToken");
   const [provider, setProvider] = useState<GithubAuthProvider | null>(null);
   // GitHub OAuth Provider ObjectのInstanceを作成
   useEffect(() => {
@@ -24,7 +25,7 @@ function SocialLogin() {
     signInWithPopup(auth, githubProvider).then((result) => {
       const credential = GithubAuthProvider.credentialFromResult(result);
       if (credential && credential.accessToken) {
-        setToken(credential.accessToken);
+        handleLogin(credential.accessToken);
         console.log("token: " + credential.accessToken);
       }
       console.log(result.user);
@@ -32,20 +33,20 @@ function SocialLogin() {
   };
 
   // アクセストークンを使用してGitHub API（GET /Issues）へリクエストする
-  useEffect(() => {
-    if (token !== null) {
-      fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues`, {
-        headers: {
-          Authorization: `token ${token}`,
-          Accept: "application / vnd.github.v3 + json",
-        },
-      }).then((result) => {
-        result.json().then((result) => {
-          console.log(result);
-        });
-      });
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (token !== null) {
+  //     fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues`, {
+  //       headers: {
+  //         Authorization: `token ${token}`,
+  //         Accept: "application / vnd.github.v3 + json",
+  //       },
+  //     }).then((result) => {
+  //       result.json().then((result) => {
+  //         console.log(result);
+  //       });
+  //     });
+  //   }
+  // }, [token]);
 
   const signInWithGoogle = () => {
     // firebaseを使ってGoogleでログインする

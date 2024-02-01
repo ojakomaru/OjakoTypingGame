@@ -3,6 +3,7 @@ import { useEffectOnce } from "../Hooks";
 import { TypingDataType, TypingGameData } from "../@types";
 import { db } from "../Config";
 import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 
 let initialData: TypingDataType = {
   id: "1",
@@ -31,36 +32,45 @@ export const TypingDataContext = createContext<TypingGameData>(
 export const TypingDataProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | string | null>(null);
   // 登録済みのデータの取得
   const [typingdata, setTypingData] = useState<TypingDataType>(initialData);
-  const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
-    JSON.parse(localStorage.getItem("typingData") as string)
-  );
-  const [typing_datas, setTyping_Datas] = useState<TypingDataType[]>([]);
+  // const [typingdatas, setTypingDatas] = useState<TypingDataType[]>(
+  //   JSON.parse(localStorage.getItem("typingData") as string)
+  // );
+  const [typingdatas, setTypingDatas] = useState<TypingDataType[]>([]);
+
   const getAllTypingDatas = async () => {
-    const typingCollection = collection(db, "typingdatas");
-    const querySnapshot = await getDocs(typingCollection);
-    const tempJson = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
-    let tempAry: TypingDataType[] = [];
-    for (let i = 0; i < tempJson.length; i++) {
-       tempAry.push(JSON.parse(tempJson[i].typingdata));
+    try {
+      const typingCollection = collection(db, "typingdatas");
+      const querySnapshot = await getDocs(typingCollection);
+      const tempJson = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
+      let tempAry: TypingDataType[] = [];
+      for (let i = 0; i < tempJson.length; i++) {
+        tempAry.push(JSON.parse(tempJson[i].typingdata));
+      }
+      setTypingDatas(tempAry);
+      setIsLoading(false);
+    } catch (e) {
+      console.log("TypingDataの読み込みに失敗しました", e);
+      setError(e);
     }
-    setTyping_Datas(tempAry);
-    // console.log(querySnapshot.docs.map((doc) => ({ ...doc.data() })));
   };
 
   // メイン画面にタイピングデータを渡す
-  useEffectOnce(() => {
+  useEffect(() => {
     getAllTypingDatas();
     // const obj = JSON.stringify(typingdatas[8]);
     // const cityRef = doc(db, "typingdatas", typingdatas[8].id);
     // setDoc(cityRef, { typingdata: obj });
+    // console.log(typingdatas);
     if (typingdatas) {
       const rnd = Math.floor(Math.random() * typingdatas.length);
       setTypingData(typingdatas[rnd]);
     }
-  });
-  // console.log(typing_datas);
+    console.log(typingdatas);
+  }, [isLoading]);
   return (
     <TypingDataContext.Provider
       value={{ typingdata, setTypingData, typingdatas, setTypingDatas }}
