@@ -14,6 +14,7 @@ import {
   githubProvider,
   googleProvider,
 } from "./firebase";
+import initialData from "./InitialTypingData";
 
 export {
   app,
@@ -28,4 +29,5 @@ export {
   ShowRadioFLG,
   OrderValues,
   defaultSetting,
+  initialData
 };

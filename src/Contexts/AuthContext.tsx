@@ -1,9 +1,7 @@
 import { FC, ReactNode, createContext, useContext } from "react";
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
-import {
-  useObserveUserDoc,
-} from "../Components/Auth/hook";
+import { useObserveUserDoc } from "../Components/Auth/hook";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../Config";
 

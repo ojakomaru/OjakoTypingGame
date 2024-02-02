@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
-import React, { useEffect, useState } from "react";
 import { auth, githubProvider, googleProvider } from "../../Config";
 import GithubButton from "./GithubButton";
 import GoogleButton from "./GoogleButton";
@@ -25,10 +25,9 @@ function SocialLogin() {
     signInWithPopup(auth, githubProvider).then((result) => {
       const credential = GithubAuthProvider.credentialFromResult(result);
       if (credential && credential.accessToken) {
+        // 発行されたトークンをCookeiとStateに保存
         handleLogin(credential.accessToken);
-        console.log("token: " + credential.accessToken);
       }
-      console.log(result.user);
     });
   };
 
