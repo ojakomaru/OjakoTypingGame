@@ -11,12 +11,14 @@ export const AuthGuard = ({ children }: Props) => {
   const { loading } = useContext(TypingDataContext);
   const navigate = useNavigate();
 
+  // ユーザーObjectが取得できなかったらログイン画面に戻す
   useEffect(() => {
     if (!user) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
+  // タイピングデータを読み込み中はローディングアニメーションを表示
   if (loading)
     return (
       <Box
@@ -25,7 +27,7 @@ export const AuthGuard = ({ children }: Props) => {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          minHeight: '100vh'
+          minHeight: "100vh",
         }}
       >
         {"Now Loading..."}

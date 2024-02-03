@@ -1,16 +1,11 @@
 import { type TypingDataType } from "../../../@types";
 import Analyzer from "./Analyzer";
 import { Romanizer } from "../../../Util";
-import { useContext } from "react";
-import { TypingDataContext } from "../../../Contexts";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../../Config";
-import React from "react";
 
-const saveTypingData = (typingdata: TypingDataType): void => {
-  // const { typingdatas } = React.useContext(TypingDataContext);
+const saveTypingData = (typingdata: TypingDataType) => {
   let word: string = "";
-  let typingDataList: TypingDataType[] = [];
   const romanizer = new Romanizer();
 
   /* 入力データの変換処理 */
@@ -35,15 +30,19 @@ const saveTypingData = (typingdata: TypingDataType): void => {
       );
     }
 
-    typingDataList.push(typingdata);
+    // typingDataList.push(typingdata);
     /* 登録されたデータが有れば取得してマージ */
     // for (let i = 0; i < typingdatas.length; i++) {
     //   typingdatas[i];
     // }
     // console.log(typingdatas);
-    const obj = JSON.stringify(typingdata);
-    const dataRef = doc(db, "typingdatas", typingdata.id);
-    setDoc(dataRef, { typingdata: obj });
+    try {
+      const obj = JSON.stringify(typingdata);
+      const dataRef = doc(db, "typingdatas", typingdata.id);
+      setDoc(dataRef, { typingdata: obj });
+    } catch (error) {
+      console.error("Error adding data: ", error);
+    }
 
     // if (localStorage.hasOwnProperty("typingData")) {
     //   let olddata = JSON.parse(localStorage.getItem("typingData") as string);

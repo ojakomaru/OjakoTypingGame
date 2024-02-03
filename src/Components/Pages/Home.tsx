@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Layout from "../layout/Layout";
 import TypingLists from "../HomeProblemList/TypingLists";
 import MainDiaplayLayout from "../layout/MainDisplayLayout";
