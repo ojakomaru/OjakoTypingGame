@@ -18,7 +18,17 @@ export default function MainDisplayLayout({
   return (
     <Container maxWidth="md">
       {isLoading ? (
-        <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          {"Now Loading..."}
+          <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+        </Box>
       ) : (
         <Paper
           sx={{

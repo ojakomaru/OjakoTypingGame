@@ -1,31 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../layout/Layout";
 import TypingLists from "../HomeProblemList/TypingLists";
 import MainDiaplayLayout from "../layout/MainDisplayLayout";
 import { HomeDisplay } from "../MainDisplay/presentation";
-import { TypingDataContext } from "../../Contexts";
+import { TypingDataContext, useAuthContext } from "../../Contexts";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import { Snackbar, SnackbarCloseReason } from "@mui/material";
+import { Snackbar } from "@mui/material";
 
 export default function Home() {
   const { typingdata } = React.useContext(TypingDataContext);
+  const { user } = useAuthContext();
   const [open, setOpen] = useState(false);
-  const [userInfo, setUserInfo] = useState<boolean>(false); // ユーザー情報がfalseであると仮定
 
   function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
-  const handleCheckUserInfo = () => {
-    // ここでユーザー情報を確認する処理を行う
-    // 例えば、データベースからユーザー情報を取得し、条件に応じてsetUserInfoを使用して更新する
-
-    // 仮の確認例として、userInfoがfalseであればポップアップを表示する
-    if (!userInfo) {
-      setOpen(true);
-    }
-  };
+  useEffect(() => {
+    if (!!user) setOpen(true);
+  }, [user]);
 
   const handleClose = () => {
     setOpen(false);
@@ -35,7 +28,8 @@ export default function Home() {
     <Layout>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="warning">
-          User information is not complete!
+          ユーザー認証がまだ完了していません。
+          受信メールからユーザーメール認証をお願い致します。
         </Alert>
       </Snackbar>
       <MainDiaplayLayout>

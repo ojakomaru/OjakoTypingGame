@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { CircularProgress, Grid } from "@mui/material";
+import { Box, CircularProgress, Grid } from "@mui/material";
 import { TypingDataType } from "../../@types";
 import { TypingDataContext } from "../../Contexts/TypingDataContext";
 import { useScrollToTop } from "../../Hooks/useScrollToTop";
@@ -39,7 +39,16 @@ const TypingLists = () => {
   return (
     <Grid container spacing={{ md: 3 }} columns={{ md: 12 }}>
       {isLoading ? (
-        <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+        </Box>
       ) : (
         randDatas.map((post, i) => (
           <Grid item xs={2} sm={4} md={4} key={`typingdata${i}`}>

@@ -60,9 +60,9 @@ const Auth = () => {
     methods.reset(defaultValue);
   };
 
-  // useEffect(() => {
-  //   if (!!user && !isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
-  // }, [user, isLogin]);
+  useEffect(() => {
+    if (!!user && !isAuthLoading) navigate("/home"); // 登録成功後にリダイレクト
+  }, [user, isLogin]);
 
   return (
     <Container component="main" maxWidth="xs">
