@@ -1,10 +1,8 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import { Search } from "./Search/Search";
 import { AppTitle } from "./AppTitle";
-import { AppBar, Box } from "@mui/material";
+import { AppBar, Box, Button, Toolbar } from "@mui/material";
 import { Hamburger } from "./Hamburger/Hamburger";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { signOut } from "firebase/auth";
