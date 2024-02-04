@@ -43,7 +43,7 @@ class Analyzer {
    * @returns Object 変換結果を格納したオブジェクト
    */
   public async getConvertString(term: string) {
-    let convertString = {
+    const convertString = {
       romaji: await this.parse(term, "romaji", "normal"),
       hiragana: await this.parse(term, "hiragana", "normal"),
       furigana: await this.parse(term, "romaji", "furigana"),

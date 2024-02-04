@@ -8,8 +8,8 @@
 export default function randomArray(dataLength: number, limit: number = dataLength) {
   let idx;
   let count = 0;
-  let randomAry = [];
-  let a = [...Array(dataLength).keys()];
+  const randomAry = [];
+  const a = [...Array(dataLength).keys()];
   while (a.length > 0) {
     idx = Math.floor(Math.random() * a.length);
     randomAry.push(a[idx]);

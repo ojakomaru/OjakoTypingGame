@@ -16,7 +16,7 @@ const saveTypingData = (typingdata: TypingDataType) => {
         .trim()
         .replace(/\s/g, " ")
         .replace(/\r?\n/g, "");
-      let convertString = await Analyzer.getConvertString(word);
+      const convertString = await Analyzer.getConvertString(word);
       typingdata.problems[i].kana = convertString.hiragana.replace(/␣/g, " "); // かな変換
       typingdata.problems[i].romaji = romanizer
         .romanize(typingdata.problems[i].kana)

@@ -4,7 +4,7 @@
  * @param limit 変換する文字数の境界
  * @returns 3点リーダーに置換した文字列
  */
-export default function strTo3Leader(str: string, limit: number = 100) {
+export default function strTo3Leader(str: string, limit = 100) {
   const clamp = "…";
   if (str.length > limit) {
     str = str.substring(0, limit - 1) + clamp;

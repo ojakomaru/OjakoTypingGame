@@ -76,3 +76,5 @@ export default App;
 //  npm install react-router-dom
 // npm i js-hira-kata-romanize
 // npm install axios --save
+// npm i -D eslint
+// npx eslint --init

@@ -26,8 +26,8 @@ const useReloadProblem = (problemsProps: ProblemType) => {
    */
   const randomProblemCreate = useCallback(
     (problemLength: number = problemsProps.length) => {
-      let initAry = randomArray(problemLength);
-      let randProblems: ProblemType = [];
+      const initAry = randomArray(problemLength);
+      const randProblems: ProblemType = [];
       for (let i = 0; i < initAry.length; i++) {
         randProblems.push(problemsProps[initAry[i]]);
       }
@@ -114,7 +114,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
-    let reloadProblem = retryProblem ? retryProblem : problems;
+    const reloadProblem = retryProblem ? retryProblem : problems;
 
     // 問題文が無くなったらfalse
     if (reloadProblem.length === 0) {
@@ -137,7 +137,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
 
     // 設定モードにより分岐
     if (typeMode === LONG_TEXT) {
-      let text: string = "";
+      let text = "";
       for (let i = 0; i < reloadProblem.length; i++) {
         text += `${reloadProblem[i].text}\n`;
       }

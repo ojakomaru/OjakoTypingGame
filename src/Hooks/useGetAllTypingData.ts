@@ -21,7 +21,7 @@ export default function useGetAllTypingData() {
       const typingCollection = collection(db, "typingdatas");
       const querySnapshot = await getDocs(typingCollection);
       const tempJson = querySnapshot.docs.map((doc) => ({ ...doc.data() }));
-      let tempAry: TypingDataType[] = [];
+      const tempAry: TypingDataType[] = [];
       for (let i = 0; i < tempJson.length; i++) {
         tempAry.push(JSON.parse(tempJson[i].typingdata));
       }

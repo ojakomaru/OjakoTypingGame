@@ -30,7 +30,7 @@ const MissMessage = styled.div<MissMessageProps>`
  *          messageShow: メッセージを一定時間表示する関数
  */
 export const useMissMessage = (): [ReactNode, () => void] => {
-  let hiddenedTime = 700;
+  const hiddenedTime = 700;
   const [miss, setMissFlg] = useState<boolean>(false);
   const messageShow = useCallback(() => {
     setMissFlg(true);
