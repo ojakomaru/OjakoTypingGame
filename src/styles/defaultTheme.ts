@@ -1,6 +1,6 @@
 import { Theme, createTheme, responsiveFontSizes } from "@mui/material";
-import { AppMode } from "../@types/AppMode";
 import { grey } from "@mui/material/colors";
+import { AppMode } from "../@types/AppMode";
 
 export const getAppTheme = (mode: AppMode): Theme => {
   let defaultTheme = createTheme({

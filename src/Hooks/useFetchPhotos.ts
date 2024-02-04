@@ -1,6 +1,11 @@
-import React from "react";
 import axios from "axios";
 import useSWR from "swr";
+
+/**
+ * 検索文字列を渡してUnsplashからランダムな写真データを取得してきます
+ * @param query 検索用のワード
+ * @returns 検索ワードで取得した写真データ, 読み込みフラグ, Fetchできなかったときのエラーオブジェクト
+ */
 const useFetchPhotos = (query: string) => {
   const fetcher = async (url: string) =>
     await axios.get(url).then((res) => res.data);

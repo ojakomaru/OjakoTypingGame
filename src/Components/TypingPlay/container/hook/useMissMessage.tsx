@@ -37,7 +37,7 @@ export const useMissMessage = (): [ReactNode, () => void] => {
     setTimeout(function () {
       setMissFlg(false);
     }, hiddenedTime);
-  }, [miss]);
+  }, []);
 
   return [<MissMessage $isMiss={miss} />, messageShow];
 };

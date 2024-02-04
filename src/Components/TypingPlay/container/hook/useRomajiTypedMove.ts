@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 const useRomajiTypedMove = () => {
   const romajiRef = useRef<HTMLParagraphElement>(null);

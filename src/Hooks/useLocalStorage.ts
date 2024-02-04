@@ -15,7 +15,7 @@ export function useLocalStorage<T>({
     const parsed = JSON.parse(storageValue);
     if (parsed === null || parsed === undefined) return initialState;
     return parsed;
-  }, [storageKey]);
+  }, [storageKey, initialState]);
   const [state, _setState] = useState(setValueFromStorage());
 
   useEffect(() => {

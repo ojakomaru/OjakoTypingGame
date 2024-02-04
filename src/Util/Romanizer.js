@@ -14,7 +14,7 @@ export default class Romanizer {
 
   youon = ["h", "y"];
 
-  upperMode = Romanizer.UPPER_NONE;
+  upperMode = "none";
 
   constructor(option) {
     if (option && "upper" in option) {
@@ -274,7 +274,6 @@ export default class Romanizer {
       return romanText;
     }
   }
-
 
   upperAll(romanText) {
     let mode = typeof romanText === "string";

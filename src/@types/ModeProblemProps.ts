@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import { SHOW_RADIO, TYPE_MODE } from "./SettingTypes";
+import { SHOW_RADIO } from "./SettingTypes";
 
 export interface ModeProblemsProps {
   refs: RefObject<HTMLParagraphElement>[];
