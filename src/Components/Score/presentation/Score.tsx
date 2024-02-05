@@ -1,6 +1,5 @@
-import React from "react";
-import styled from "styled-components";
-import DetailItem from "./DetailItem";
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledScore = styled.div<{ $isBest: boolean }>`
   position: absolute;
@@ -18,20 +17,18 @@ const StyledScoreItem = styled.span<{ $align: string }>`
   font-size: 42px;
   width: 230px;
   display: inline-block;
-  font-family: "mtjFontRound";
+  font-family: 'mtjFontRound';
 `;
 // どういうわけか継承しても反映されない↓↓
 // const StyledScoreItem = styled(DetailItem)<{$align: string}>`
 //   font-size: 42px;
 //   width: 230px;
 // `;
-const Score = ({ isBest, score }: { isBest: boolean; score: number }) => {
-  return (
-    <StyledScore $isBest={isBest}>
-      <StyledScoreItem $align={"left"}>Score</StyledScoreItem>
-      <StyledScoreItem $align={"right"}>{score}</StyledScoreItem>
-    </StyledScore>
-  );
-};
+const Score = ({ isBest, score }: { isBest: boolean; score: number }) => (
+  <StyledScore $isBest={isBest}>
+    <StyledScoreItem $align={'left'}>Score</StyledScoreItem>
+    <StyledScoreItem $align={'right'}>{score}</StyledScoreItem>
+  </StyledScore>
+);
 
 export default Score;

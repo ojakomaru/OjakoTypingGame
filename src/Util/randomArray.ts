@@ -15,7 +15,7 @@ export default function randomArray(dataLength: number, limit: number = dataLeng
     randomAry.push(a[idx]);
     a.splice(idx, 1);
     count++;
-    if(limit <= count) a.length = 0;
+    if (limit <= count) a.length = 0;
   }
   return randomAry;
 }

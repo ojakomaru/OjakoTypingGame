@@ -1,9 +1,8 @@
-import * as React from 'react';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
-import { useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 function Copyright() {
   return (
@@ -22,11 +21,11 @@ interface FooterProps {
   description: string;
 }
 
-export default function Footer({ description } : FooterProps) {
+export default function Footer({ description }: FooterProps) {
   const theme = useTheme();
 
   return (
-    <div
+    <Box
       css={css`
         flex: 1;
         display: flex;
@@ -47,6 +46,6 @@ export default function Footer({ description } : FooterProps) {
         {description}
       </Typography>
       <Copyright />
-    </div>
+    </Box>
   );
 }

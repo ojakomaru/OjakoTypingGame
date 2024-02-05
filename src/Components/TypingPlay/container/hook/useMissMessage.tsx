@@ -1,5 +1,5 @@
-import React, { ReactNode, useCallback, useState } from "react";
-import styled, { css } from "styled-components";
+import React, { ReactNode, useCallback, useState } from 'react';
+import styled, { css } from 'styled-components';
 
 type MissMessageProps = {
   $isMiss: boolean;
@@ -34,10 +34,10 @@ export const useMissMessage = (): [ReactNode, () => void] => {
   const [miss, setMissFlg] = useState<boolean>(false);
   const messageShow = useCallback(() => {
     setMissFlg(true);
-    setTimeout(function () {
+    setTimeout(() => {
       setMissFlg(false);
     }, hiddenedTime);
   }, []);
 
-  return [<MissMessage $isMiss={miss} />, messageShow];
+  return [<MissMessage key={'missMessageKey'} $isMiss={miss} />, messageShow];
 };

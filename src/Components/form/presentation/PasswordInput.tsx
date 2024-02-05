@@ -1,25 +1,22 @@
-import React from "react";
-import { useFormContext } from "react-hook-form";
-import { AuthFormValues } from "../../../@types";
-import Input from "../../ui/Input";
+import { useFormContext } from 'react-hook-form';
+import { AuthFormValues } from '../../../@types';
+import Input from '../../ui/Input';
 
-type Props = {};
-
-const PasswordInput = (props: Props) => {
+const PasswordInput = () => {
   const { control } = useFormContext<AuthFormValues>();
   return (
     <Input
       name="password"
       control={control}
       rules={{
-        required: "Passwordは必須です",
-        minLength: { value: 6, message: "Passwordが短すぎます" },
+        required: 'Passwordは必須です',
+        minLength: { value: 6, message: 'Passwordが短すぎます' },
       }}
       textFieldProps={{
-        type: "password",
-        label: "Password",
-        autoComplete: "password",
-        margin: "normal",
+        type: 'password',
+        label: 'Password',
+        autoComplete: 'password',
+        margin: 'normal',
       }}
     />
   );

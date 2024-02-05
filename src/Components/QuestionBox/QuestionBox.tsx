@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { ProblemType } from "../../@types";
-import styled from "styled-components";
-import StarsIcon from "@mui/icons-material/Stars";
-import { Button } from "@mui/material";
-import { styled as MuiStyled } from "@mui/material";
-import QuestionBoxItem from "./QuestionBoxItem";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import StarsIcon from '@mui/icons-material/Stars';
+import { Button, styled as MuiStyled } from '@mui/material';
+import { ProblemType } from '../../@types';
+import QuestionBoxItem from './QuestionBoxItem';
 
 const StyledQuestionBoxWrapper = styled.div`
   border: 1px solid #dde4e6;
@@ -14,16 +13,16 @@ const StyledQuestionBoxWrapper = styled.div`
   margin: 10px 0;
   line-height: 150%;
 `;
-const StyledQuestionBoxTitle = MuiStyled("h2")(({ theme }) => ({
+const StyledQuestionBoxTitle = MuiStyled('h2')(({ theme }) => ({
   color: theme.palette.primary.main,
-  position: "relative",
-  fontWeight: "bold",
-  marginBottom: "5px",
-  fontSize: "1.8rem",
+  position: 'relative',
+  fontWeight: 'bold',
+  marginBottom: '5px',
+  fontSize: '1.8rem',
 }));
 const KanaShowToggle = MuiStyled(Button)({
-  position: "absolute",
-  right: "40px",
+  position: 'absolute',
+  right: '40px',
   top: 0,
 });
 const StyledQuestionBoxContent = styled.div`
@@ -49,22 +48,14 @@ const QuestionBox = ({ problems }: QuestionBoxProps) => {
     <StyledQuestionBoxWrapper>
       <StyledQuestionBoxTitle>
         <StarsIcon />
-        問題文
-        <KanaShowToggle
-          variant="outlined"
-          onClick={() => setKanaHidden(!kanaHidden)}
-        >
-          ふりがな非表示
+        {'問題文'}
+        <KanaShowToggle variant="outlined" onClick={() => setKanaHidden(!kanaHidden)}>
+          {'ふりがな非表示'}
         </KanaShowToggle>
       </StyledQuestionBoxTitle>
       <StyledQuestionBoxContent>
         {problems.map((problem, index) => (
-          <QuestionBoxItem
-            key={index}
-            kana={`（${problem.kana}）`}
-            text={problem.text}
-            kanaHidden={kanaHidden}
-          />
+          <QuestionBoxItem key={index} kana={`（${problem.kana}）`} text={problem.text} kanaHidden={kanaHidden} />
         ))}
       </StyledQuestionBoxContent>
     </StyledQuestionBoxWrapper>

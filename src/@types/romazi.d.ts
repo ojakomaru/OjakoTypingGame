@@ -6,6 +6,7 @@ declare module "kuroshiro-analyzer-kuromoji";
 declare module 'react-typical';
 declare module "path-browserify" {
   import path from "path";
+
   export default path;
 }
 declare class Kuroshiro {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import Cookies from "js-cookie";
 import { useEffectOnce } from "../../../Hooks";
 

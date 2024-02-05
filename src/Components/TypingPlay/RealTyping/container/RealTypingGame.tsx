@@ -71,8 +71,8 @@ const RealTypingGame = (props: RealTypingGameProps) => {
 
   /* 文章判定処理 */
   const onSubmit: SubmitHandler<InputValues> = (inputData: InputValues) => {
-    let typed = inputData.answer.length;
-    let checkText = questionText.substring(0, typed);
+    const typed = inputData.answer.length;
+    const checkText = questionText.substring(0, typed);
 
     // 入力箇所が一致した場合の処理
     if (inputData.answer.replace(/\s/g, "␣") === checkText) {

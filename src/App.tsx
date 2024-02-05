@@ -1,31 +1,21 @@
-import React, { FC, useMemo, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { routes } from "./Config";
-import { Route as AppRoute } from "./@types/Route";
-import { PageDefault } from "./Components/PageDefault";
-import { CssBaseline, useMediaQuery } from "@mui/material";
-import { ThemeProvider } from "@mui/material";
-import {
-  TypingDataProvider,
-  ThemeModeContext,
-  SettingDataProvider,
-  AuthProvider,
-} from "./Contexts";
-import { getAppTheme } from "./styles/defaultTheme";
-import { DARK_THEME, LIGHT_THEME, AppMode } from "./@types";
+import { FC, useMemo, useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { CssBaseline, useMediaQuery, ThemeProvider } from '@mui/material';
+import { routes } from './Config';
+import { Route as AppRoute } from './@types/Route';
+import { PageDefault } from './Components/PageDefault';
+import { TypingDataProvider, ThemeModeContext, SettingDataProvider, AuthProvider } from './Contexts';
+import { getAppTheme } from './styles/defaultTheme';
+import { DARK_THEME, LIGHT_THEME, AppMode } from './@types';
 
 const App: FC = () => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
-    ? DARK_THEME
-    : LIGHT_THEME;
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)') ? DARK_THEME : LIGHT_THEME;
   const [mode, setMode] = useState<AppMode>(prefersDarkMode);
 
   const themeMode = useMemo(
     () => ({
       toggleThemeMode: () => {
-        setMode((prevMode) =>
-          prevMode === LIGHT_THEME ? DARK_THEME : LIGHT_THEME
-        );
+        setMode((prevMode) => (prevMode === LIGHT_THEME ? DARK_THEME : LIGHT_THEME));
       },
     }),
     []
@@ -34,11 +24,7 @@ const App: FC = () => {
   const theme = useMemo(() => getAppTheme(mode), [mode]);
 
   const addRoute = (route: AppRoute) => (
-    <Route
-      key={route.key}
-      path={route.path}
-      Component={route.component || PageDefault}
-    />
+    <Route key={route.key} path={route.path} Component={route.component ? route.component : PageDefault} />
   );
 
   return (
@@ -51,9 +37,7 @@ const App: FC = () => {
               <BrowserRouter>
                 <Routes>
                   {routes.map((route: AppRoute) =>
-                    route.subRoutes
-                      ? route.subRoutes.map((item: AppRoute) => addRoute(item))
-                      : addRoute(route)
+                    route.subRoutes ? route.subRoutes.map((item: AppRoute) => addRoute(item)) : addRoute(route)
                   )}
                 </Routes>
               </BrowserRouter>

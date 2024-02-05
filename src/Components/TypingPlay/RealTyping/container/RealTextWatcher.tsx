@@ -42,7 +42,7 @@ const RealTextWatcher = (props: RealTextWatcherProps) => {
       </StyleQuestionText>
       <StyleInputText>
         {inputValue.map((char: string, i: number) => {
-          let className =
+          const className =
             inputValue[i] !== questionAry[i] ? "typo" : "waiting-letters";
           return (
             <span className={className} key={i}>

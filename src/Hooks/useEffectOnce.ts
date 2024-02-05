@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 const useEffectOnce = (effect: React.EffectCallback) => {
   const called = useRef(false);
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (!called.current) {
       called.current = true;

@@ -1,12 +1,12 @@
-import { Timer } from "@mui/icons-material";
-import { Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
-import { useEffectOnce } from "../../../Hooks";
-import { timeFormatting } from "../../../Util/scoreCalc";
+import { Timer } from '@mui/icons-material';
+import { Typography } from '@mui/material';
+import React, { useRef, useState } from 'react';
+import { useEffectOnce } from '../../../Hooks';
+import { timeFormatting } from '../../../Util/scoreCalc';
 
 const GameTimer = () => {
   const timer = useRef<number>(0); // タイマーのID保管用
-  const [timeOfTyping, setTimeOfTyping] = useState(0); //トータルタイム
+  const [timeOfTyping, setTimeOfTyping] = useState(0); // トータルタイム
   useEffectOnce(() => {
     const startTime = new Date().getTime();
     timer.current = window.setInterval(() => {

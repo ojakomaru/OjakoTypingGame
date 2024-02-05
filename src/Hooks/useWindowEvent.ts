@@ -14,6 +14,7 @@ export const useWindowEvent = <K extends keyof WindowEventMap>(
   deps?: DependencyList,
   options?: boolean | AddEventListenerOptions
 ) =>
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (window) {
       window.addEventListener(type, listener, options);

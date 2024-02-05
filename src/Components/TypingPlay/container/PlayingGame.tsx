@@ -1,4 +1,6 @@
+/* eslint-disable */
 import React, { useEffect, useRef } from "react";
+import { Box, Typography } from "@mui/material";
 import { useEffectOnce } from "../../../Hooks";
 import { LONG_TEXT, REAL_TEXT, type TypingDataType } from "../../../@types";
 import { useSettingDataContext } from "../../../Contexts";
@@ -10,7 +12,6 @@ import {
   ShortModeProblems,
 } from "../presentation";
 import ResultScore from "../../Score/container/ResultScore";
-import { Box, Typography } from "@mui/material";
 import { useEscapeWithHome } from "../RealTyping/container/hook/useEscapeWithHome";
 import useGameManager from "../RealTyping/container/hook/useGameManager";
 import { Countdown } from "../RealTyping/presentation";
@@ -71,7 +72,7 @@ export default function PlayingGame(props: PlayingGameProps) {
 
   // 問題文の更新時に最初のキーを色付けする
   useEffect(() => {
-    if (!!romajiText[0]) keyboard.selActive(romajiText[0]);
+    if (romajiText[0]) keyboard.selActive(romajiText[0]);
   }, [questionText, romajiText]);
 
   /* タイピング入力処理 */
@@ -79,15 +80,15 @@ export default function PlayingGame(props: PlayingGameProps) {
     if (finished) return;
     const romajiTyped = romajiInit();
     const kanaTyped = kanaInit();
-    let romaPos = romaPosIdx.current,
-      kanaPos = kanaPosIdx.current,
-      romaLength = romaIdx.current,
-      kanaLength = kanaIdx.current;
+    let romaPos = romaPosIdx.current;
+      let kanaPos = kanaPosIdx.current;
+      let romaLength = romaIdx.current;
+      let kanaLength = kanaIdx.current;
     let tmp = tmpRef.current;
     document.onkeydown = function (e) {
       /* typingWordがstateの為特別に以下で定義 */
       patternAry.current.splice(typingWord.length, 100 - typingWord.length);
-      let pattern = patternAry.current;
+      const pattern = patternAry.current;
       let nFlag = false;
 
       function saveRefs() {
@@ -120,9 +121,9 @@ export default function PlayingGame(props: PlayingGameProps) {
       } else {
         // 目的のキーでなければpattern[kanaPos]を検索
         if (!tmp.match(/[ -/:-@[-`/{-~]/)) {
-          let reg = new RegExp("^" + tmp);
+          const reg = new RegExp(`^${  tmp}`);
           for (let i = 0; i < typingWord[kanaPos].length; i++) {
-            if (!!typingWord[kanaPos][i].match(reg)) {
+            if (typingWord[kanaPos][i].match(reg)) {
               pattern[kanaPos] = i;
               break;
             }
@@ -135,7 +136,7 @@ export default function PlayingGame(props: PlayingGameProps) {
           romaPos++;
           saveRefs();
         } else {
-          //「ん」の時の特別措置
+          // 「ん」の時の特別措置
           if (
             typingWord[kanaPos][pattern[kanaPos]] === "nn" &&
             typingWord[kanaPos].length === 3
@@ -147,7 +148,7 @@ export default function PlayingGame(props: PlayingGameProps) {
                 nFlag = true;
                 // 「ん」を省略して記号を入力し文章を終えたとき
                 if (romaLength + 1 === romajiText.length - 1)
-                  romaLength = romaLength + 2;
+                  romaLength += 2;
                 break;
               }
             }
@@ -157,11 +158,9 @@ export default function PlayingGame(props: PlayingGameProps) {
             }
           }
           // 該当パターンなし、「ん」でもない時は打ち間違い
-          else {
-            if (e.key !== "Shift") {
+          else if (e.key !== "Shift") {
               missTyped(typingWord[kanaPos][pattern[kanaPos]][romaPos]);
             }
-          }
         }
       }
 
@@ -170,7 +169,7 @@ export default function PlayingGame(props: PlayingGameProps) {
         romajiTyped!.next(romaLength - 1);
         // ローマ字入力が完了している場合
         if (romaPos === typingWord[kanaPos][pattern[kanaPos]].length) {
-          let kanaStr = romanizer.romaToHira(
+          const kanaStr = romanizer.romaToHira(
             typingWord[kanaPos][pattern[kanaPos]]
           );
           kanaTyped!.success(kanaLength);

@@ -1,5 +1,7 @@
 import React, { useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import {
   ORDER_TYPE,
   ROMAJI_TYPE,
@@ -7,8 +9,6 @@ import {
   SettingTypes,
   TYPE_MODE,
 } from "../../@types";
-import { Box, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import {
   RomajiTypeValues,
   TypeModeValues,
@@ -45,11 +45,11 @@ function SettingForm(props: SettingFormProps) {
   } = useSettingDataContext();
   const methods = useForm<SettingTypes>({
     defaultValues: {
-      typeMode: typeMode,
-      showFurigana: showFurigana,
-      romajiType: romajiType,
-      order: order,
-      showKeyboard: showKeyboard,
+      typeMode,
+      showFurigana,
+      romajiType,
+      order,
+      showKeyboard,
     },
   });
 

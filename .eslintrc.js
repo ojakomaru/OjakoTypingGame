@@ -24,6 +24,10 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
 
   rules: {
+    "no-underscore-dangle": 'off',
+    'no-console': 'off', // console.logが残っていてもOK
+    'import/no-cycle': 'off', // importの階層読み込みルールの無効化
+    'no-plusplus': 'off', // ++インクリメントを有効化
     'react/react-in-jsx-scope': 'off', //import React from 'react'が無くてもエラーを無くす
     'react/prop-types': 'off', //TypeScriptでチェックしているから不要。offにする
     'react-hooks/exhaustive-deps': 'off', // useEffectなどの依存配列の設定忘れを無視する
@@ -38,14 +42,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    'react/function-component-definition': [
-      // アロー関数以外受け付けない設定
-      2,
-      {
-        namedComponents: 'arrow-function',
-        unnamedComponents: 'arrow-function',
-      },
-    ],
+
     'react/jsx-filename-extension': [
       //jsx形式のファイル拡張子をjsxもしくはtsxに限定
       'error',

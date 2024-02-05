@@ -1,18 +1,11 @@
-import React, { useCallback } from "react";
-import { TypingDataType } from "../../@types";
-import { Box } from "@mui/material";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { TypingDataContext } from "../../Contexts";
-import saveTypingData from "./container/saveTypingData";
-import {
-  TitleInput,
-  ProblemList,
-  CancelButton,
-  SubmitButton,
-  ResetButton,
-  DeleteButton,
-} from "./presentation";
+import React, { useCallback } from 'react';
+import { Box } from '@mui/material';
+import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { TypingDataType } from '../../@types';
+import { TypingDataContext } from '../../Contexts';
+import saveTypingData from './container/saveTypingData';
+import { TitleInput, ProblemList, CancelButton, SubmitButton, ResetButton, DeleteButton } from './presentation';
 
 type UpdateTypingFormProps = {
   modData: TypingDataType;
@@ -22,8 +15,8 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
   const navigate = useNavigate();
   const defaultValue = modData;
   const methods = useForm<TypingDataType>({
-    mode: "onChange",
-    reValidateMode: "onBlur",
+    mode: 'onChange',
+    reValidateMode: 'onBlur',
     defaultValues: defaultValue,
   });
 
@@ -31,9 +24,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     methods.reset(defaultValue);
   }, [methods, defaultValue]);
 
-  const onSubmit: SubmitHandler<TypingDataType> = (
-    typingdata: TypingDataType
-  ) => {
+  const onSubmit: SubmitHandler<TypingDataType> = (typingdata: TypingDataType) => {
     saveTypingData(typingdata);
     typingdatas.splice(
       typingdatas.findIndex((data: TypingDataType) => data.id === modData.id),
@@ -41,7 +32,7 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
     );
     setTypingDatas([...typingdatas, typingdata]);
     methods.reset();
-    navigate("/home");
+    navigate('/home');
   };
   return (
     <FormProvider {...methods}>
@@ -51,8 +42,8 @@ const UpdateTypingForm = ({ modData }: UpdateTypingFormProps) => {
         <Box textAlign="center" mt={2}>
           <ResetButton resetFunc={resetFunc} />
           <SubmitButton
-            possible={"更新する"}
-            unable={"変更はありません"}
+            possible={'更新する'}
+            unable={'変更はありません'}
             status={{
               isDirty: methods.formState.isDirty,
               isValid: methods.formState.isValid,

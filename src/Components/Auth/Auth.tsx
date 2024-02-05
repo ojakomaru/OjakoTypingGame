@@ -1,8 +1,6 @@
 import { Avatar, Container, Typography, Box, Link } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useForm, FormProvider, SubmitHandler } from "react-hook-form";
-import { EmailInput, PasswordInput, SubmitButton } from "../form/presentation";
-import Input from "../ui/Input";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -10,12 +8,14 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
-import { auth } from "../../Config";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { EmailInput, PasswordInput, SubmitButton } from "../form/presentation";
+import Input from "../ui/Input";
+import { auth } from "../../Config";
 import saveUserData from "../../Util/saveUserData";
 import { useAuthContext } from "../../Contexts";
 
-import { useEffect, useState } from "react";
 import SocialLogin from "./SocialLogin";
 import { AuthFormValues } from "../../@types";
 

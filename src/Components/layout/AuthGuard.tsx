@@ -1,7 +1,7 @@
-import { Box, CircularProgress } from "@mui/material";
-import { ReactNode, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { TypingDataContext, useAuthContext } from "../../Contexts";
+import { Box, CircularProgress } from '@mui/material';
+import { ReactNode, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext, TypingDataContext } from '../../Contexts';
 
 type Props = {
   children: ReactNode;
@@ -14,7 +14,7 @@ export const AuthGuard = ({ children }: Props) => {
   // ユーザーObjectが取得できなかったらログイン画面に戻す
   useEffect(() => {
     if (!user) {
-      navigate("/");
+      navigate('/');
     }
   }, [user, navigate]);
 
@@ -23,15 +23,15 @@ export const AuthGuard = ({ children }: Props) => {
     return (
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          minHeight: "100vh",
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          minHeight: '100vh',
         }}
       >
-        {"Now Loading..."}
-        <CircularProgress sx={{ color: "theme.palette.primary.main" }} />
+        {'Now Loading...'}
+        <CircularProgress sx={{ color: 'theme.palette.primary.main' }} />
       </Box>
     );
   return <>{children}</>;

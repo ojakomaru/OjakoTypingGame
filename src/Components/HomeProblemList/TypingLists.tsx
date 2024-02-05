@@ -26,9 +26,9 @@ const TypingLists = () => {
   // 最大表示件数を制限
   useEffect(() => {
     const datas: TypingDataType[] = [];
-    if (!!typingdatas) {
+    if (typingdatas) {
       // Articleは一旦ランダム表示として実装
-      let rand = randomArray(typingdatas.length, 9);
+      const rand = randomArray(typingdatas.length, 9);
       for (let i = 0; i < rand.length; i++) {
         datas.push(typingdatas[rand[i]]);
       }

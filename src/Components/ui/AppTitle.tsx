@@ -1,25 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { css } from '@emotion/react';
+import { Typography } from '@mui/material';
+import { NavLink, useLocation } from 'react-router-dom';
 
 export const AppTitle = () => {
   const location = useLocation();
-  let APP_TITLE: string = "OjakoTyping"
+  let APP_TITLE: string = 'OjakoTyping';
   switch (location.pathname) {
-    case "/":
+    case '/home':
       APP_TITLE += `Home`;
       break;
-    case "/play":
+    case '/play':
       APP_TITLE += `Play`;
       break;
-    case "/setting":
+    case '/setting':
       APP_TITLE += `Setting`;
       break;
-    case "/form":
+    case '/form':
       APP_TITLE += `Form`;
       break;
+    default:
   }
   return (
     <NavLink

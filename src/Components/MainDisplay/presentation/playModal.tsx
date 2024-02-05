@@ -1,6 +1,6 @@
-import { useStartGame } from "../container/useStartGame";
-import Paragraph from "../../ui/Paragraph";
-import { Grid, Box, Typography, rgbToHex } from "@mui/material";
+import { Grid, Box, Typography, rgbToHex } from '@mui/material';
+import { useStartGame } from '../container/useStartGame';
+import Paragraph from '../../ui/Paragraph';
 
 interface PlayModalProps {
   setIsStandby: (a: boolean) => void;
@@ -14,25 +14,23 @@ export default function PlayModal({ setIsStandby }: PlayModalProps) {
       <Box
         component="div"
         sx={{
-          position: "relative",
+          position: 'relative',
           p: { xs: 3, md: 6 },
           pr: { md: 0 },
-          textAlign: "center",
+          textAlign: 'center',
         }}
       >
         <Typography variant="h4" color="inherit" gutterBottom paragraph>
           【Space か Enter キーを押すとスタートします】
         </Typography>
         <Typography variant="h5" color="inherit" paragraph>
-          Press "Space" or "Enter" key to start!!
+          {' Press "Space" or "Enter" key to start!!'}
         </Typography>
-        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
-          ※ゲーム中はescキーでホーム画面に戻ります
-        </Paragraph>
-        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
+        <Paragraph style={{ color: rgbToHex('#ffffff') }}>※ゲーム中はescキーでホーム画面に戻ります</Paragraph>
+        <Paragraph style={{ color: rgbToHex('#ffffff') }}>
           ※ミスした場合「Miss」の文字が消えるまで入力を受け付けません
         </Paragraph>
-        <Paragraph style={{ color: rgbToHex("#ffffff") }}>
+        <Paragraph style={{ color: rgbToHex('#ffffff') }}>
           ※表示されているローマ字以外でも入力可能です（「し」→「shi」「ci」など）
         </Paragraph>
       </Box>

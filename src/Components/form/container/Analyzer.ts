@@ -8,6 +8,7 @@ import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
  */
 class Analyzer {
   private _instance: Kuroshiro;
+
   private isInitialized: boolean;
 
   constructor() {
@@ -30,8 +31,8 @@ class Analyzer {
   public async parse(term: string, to: string, mode: string) {
     const parser = await this.init();
     const result = await parser.convert(term, {
-      to: to,
-      mode: mode,
+      to,
+      mode,
       romajiSystem: "nippon",
     });
     return result;

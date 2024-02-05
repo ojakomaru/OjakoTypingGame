@@ -1,3 +1,4 @@
+/* eslint-disable */
 type Option<T> = { label: string; value: T };
 type Options<T> = Option<T>[];
 // TYPE_MODE

@@ -3,9 +3,8 @@ import {
   FormLabel,
   RadioGroup,
   Radio,
-} from "@mui/material";
+ RadioGroupProps } from "@mui/material";
 import { useFormContext, Controller } from "react-hook-form";
-import { RadioGroupProps } from "@mui/material";
 import { Options, Option, SettingTypes } from "../../../../@types";
 import { CustomFormControlLabel, CustomFormControl } from "../presentation";
 

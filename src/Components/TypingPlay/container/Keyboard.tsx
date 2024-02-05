@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Ref, useCallback, useState } from "react";
-import { HIDDEN, SHOW_RADIO } from "../../../@types";
-import styled, { css } from "styled-components";
-import { useWindowEvent } from "../../../Hooks";
+import * as React from 'react';
+import { Ref, useCallback, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { HIDDEN, SHOW_RADIO } from '../../../@types';
+import { useWindowEvent } from '../../../Hooks';
 
 interface KeyboardProps {
   ref?: Ref<HTMLDivElement>;
@@ -10,7 +10,7 @@ interface KeyboardProps {
   className?: string;
 }
 
-type StyledKeyboardProps = Pick<KeyboardProps, "$showKeyboard">;
+type StyledKeyboardProps = Pick<KeyboardProps, '$showKeyboard'>;
 const StyleKeyboard = styled.div<StyledKeyboardProps>`
   ${({ $showKeyboard }) =>
     $showKeyboard === HIDDEN &&
@@ -192,7 +192,7 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
   & div.key_Enter:after {
     position: absolute;
     display: block;
-    content: "";
+    content: '';
     top: 34px;
     left: 0;
     width: 20px;
@@ -394,12 +394,12 @@ const StyleKeyboard = styled.div<StyledKeyboardProps>`
   }
 
   & div.active {
-    background-color: #CD853F !important;
-    border-color: #CD853F !important;
+    background-color: #cd853f !important;
+    border-color: #cd853f !important;
     color: #fff !important;
   }
   &::after {
-    content: "";
+    content: '';
     display: block;
     padding-top: 38%;
   }
@@ -410,33 +410,28 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
   const { className, $showKeyboard } = props;
 
   const shiftToggle = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Shift") {
-      setShift((shift) => !shift);
+    if (e.key === 'Shift') {
+      setShift((isShift) => !isShift);
     }
   }, []);
-  useWindowEvent("keydown", shiftToggle, []);
-  useWindowEvent("keyup", shiftToggle, []);
+  useWindowEvent('keydown', shiftToggle, []);
+  useWindowEvent('keyup', shiftToggle, []);
 
   return (
-    <StyleKeyboard
-      ref={ref}
-      id="virtual-keyboard"
-      className={className}
-      $showKeyboard={$showKeyboard}
-    >
-      <div className="key_backquote key_childa">{shift ? "~" : "`"}</div>
-      <div className="key_1 key_exclamation">{shift ? "!" : "1"}</div>
-      <div className="key_2 key_atmark">{shift ? "@" : "2"}</div>
-      <div className="key_3 key_sharp">{shift ? "#" : "3"}</div>
-      <div className="key_4 key_dollar">{shift ? "$" : "4"}</div>
-      <div className="key_5 key_percnt">{shift ? "%" : "5"}</div>
-      <div className="key_6 key_caret">{shift ? "^" : "6"}</div>
-      <div className="key_7 key_and">{shift ? "&" : "7"}</div>
-      <div className="key_8 key_aster">{shift ? "*" : "8"}</div>
-      <div className="key_9 key_lper">{shift ? "(" : "9"}</div>
-      <div className="key_0 key_rper">{shift ? ")" : "0"}</div>
-      <div className="key_hyphen key_underbar">{shift ? "_" : "-"}</div>
-      <div className="key_equal key_plus">{shift ? "+" : "="}</div>
+    <StyleKeyboard ref={ref} id="virtual-keyboard" className={className} $showKeyboard={$showKeyboard}>
+      <div className="key_backquote key_childa">{shift ? '~' : '`'}</div>
+      <div className="key_1 key_exclamation">{shift ? '!' : '1'}</div>
+      <div className="key_2 key_atmark">{shift ? '@' : '2'}</div>
+      <div className="key_3 key_sharp">{shift ? '#' : '3'}</div>
+      <div className="key_4 key_dollar">{shift ? '$' : '4'}</div>
+      <div className="key_5 key_percnt">{shift ? '%' : '5'}</div>
+      <div className="key_6 key_caret">{shift ? '^' : '6'}</div>
+      <div className="key_7 key_and">{shift ? '&' : '7'}</div>
+      <div className="key_8 key_aster">{shift ? '*' : '8'}</div>
+      <div className="key_9 key_lper">{shift ? '(' : '9'}</div>
+      <div className="key_0 key_rper">{shift ? ')' : '0'}</div>
+      <div className="key_hyphen key_underbar">{shift ? '_' : '-'}</div>
+      <div className="key_equal key_plus">{shift ? '+' : '='}</div>
       <div className="deco_key3">bk</div>
       <div className="deco_key4"></div>
       <div className="deco_key5"></div>
@@ -450,8 +445,8 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_i">I</div>
       <div className="key_o">O</div>
       <div className="key_p">P</div>
-      <div className="key_lbrack key_lbraces">{shift ? "{" : "["}</div>
-      <div className="key_rbrack key_rbraces">{shift ? "}" : "]"}</div>
+      <div className="key_lbrack key_lbraces">{shift ? '{' : '['}</div>
+      <div className="key_rbrack key_rbraces">{shift ? '}' : ']'}</div>
       <div className="key_Enter"></div>
       <div className="deco_key7"></div>
       <div className="key_a">A</div>
@@ -463,11 +458,9 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_j">J</div>
       <div className="key_k">K</div>
       <div className="key_l">L</div>
-      <div className="key_semicolon key_colon">{shift ? ":" : ";"}</div>
-      <div className="key_doublequotation key_singlequotation">
-        {shift ? '"' : "'"}
-      </div>
-      <div className="key_pipe key_backslash">{shift ? "|" : "\\"}</div>
+      <div className="key_semicolon key_colon">{shift ? ':' : ';'}</div>
+      <div className="key_doublequotation key_singlequotation">{shift ? '"' : "'"}</div>
+      <div className="key_pipe key_backslash">{shift ? '|' : '\\'}</div>
       <div className="key_lShift">shift</div>
       <div className="key_z">Z</div>
       <div className="key_x">X</div>
@@ -476,9 +469,9 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
       <div className="key_b">B</div>
       <div className="key_n">N</div>
       <div className="key_m">M</div>
-      <div className="key_comma key_less">{shift ? "<" : ","}</div>
-      <div className="key_period key_more">{shift ? ">" : "."}</div>
-      <div className="key_slash key_question">{shift ? "?" : "/"}</div>
+      <div className="key_comma key_less">{shift ? '<' : ','}</div>
+      <div className="key_period key_more">{shift ? '>' : '.'}</div>
+      <div className="key_slash key_question">{shift ? '?' : '/'}</div>
       <div className="deco_key9"></div>
       <div className="key_rShift">shift</div>
       <div className="deco_key10"></div>
@@ -495,6 +488,4 @@ function KeyboardCore(props: KeyboardProps, ref: Ref<HTMLDivElement>) {
   );
 }
 
-export const Keyboard = React.forwardRef<HTMLDivElement, KeyboardProps>(
-  KeyboardCore
-);
+export const Keyboard = React.forwardRef<HTMLDivElement, KeyboardProps>(KeyboardCore);

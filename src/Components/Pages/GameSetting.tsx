@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
-import Layout from "../layout/Layout";
-import SettingForm from "../form/SettingForm";
-import { useSettingDataContext, TypingDataContext } from "../../Contexts";
-import { FormWrapper } from "../form/settingForm/presentation";
-import { Keyboard } from "../TypingPlay/presentation";
-import MainDisplayLayout from "../layout/MainDisplayLayout";
-import { SettingExample } from "../MainDisplay/presentation";
+import { useState } from 'react';
+import Layout from '../layout/Layout';
+import SettingForm from '../form/SettingForm';
+import { useSettingDataContext } from '../../Contexts';
+import { FormWrapper } from '../form/settingForm/presentation';
+import { Keyboard } from '../TypingPlay/presentation';
+import MainDisplayLayout from '../layout/MainDisplayLayout';
+// import { SettingExample } from "../MainDisplay/presentation";
 
 const GameSetting = (): JSX.Element => {
   const { showKeyboard } = useSettingDataContext();
-  const { typingdata } = useContext(TypingDataContext);
+  // const { typingdata } = useContext(TypingDataContext);
   const [isSetting, setIsSetting] = useState(true);
   return (
     <Layout>

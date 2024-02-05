@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
-import { useCallback, useState } from "react";
-import { ProblemType } from "../../../../../@types";
-import { usePrevious } from "../../../../../Hooks";
-import { useReloadProblem } from "../../../container/hook";
+import { useEffect, useCallback, useState } from 'react';
+import { ProblemType } from '../../../../../@types';
+import { usePrevious } from '../../../../../Hooks';
+import { useReloadProblem } from '../../../container/hook';
 
 const useGameManager = (
   isRealPlay: boolean,
@@ -14,10 +13,10 @@ const useGameManager = (
   const [missCount, setMissCount] = useState(0); // ミスした回数
   const [typo, setTypo] = useState<Array<string>>([]); // タイプミス文字保管用
   const [problemOfMissCount, setProblemOfMissCount] = useState(0); // 問題文毎のミス回数
-  const { ref } = usePrevious(problemOfMissCount); //ミス回数を前回のものと比較する
+  const { ref } = usePrevious(problemOfMissCount); // ミス回数を前回のものと比較する
   const [missedProblems, setMissedProblems] = useState<Array<number>>([]); // タイプミス文章保管用
   const [totalType, setTotalType] = useState(0); // トータルタイピング数
-  const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); //トータルタイム
+  const [timeOfTyping, setTimeOfTyping] = useState(new Date().getTime()); // トータルタイム
   const [missFlg, setMissFlg] = useState(false); // ミスした際のフラグ
   const [tryagain, setIsTryagain] = useState(false); // やり直し中フラグ
   const [count, setCountdown] = useState(3);
@@ -63,14 +62,16 @@ const useGameManager = (
   const missRecode = (key: string) => {
     let time: number = 800;
     if (isRealPlay) {
-      key = " ";
+      // eslint-disable-next-line no-param-reassign
+      key = ' ';
       time = 100;
     }
     setMissFlg(true);
-    setTimeout(function () {
+    setTimeout(() => {
       setMissFlg(false);
     }, time);
     // 打ち間違えた文字を追加
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     setTypo((typo) => [...typo, key]);
     setMissCount((prev) => prev + 1);
   };
@@ -86,29 +87,33 @@ const useGameManager = (
   const missedOnlyRetry = useCallback(() => {
     resetState();
     setIsTryagain(true);
-    let retryProblem = selectRetryProblem(missedProblems);
-    retryProblem.length !== 0 ? reloadProblem(retryProblem) : reloadProblem();
+    const retryProblem = selectRetryProblem(missedProblems);
+    if (retryProblem.length !== 0) {
+      reloadProblem(retryProblem);
+    } else {
+      reloadProblem();
+    }
     setMissedProblems([]);
   }, [missedProblems, reloadProblem, resetState]);
 
   // 文章を入力完了時の処理
-  const typingConplate = (romajiTextLength: number, problemCount: number) => {
-    setTotalType((prev) => prev + romajiTextLength);
-    if (missCount > 0) {
-      setProblemOfMissCount(missCount);
-      if (missCount !== ref.current) {
-        setMissedProblems([...missedProblems, problemCount]);
-      }
-    }
-    let isProblem = reloadProblem();
-    if (!isProblem) gameClear();
-  };
-
   // ゲームクリア時の処理
   const gameClear = () => {
     setTotalType((prev) => prev + missCount);
     setTimeOfTyping((startTime) => new Date().getTime() - startTime - 3000);
     setFinished(true);
+  };
+
+  const typingConplate = (romajiTextLength: number, problemNumber: number) => {
+    setTotalType((prev) => prev + romajiTextLength);
+    if (missCount > 0) {
+      setProblemOfMissCount(missCount);
+      if (missCount !== ref.current) {
+        setMissedProblems([...missedProblems, problemNumber]);
+      }
+    }
+    const isProblem = reloadProblem();
+    if (!isProblem) gameClear();
   };
 
   return {

@@ -1,18 +1,13 @@
-import React from 'react'
+import React from 'react';
 import { Button } from '@mui/material';
 
 interface ResetButtonProps {
-  resetFunc: () => void
+  resetFunc: () => void;
 }
-const ResetButton = ({resetFunc}: ResetButtonProps) => {
-  return (
-    <Button
-      variant="outlined"
-      onClick={resetFunc}
-    >
-      リセット
-    </Button>
-  );
-}
+const ResetButton = ({ resetFunc }: ResetButtonProps) => (
+  <Button variant="outlined" onClick={resetFunc}>
+    {'リセット'}
+  </Button>
+);
 
-export default ResetButton
+export default ResetButton;

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState } from 'react';
 import {
   SHORT_TEXT,
   LONG_TEXT,
@@ -9,10 +9,9 @@ import {
   NONE,
   RANDOM,
   ProblemType,
-} from "../../../../@types";
-import { useSettingDataContext } from "../../../../Contexts";
-import { randomArray, Romanizer } from "../../../../Util";
-
+} from '../../../../@types';
+import { useSettingDataContext } from '../../../../Contexts';
+import { randomArray, Romanizer } from '../../../../Util';
 
 const useReloadProblem = (problemsProps: ProblemType) => {
   // 問題をコピーしておく（破壊的な配列操作を行うため）
@@ -35,14 +34,12 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     },
     [problemsProps]
   );
-  const [problems, setProblems] = useState(
-    order === RANDOM ? randomProblemCreate() : cpProblems
-  );
+  const [problems, setProblems] = useState(order === RANDOM ? randomProblemCreate() : cpProblems);
   const problemRef = useRef<ProblemType>(structuredClone(problems));
-  const [problemCount, setProblemCount] = useState(0); //出題数
-  const [romajiText, setRomajiText] = useState<string>("");
-  const [kanaText, setKanaText] = useState<string>("");
-  const [questionText, setQesutionText] = useState<string>("");
+  const [problemCount, setProblemCount] = useState(0); // 出題数
+  const [romajiText, setRomajiText] = useState<string>('');
+  const [kanaText, setKanaText] = useState<string>('');
+  const [questionText, setQesutionText] = useState<string>('');
   const [typingWord, setTypingWord] = useState<Array<string[]>>([[]]);
   const romanizer = new Romanizer();
 
@@ -53,7 +50,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
    */
   const selectRetryProblem = useCallback(
     (missedProblems: Array<number>) => {
-      let retryProblems: ProblemType = [];
+      const retryProblems: ProblemType = [];
       for (let i = 0; i < missedProblems.length; i++) {
         retryProblems.push(problemRef.current[missedProblems[i] - 1]);
       }
@@ -75,13 +72,9 @@ const useReloadProblem = (problemsProps: ProblemType) => {
    * @param romaPos ローマ字一文字のポジション
    * @return: number 現在入力中の文章のポジション
    */
-  const romajiMod = (
-    kanaPos: number,
-    pattern: Array<number>,
-    romaPos: number
-  ) => {
+  const romajiMod = (kanaPos: number, pattern: Array<number>, romaPos: number) => {
     // パターン変更後のローマ字の判定
-    let text = "";
+    let text = '';
     let currentPosition = 0;
     if (kanaPos > 0) {
       // 現在入力完了の文字列を生成
@@ -95,18 +88,14 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     }
     currentPosition = text.length;
     // 現在入力中のローマ字を追加
-    for (
-      let i = romaPos + 1;
-      i < typingWord[kanaPos][pattern[kanaPos]].length;
-      i++
-    ) {
+    for (let i = romaPos + 1; i < typingWord[kanaPos][pattern[kanaPos]].length; i++) {
       text += typingWord[kanaPos][pattern[kanaPos]][i];
     }
     // 残りの問題文のローマ字を追加
     for (let i = kanaPos + 1; i < typingWord.length; i++) {
       text += typingWord[i][pattern[i]];
     }
-    setRomajiText(text.replace(/\s/g, "␣"));
+    setRomajiText(text.replace(/\s/g, '␣'));
     return currentPosition;
   };
 
@@ -114,37 +103,39 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     let isMore = false;
     let convRomaText: string | string[][];
     let problem: ProblemType;
-    const reloadProblem = retryProblem ? retryProblem : problems;
+    const tempProblems = retryProblem || problems;
 
     // 問題文が無くなったらfalse
-    if (reloadProblem.length === 0) {
+    if (tempProblems.length === 0) {
       setProblems(structuredClone(problemRef.current));
       return isMore;
     }
 
-    const romajiTypeSelect = <T extends typeof convRomaText>(romajiText: T) => {
+    const romajiTypeSelect = <T extends typeof convRomaText>(text: T) => {
       switch (romajiType) {
         case UPPER:
-          return romanizer.upperAll(romajiText);
+          return romanizer.upperAll(text);
         case LOWER:
-          return romanizer.lowerAll(romajiText);
+          return romanizer.lowerAll(text);
         case WORD_INITIAL:
-          return romanizer.upperWordInitial(romajiText);
+          return romanizer.upperWordInitial(text);
         case NONE:
-          return romajiText;
+          return text;
+        default:
+          return text;
       }
     };
 
     // 設定モードにより分岐
     if (typeMode === LONG_TEXT) {
-      let text = "";
-      for (let i = 0; i < reloadProblem.length; i++) {
-        text += `${reloadProblem[i].text}\n`;
+      let text = '';
+      for (let i = 0; i < tempProblems.length; i++) {
+        text += `${tempProblems[i].text}\n`;
       }
       setQesutionText(text);
-      problem = reloadProblem.splice(0, 1);
+      problem = tempProblems.splice(0, 1);
     } else if (typeMode === SHORT_TEXT || typeMode === REAL_TEXT) {
-      problem = reloadProblem.splice(0, 1);
+      problem = tempProblems.splice(0, 1);
       setQesutionText(problem![0].text);
     }
 
@@ -154,7 +145,7 @@ const useReloadProblem = (problemsProps: ProblemType) => {
     setKanaText(problem![0].kana as string);
     convRomaText = romajiTypeSelect(problem![0].typingWords as string[][]);
     setTypingWord(convRomaText as string[][]);
-    setProblems(reloadProblem);
+    setProblems(tempProblems);
     setProblemCount((prev) => prev + 1);
     return isMore;
   };

@@ -1,9 +1,13 @@
+/* eslint-disable */
 import { romanMap, tree } from "../Config/stringMap";
 
 export default class Romanizer {
   static UPPER_WORD_INITIAL = "word_initial";
+
   static UPPER_SENTENCE_INITIAL = "sentence_initial";
+
   static UPPER_ALL = "all";
+
   static UPPER_NONE = "none";
 
   sutegana = ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ", "ゃ", "ゅ", "ょ"];
@@ -45,7 +49,7 @@ export default class Romanizer {
    */
   kanaToHira(text) {
     const str = text.trim().replace(/\s+/g, " ");
-    return str.replace(/[\u30a1-\u30f6]/g, function (match) {
+    return str.replace(/[\u30a1-\u30f6]/g, (match) => {
       const chr = match.charCodeAt(0) - 0x60;
       return String.fromCharCode(chr);
     });
@@ -64,9 +68,9 @@ export default class Romanizer {
     if (this.isWithSutegana(text, i)) {
       const charWithSutegana = text.substr(i, 2);
       return charWithSutegana in romanMap ? charWithSutegana : text[i];
-    } else {
+    } 
       return text[i];
-    }
+    
   }
 
   /**
@@ -81,7 +85,7 @@ export default class Romanizer {
     let romanChar = char;
     if (char === this.sokuon) {
       return "";
-    } else if (char in romanMap) {
+    } if (char in romanMap) {
       romanChar = romanMap[char][0];
     }
     // 1文字前が促音なら子音を２つにする
@@ -99,15 +103,15 @@ export default class Romanizer {
    */
   createRomajiWords(_text) {
     const text = this.kanaToHira(_text);
-    let remStr = String(text),
-      slStr,
-      romaAry,
-      next;
-    let result = [];
+    let remStr = String(text);
+      let slStr;
+      let romaAry;
+      let next;
+    const result = [];
 
     function getFirstStr() {
       // 現在のテキストから先頭一文字を切り抜く
-      let oneChar = remStr.slice(0, 1);
+      const oneChar = remStr.slice(0, 1);
       // 現在の先頭文字以降を切り抜き検索対象文字列とする
       remStr = remStr.slice(1);
       return oneChar;
@@ -237,7 +241,7 @@ export default class Romanizer {
   }
 
   upperWordInitial(romanText) {
-    let mode = typeof romanText === "string";
+    const mode = typeof romanText === "string";
     if (mode) {
       let result = romanText[0].toUpperCase();
       for (let i = 1; i < romanText.length; i++) {
@@ -248,7 +252,7 @@ export default class Romanizer {
           : (result += char.toLowerCase());
       }
       return result;
-    } else {
+    } 
       let char = romanText[0][0][0].toUpperCase();
       for (let i = 1; i < romanText[0][0].length; i++) {
         char += romanText[0][0][i];
@@ -272,11 +276,11 @@ export default class Romanizer {
         }
       }
       return romanText;
-    }
+    
   }
 
   upperAll(romanText) {
-    let mode = typeof romanText === "string";
+    const mode = typeof romanText === "string";
     if (mode) {
       let result = "";
       for (let i = 0; i < romanText.length; i++) {
@@ -284,19 +288,19 @@ export default class Romanizer {
         result += char.toUpperCase();
       }
       return result;
-    } else {
+    } 
       for (let i = 0; i < romanText.length; i++) {
         for (let j = 0; j < romanText[i].length; j++) {
-          let text = romanText[i][j];
+          const text = romanText[i][j];
           romanText[i][j] = this.upperAll(text);
         }
       }
       return romanText;
-    }
+    
   }
 
   lowerAll(romanText) {
-    let mode = typeof romanText === "string";
+    const mode = typeof romanText === "string";
     if (mode) {
       let result = "";
       for (let i = 0; i < romanText.length; i++) {
@@ -304,15 +308,15 @@ export default class Romanizer {
         result += char.toLowerCase();
       }
       return result;
-    } else {
+    } 
       for (let i = 0; i < romanText.length; i++) {
         for (let j = 0; j < romanText[i].length; j++) {
-          let text = romanText[i][j];
+          const text = romanText[i][j];
           romanText[i][j] = this.lowerAll(text);
         }
       }
       return romanText;
-    }
+    
   }
 
   /**
@@ -336,3 +340,4 @@ export default class Romanizer {
     return false;
   }
 }
+/* eslint-disable */

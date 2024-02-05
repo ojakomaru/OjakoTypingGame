@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledScoreComment = styled.div`
   border-top: 1px solid #333;
@@ -11,8 +10,6 @@ const StyledScoreComment = styled.div`
   padding: 0 5px;
   font-size: 16px;
 `;
-const ScoreComment = ({ comment }: { comment: string }) => {
-  return <StyledScoreComment>{comment}</StyledScoreComment>;
-};
+const ScoreComment = ({ comment }: { comment: string }) => <StyledScoreComment>{comment}</StyledScoreComment>;
 
 export default ScoreComment;

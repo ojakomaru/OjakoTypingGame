@@ -1,4 +1,4 @@
-import { ComponentType, FC } from "react";
+import { ComponentType } from "react";
 
 /**
  * Represents the route of a page.
@@ -52,7 +52,7 @@ export type Route = {
    * @example
    * "<Dashboard />"
    */
-  component?: FC<{}>;
+  component?: any;
 
   /**
    * ルートの起動フラグ
