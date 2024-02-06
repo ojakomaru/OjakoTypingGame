@@ -1,7 +1,7 @@
-import { Box, CircularProgress } from '@mui/material';
 import { ReactNode, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext, TypingDataContext } from '../../Contexts';
+import LoadingSpiner from './LoadingSpiner';
 
 type Props = {
   children: ReactNode;
@@ -19,20 +19,6 @@ export const AuthGuard = ({ children }: Props) => {
   }, [user, navigate]);
 
   // タイピングデータを読み込み中はローディングアニメーションを表示
-  if (loading)
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          minHeight: '100vh',
-        }}
-      >
-        {'Now Loading...'}
-        <CircularProgress sx={{ color: 'theme.palette.primary.main' }} />
-      </Box>
-    );
+  if (loading) return <LoadingSpiner />;
   return <>{children}</>;
 };

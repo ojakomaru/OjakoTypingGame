@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
