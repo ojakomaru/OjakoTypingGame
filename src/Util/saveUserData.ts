@@ -1,6 +1,5 @@
 import { User } from 'firebase/auth';
 import { AuthFormValues } from '../@types';
-/* eslint-disable import/no-cycle */
 import { insertData } from './insertData';
 
 const saveUserData = async (data: AuthFormValues, user: User) => {

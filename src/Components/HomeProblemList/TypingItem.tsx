@@ -1,16 +1,9 @@
-import React from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { TypeAnimation } from "react-type-animation";
-import { TypingDataType } from "../../@types";
-import { strTo3Leader } from "../../Util";
+import React from 'react';
+import { Card, CardMedia, CardContent, Typography, CardActions, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { TypeAnimation } from 'react-type-animation';
+import { TypingDataType } from '../../@types';
+import { strTo3Leader } from '../../Util';
 
 interface TypingItemProps {
   image: string;
@@ -24,16 +17,16 @@ const TypingItem = (props: TypingItemProps) => {
     <Card
       onClick={() => selectedTypingToTop(post)}
       sx={{
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-        cursor: "pointer",
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
       }}
     >
       <CardMedia
         component="div"
         sx={{
-          pt: "56.25%",
+          pt: '56.25%',
         }}
         image={image}
       />
@@ -43,7 +36,7 @@ const TypingItem = (props: TypingItemProps) => {
         </Typography>
         <Typography>
           <TypeAnimation
-            sequence={[strTo3Leader(post.problems[0].text, 30), 800, ""]}
+            sequence={[strTo3Leader(post.problems[0].text, 30), 800, '']}
             speed={10}
             deletionSpeed={10}
             repeat={Infinity}
@@ -52,7 +45,7 @@ const TypingItem = (props: TypingItemProps) => {
       </CardContent>
       <CardActions>
         <Button onClick={() => navigate(`/form/${post.id}`)} variant="outlined">
-          Edit
+          {'Edit'}
         </Button>
       </CardActions>
     </Card>

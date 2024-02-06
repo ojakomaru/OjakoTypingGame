@@ -24,7 +24,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
 
   rules: {
-    "no-underscore-dangle": 'off',
     'no-console': 'off', // console.logが残っていてもOK
     'import/no-cycle': 'off', // importの階層読み込みルールの無効化
     'no-plusplus': 'off', // ++インクリメントを有効化

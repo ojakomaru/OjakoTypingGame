@@ -5,7 +5,7 @@
  * @returns 3点リーダーに置換した文字列
  */
 export default function strTo3Leader(str: string, limit = 100) {
-  let beforeStr = '';
+  let beforeStr = str;
   const clamp = '…';
   if (str.length > limit) {
     beforeStr = str.substring(0, limit - 1) + clamp;

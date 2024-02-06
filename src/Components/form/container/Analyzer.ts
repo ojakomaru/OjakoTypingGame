@@ -7,12 +7,12 @@ import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
  * 文字列変換ライブラリのKuroshiroのラッパークラス
  */
 class Analyzer {
-  private _instance: Kuroshiro;
+  #instance: Kuroshiro;
 
   private isInitialized: boolean;
 
   constructor() {
-    this._instance = new Kuroshiro();
+    this.#instance = new Kuroshiro();
     this.isInitialized = false;
   }
 
@@ -22,10 +22,10 @@ class Analyzer {
    */
   private async init() {
     if (!this.isInitialized) {
-      await this._instance.init(new KuromojiAnalyzer({ dictPath: "/dict" }));
+      await this.#instance.init(new KuromojiAnalyzer({ dictPath: "/dict" }));
       this.isInitialized = true;
     }
-    return this._instance;
+    return this.#instance;
   }
 
   public async parse(term: string, to: string, mode: string) {

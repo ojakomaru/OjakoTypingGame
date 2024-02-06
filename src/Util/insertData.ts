@@ -1,5 +1,4 @@
 import { addDoc, collection, doc, DocumentData, DocumentReference, setDoc } from 'firebase/firestore';
-// eslint-disable-next-line import/no-cycle
 import { db } from '../Config';
 
 export const insertData = async (table: string, data: Object, id: string | null = null) => {
